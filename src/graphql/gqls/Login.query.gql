@@ -1,0 +1,15 @@
+query Login($input: LoginInput!) {
+  login(input: $input) {
+    ok
+    error {
+      message
+    }
+    user {
+      id
+      name
+      email
+      role
+    }
+    accessToken
+  }
+}
