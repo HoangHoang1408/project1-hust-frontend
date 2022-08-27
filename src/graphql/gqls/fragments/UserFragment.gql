@@ -1,0 +1,16 @@
+fragment UserFragment on User {
+  id
+  avatar {
+    fileUrl
+    filePath
+  }
+  email
+  verified
+  name
+  role
+  address
+  phoneNumber
+  bookings {
+    ...BookingFragment
+  }
+}

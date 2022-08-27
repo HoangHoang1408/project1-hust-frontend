@@ -1,0 +1,31 @@
+fragment CarFragment on Car {
+  id
+  procedures {
+    mortgateProperty
+    mortgatePaper
+    verificationPaper
+  }
+  images {
+    fileUrl
+    filePath
+  }
+  totalQuantity
+  vehicleStatuses {
+    vehicleNumber
+    booked
+    goodCondition
+  }
+  acceptedPayment
+  carType
+  carBrand
+  transmissionType
+  consumption
+  features
+  name
+  rating
+  engineType
+  manufactureYear
+  maxDistance
+  additionalDistancePrice
+  price
+}

@@ -1,0 +1,11 @@
+query User {
+  getDetailUser {
+    ok
+    error {
+      message
+    }
+    user {
+      ...UserFragment
+    }
+  }
+}

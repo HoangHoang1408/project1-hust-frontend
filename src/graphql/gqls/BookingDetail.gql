@@ -1,0 +1,11 @@
+query BookingDetail($input: GetBookingDetailInput!) {
+  getBookingDetail(input: $input) {
+    ok
+    error {
+      message
+    }
+    booking {
+      ...BookingFragment
+    }
+  }
+}

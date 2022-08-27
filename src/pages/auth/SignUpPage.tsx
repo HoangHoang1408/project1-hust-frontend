@@ -1,7 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import * as yup from "yup";
 import { FormInput, FormInputProps } from "../../components/form/FormInput";
+import LoadingButton from "../../components/form/LoadingButton";
 import { UserRole, useSignupMutation } from "../../graphql/generated/schema";
 interface SignUpInputForm {
   name: string;
@@ -17,6 +20,7 @@ const signupInputSchema = yup.object().shape({
 });
 
 export default function SignUpPage() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -26,7 +30,7 @@ export default function SignUpPage() {
     resolver: yupResolver(signupInputSchema),
     mode: "onBlur",
   });
-  const [signup, { error, data, loading }] = useSignupMutation();
+  const [signup, { loading }] = useSignupMutation();
   const signupFormProps: FormInputProps[] = [
     {
       id: "name",
@@ -73,8 +77,21 @@ export default function SignUpPage() {
           role: UserRole.Normal,
         },
       },
+      onCompleted({ signup }) {
+        const { ok, error } = signup;
+        if (error) {
+          toast.error(error.message);
+          return;
+        }
+        if (ok) {
+          toast.success("Tạo tài khoản thành công");
+          navigate("/auth/login");
+        }
+      },
+      onError(err) {
+        toast.error("Lỗi server, thử lại sau");
+      },
     });
-    
   };
 
   return (
@@ -95,14 +112,16 @@ export default function SignUpPage() {
             {signupFormProps.map((p, i) => (
               <FormInput key={i} {...p} />
             ))}
-            <div>
-              <button
-                type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            <div className="flex justify-end text-sm space-x-1">
+              <p>Đã có tài khoản?</p>
+              <Link
+                to={"/auth/login"}
+                className="text-indigo-600 cursor-pointer"
               >
-                Đăng ký
-              </button>
+                Đăng nhập
+              </Link>
             </div>
+            <LoadingButton loading={loading} text={"Đăng kí"} />
           </form>
         </div>
       </div>

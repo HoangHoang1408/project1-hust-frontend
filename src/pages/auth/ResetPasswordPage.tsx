@@ -1,4 +1,69 @@
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import * as yup from "yup";
+import { FormInput } from "../../components/form/FormInput";
+import LoadingButton from "../../components/form/LoadingButton";
+import { useResetPasswordMutation } from "../../graphql/generated/schema";
+type ResetPasswordInputForm = {
+  password: string;
+  confirmPassword: string;
+};
+const inputSchema = yup.object().shape({
+  password: yup.string().required("Cần điền mật khẩu"),
+  confirmPassword: yup.string().required("Cần điền xác nhận mật khẩu"),
+});
 export default function ResetPasswordPage() {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    setError,
+    formState: { errors },
+  } = useForm<ResetPasswordInputForm>({
+    resolver: yupResolver(inputSchema),
+  });
+  const [resetPassword, { loading }] = useResetPasswordMutation({
+    onCompleted({ verifyForgotPassword }) {
+      const { ok, error } = verifyForgotPassword;
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+      if (ok) {
+        toast.success("Đổi mật khẩu thành công", { autoClose: 2000 });
+        navigate("/auth/login");
+      }
+    },
+    onError(err) {
+      toast.error("Lỗi server, thử lại sau");
+    },
+  });
+  const submitHandler = async () => {
+    const { confirmPassword, password } = getValues();
+    if (confirmPassword !== password) {
+      setError("confirmPassword", {
+        message: "Mật khẩu xác nhận không đúng",
+      });
+    }
+    const token = searchParams.get("token");
+    if (!token) {
+      toast.error("Link lấy lại mật khẩu không hợp lệ");
+      return;
+    }
+    await resetPassword({
+      variables: {
+        input: {
+          confirmPassword,
+          password,
+          verificationToken: token,
+        },
+      },
+    });
+  };
   return (
     <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -8,56 +73,32 @@ export default function ResetPasswordPage() {
           alt="Workflow"
         />
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          New password
+          Đổi mật khẩu
         </h2>
       </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form className="space-y-4" action="#" method="POST">
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                New password
-              </label>
-              <div className="mt-1">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-            </div>
-            <div>
-              <label
-                htmlFor="confirmPassword"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Confirm password
-              </label>
-              <div className="mt-1">
-                <input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="confirmPassword"
-                  autoComplete="current-password"
-                  required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-            </div>
-            <div>
-              <button
-                type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Change password
-              </button>
-            </div>
+          <form
+            onSubmit={handleSubmit(submitHandler)}
+            className="space-y-4"
+            action="#"
+            method="POST"
+          >
+            <FormInput
+              id="password"
+              labelText="Mật khẩu"
+              errorMessage={errors.password?.message}
+              registerReturn={register("password")}
+              type="password"
+            />
+            <FormInput
+              id="confirmPassword"
+              labelText="Xác nhận mật khẩu"
+              errorMessage={errors.confirmPassword?.message}
+              type="password"
+              registerReturn={register("confirmPassword")}
+            />
+            <LoadingButton loading={loading} text="Đổi mật khẩu" />
           </form>
         </div>
       </div>

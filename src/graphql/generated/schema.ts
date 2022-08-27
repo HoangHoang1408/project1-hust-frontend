@@ -748,6 +748,123 @@ export type VerifyForgotPasswordOutput = {
   ok: Scalars["Boolean"];
 };
 
+export type BookingDetailQueryVariables = Exact<{
+  input: GetBookingDetailInput;
+}>;
+
+export type BookingDetailQuery = {
+  __typename?: "Query";
+  getBookingDetail: {
+    __typename?: "GetBookingDetailOutput";
+    ok: boolean;
+    error?: { __typename?: "CustomError"; message: string } | null;
+    booking?: {
+      __typename?: "Booking";
+      id: string;
+      payment: Payment;
+      status: BookingStatus;
+      rating?: number | null;
+      feedBack?: string | null;
+      vehicleType: VehicleType;
+      bookingCode: string;
+      car?: {
+        __typename?: "Car";
+        id: string;
+        totalQuantity: number;
+        acceptedPayment: Array<Payment>;
+        carType: CarType;
+        carBrand: CarBrand;
+        transmissionType: TransmissionType;
+        consumption: number;
+        features: Array<string>;
+        name: string;
+        rating: number;
+        engineType: EngineType;
+        manufactureYear: number;
+        maxDistance?: number | null;
+        additionalDistancePrice: number;
+        price: number;
+        procedures: {
+          __typename?: "Procedure";
+          mortgateProperty?: Array<string> | null;
+          mortgatePaper?: Array<string> | null;
+          verificationPaper?: Array<string> | null;
+        };
+        images?: Array<{
+          __typename?: "StoredFile";
+          fileUrl: string;
+          filePath: string;
+        }> | null;
+        vehicleStatuses: Array<{
+          __typename?: "VehicleStatus";
+          vehicleNumber: number;
+          booked: boolean;
+          goodCondition: boolean;
+        }>;
+      } | null;
+      motorBike?: {
+        __typename?: "MotorBike";
+        id: string;
+        totalQuantity: number;
+        acceptedPayment: Array<Payment>;
+        transmissionType: TransmissionType;
+        name: string;
+        rating: number;
+        engineType: EngineType;
+        manufactureYear: number;
+        maxDistance?: number | null;
+        additionalDistancePrice: number;
+        price: number;
+        motorBikeBrand: MotorBikeBrand;
+        procedures: {
+          __typename?: "Procedure";
+          mortgateProperty?: Array<string> | null;
+          mortgatePaper?: Array<string> | null;
+          verificationPaper?: Array<string> | null;
+        };
+        images?: Array<{
+          __typename?: "StoredFile";
+          fileUrl: string;
+          filePath: string;
+        }> | null;
+        vehicleStatuses: Array<{
+          __typename?: "VehicleStatus";
+          vehicleNumber: number;
+          booked: boolean;
+          goodCondition: boolean;
+        }>;
+      } | null;
+      user?: {
+        __typename?: "User";
+        id: string;
+        name: string;
+        avatar?: {
+          __typename?: "StoredFile";
+          fileUrl: string;
+          filePath: string;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type ForgotPasswordQueryVariables = Exact<{
+  input: ForgotPasswordInput;
+}>;
+
+export type ForgotPasswordQuery = {
+  __typename?: "Query";
+  forgotPassword: {
+    __typename?: "ForgotPasswordOutput";
+    ok: boolean;
+    error?: {
+      __typename?: "CustomError";
+      message: string;
+      mainReason: string;
+    } | null;
+  };
+};
+
 export type LoginQueryVariables = Exact<{
   input: LoginInput;
 }>;
@@ -769,6 +886,19 @@ export type LoginQuery = {
   };
 };
 
+export type ResetPasswordMutationVariables = Exact<{
+  input: VerifyForgotPasswordInput;
+}>;
+
+export type ResetPasswordMutation = {
+  __typename?: "Mutation";
+  verifyForgotPassword: {
+    __typename?: "VerifyForgotPasswordOutput";
+    ok: boolean;
+    error?: { __typename?: "CustomError"; message: string } | null;
+  };
+};
+
 export type SignupMutationVariables = Exact<{
   input: SignUpInput;
 }>;
@@ -782,6 +912,615 @@ export type SignupMutation = {
   };
 };
 
+export type UserQueryVariables = Exact<{ [key: string]: never }>;
+
+export type UserQuery = {
+  __typename?: "Query";
+  getDetailUser: {
+    __typename?: "GetDetailUserOutput";
+    ok: boolean;
+    error?: { __typename?: "CustomError"; message: string } | null;
+    user: {
+      __typename?: "User";
+      id: string;
+      email: string;
+      verified: boolean;
+      name: string;
+      role: UserRole;
+      address?: string | null;
+      phoneNumber?: string | null;
+      avatar?: {
+        __typename?: "StoredFile";
+        fileUrl: string;
+        filePath: string;
+      } | null;
+      bookings?: Array<{
+        __typename?: "Booking";
+        id: string;
+        payment: Payment;
+        status: BookingStatus;
+        rating?: number | null;
+        feedBack?: string | null;
+        vehicleType: VehicleType;
+        bookingCode: string;
+        car?: {
+          __typename?: "Car";
+          id: string;
+          totalQuantity: number;
+          acceptedPayment: Array<Payment>;
+          carType: CarType;
+          carBrand: CarBrand;
+          transmissionType: TransmissionType;
+          consumption: number;
+          features: Array<string>;
+          name: string;
+          rating: number;
+          engineType: EngineType;
+          manufactureYear: number;
+          maxDistance?: number | null;
+          additionalDistancePrice: number;
+          price: number;
+          procedures: {
+            __typename?: "Procedure";
+            mortgateProperty?: Array<string> | null;
+            mortgatePaper?: Array<string> | null;
+            verificationPaper?: Array<string> | null;
+          };
+          images?: Array<{
+            __typename?: "StoredFile";
+            fileUrl: string;
+            filePath: string;
+          }> | null;
+          vehicleStatuses: Array<{
+            __typename?: "VehicleStatus";
+            vehicleNumber: number;
+            booked: boolean;
+            goodCondition: boolean;
+          }>;
+        } | null;
+        motorBike?: {
+          __typename?: "MotorBike";
+          id: string;
+          totalQuantity: number;
+          acceptedPayment: Array<Payment>;
+          transmissionType: TransmissionType;
+          name: string;
+          rating: number;
+          engineType: EngineType;
+          manufactureYear: number;
+          maxDistance?: number | null;
+          additionalDistancePrice: number;
+          price: number;
+          motorBikeBrand: MotorBikeBrand;
+          procedures: {
+            __typename?: "Procedure";
+            mortgateProperty?: Array<string> | null;
+            mortgatePaper?: Array<string> | null;
+            verificationPaper?: Array<string> | null;
+          };
+          images?: Array<{
+            __typename?: "StoredFile";
+            fileUrl: string;
+            filePath: string;
+          }> | null;
+          vehicleStatuses: Array<{
+            __typename?: "VehicleStatus";
+            vehicleNumber: number;
+            booked: boolean;
+            goodCondition: boolean;
+          }>;
+        } | null;
+        user?: {
+          __typename?: "User";
+          id: string;
+          name: string;
+          avatar?: {
+            __typename?: "StoredFile";
+            fileUrl: string;
+            filePath: string;
+          } | null;
+        } | null;
+      }> | null;
+    };
+  };
+};
+
+export type BookingFragmentFragment = {
+  __typename?: "Booking";
+  id: string;
+  payment: Payment;
+  status: BookingStatus;
+  rating?: number | null;
+  feedBack?: string | null;
+  vehicleType: VehicleType;
+  bookingCode: string;
+  car?: {
+    __typename?: "Car";
+    id: string;
+    totalQuantity: number;
+    acceptedPayment: Array<Payment>;
+    carType: CarType;
+    carBrand: CarBrand;
+    transmissionType: TransmissionType;
+    consumption: number;
+    features: Array<string>;
+    name: string;
+    rating: number;
+    engineType: EngineType;
+    manufactureYear: number;
+    maxDistance?: number | null;
+    additionalDistancePrice: number;
+    price: number;
+    procedures: {
+      __typename?: "Procedure";
+      mortgateProperty?: Array<string> | null;
+      mortgatePaper?: Array<string> | null;
+      verificationPaper?: Array<string> | null;
+    };
+    images?: Array<{
+      __typename?: "StoredFile";
+      fileUrl: string;
+      filePath: string;
+    }> | null;
+    vehicleStatuses: Array<{
+      __typename?: "VehicleStatus";
+      vehicleNumber: number;
+      booked: boolean;
+      goodCondition: boolean;
+    }>;
+  } | null;
+  motorBike?: {
+    __typename?: "MotorBike";
+    id: string;
+    totalQuantity: number;
+    acceptedPayment: Array<Payment>;
+    transmissionType: TransmissionType;
+    name: string;
+    rating: number;
+    engineType: EngineType;
+    manufactureYear: number;
+    maxDistance?: number | null;
+    additionalDistancePrice: number;
+    price: number;
+    motorBikeBrand: MotorBikeBrand;
+    procedures: {
+      __typename?: "Procedure";
+      mortgateProperty?: Array<string> | null;
+      mortgatePaper?: Array<string> | null;
+      verificationPaper?: Array<string> | null;
+    };
+    images?: Array<{
+      __typename?: "StoredFile";
+      fileUrl: string;
+      filePath: string;
+    }> | null;
+    vehicleStatuses: Array<{
+      __typename?: "VehicleStatus";
+      vehicleNumber: number;
+      booked: boolean;
+      goodCondition: boolean;
+    }>;
+  } | null;
+  user?: {
+    __typename?: "User";
+    id: string;
+    name: string;
+    avatar?: {
+      __typename?: "StoredFile";
+      fileUrl: string;
+      filePath: string;
+    } | null;
+  } | null;
+};
+
+export type CarFragmentFragment = {
+  __typename?: "Car";
+  id: string;
+  totalQuantity: number;
+  acceptedPayment: Array<Payment>;
+  carType: CarType;
+  carBrand: CarBrand;
+  transmissionType: TransmissionType;
+  consumption: number;
+  features: Array<string>;
+  name: string;
+  rating: number;
+  engineType: EngineType;
+  manufactureYear: number;
+  maxDistance?: number | null;
+  additionalDistancePrice: number;
+  price: number;
+  procedures: {
+    __typename?: "Procedure";
+    mortgateProperty?: Array<string> | null;
+    mortgatePaper?: Array<string> | null;
+    verificationPaper?: Array<string> | null;
+  };
+  images?: Array<{
+    __typename?: "StoredFile";
+    fileUrl: string;
+    filePath: string;
+  }> | null;
+  vehicleStatuses: Array<{
+    __typename?: "VehicleStatus";
+    vehicleNumber: number;
+    booked: boolean;
+    goodCondition: boolean;
+  }>;
+};
+
+export type MotorBikeFragmentFragment = {
+  __typename?: "MotorBike";
+  id: string;
+  totalQuantity: number;
+  acceptedPayment: Array<Payment>;
+  transmissionType: TransmissionType;
+  name: string;
+  rating: number;
+  engineType: EngineType;
+  manufactureYear: number;
+  maxDistance?: number | null;
+  additionalDistancePrice: number;
+  price: number;
+  motorBikeBrand: MotorBikeBrand;
+  procedures: {
+    __typename?: "Procedure";
+    mortgateProperty?: Array<string> | null;
+    mortgatePaper?: Array<string> | null;
+    verificationPaper?: Array<string> | null;
+  };
+  images?: Array<{
+    __typename?: "StoredFile";
+    fileUrl: string;
+    filePath: string;
+  }> | null;
+  vehicleStatuses: Array<{
+    __typename?: "VehicleStatus";
+    vehicleNumber: number;
+    booked: boolean;
+    goodCondition: boolean;
+  }>;
+};
+
+export type UserFragmentFragment = {
+  __typename?: "User";
+  id: string;
+  email: string;
+  verified: boolean;
+  name: string;
+  role: UserRole;
+  address?: string | null;
+  phoneNumber?: string | null;
+  avatar?: {
+    __typename?: "StoredFile";
+    fileUrl: string;
+    filePath: string;
+  } | null;
+  bookings?: Array<{
+    __typename?: "Booking";
+    id: string;
+    payment: Payment;
+    status: BookingStatus;
+    rating?: number | null;
+    feedBack?: string | null;
+    vehicleType: VehicleType;
+    bookingCode: string;
+    car?: {
+      __typename?: "Car";
+      id: string;
+      totalQuantity: number;
+      acceptedPayment: Array<Payment>;
+      carType: CarType;
+      carBrand: CarBrand;
+      transmissionType: TransmissionType;
+      consumption: number;
+      features: Array<string>;
+      name: string;
+      rating: number;
+      engineType: EngineType;
+      manufactureYear: number;
+      maxDistance?: number | null;
+      additionalDistancePrice: number;
+      price: number;
+      procedures: {
+        __typename?: "Procedure";
+        mortgateProperty?: Array<string> | null;
+        mortgatePaper?: Array<string> | null;
+        verificationPaper?: Array<string> | null;
+      };
+      images?: Array<{
+        __typename?: "StoredFile";
+        fileUrl: string;
+        filePath: string;
+      }> | null;
+      vehicleStatuses: Array<{
+        __typename?: "VehicleStatus";
+        vehicleNumber: number;
+        booked: boolean;
+        goodCondition: boolean;
+      }>;
+    } | null;
+    motorBike?: {
+      __typename?: "MotorBike";
+      id: string;
+      totalQuantity: number;
+      acceptedPayment: Array<Payment>;
+      transmissionType: TransmissionType;
+      name: string;
+      rating: number;
+      engineType: EngineType;
+      manufactureYear: number;
+      maxDistance?: number | null;
+      additionalDistancePrice: number;
+      price: number;
+      motorBikeBrand: MotorBikeBrand;
+      procedures: {
+        __typename?: "Procedure";
+        mortgateProperty?: Array<string> | null;
+        mortgatePaper?: Array<string> | null;
+        verificationPaper?: Array<string> | null;
+      };
+      images?: Array<{
+        __typename?: "StoredFile";
+        fileUrl: string;
+        filePath: string;
+      }> | null;
+      vehicleStatuses: Array<{
+        __typename?: "VehicleStatus";
+        vehicleNumber: number;
+        booked: boolean;
+        goodCondition: boolean;
+      }>;
+    } | null;
+    user?: {
+      __typename?: "User";
+      id: string;
+      name: string;
+      avatar?: {
+        __typename?: "StoredFile";
+        fileUrl: string;
+        filePath: string;
+      } | null;
+    } | null;
+  }> | null;
+};
+
+export const CarFragmentFragmentDoc = gql`
+  fragment CarFragment on Car {
+    id
+    procedures {
+      mortgateProperty
+      mortgatePaper
+      verificationPaper
+    }
+    images {
+      fileUrl
+      filePath
+    }
+    totalQuantity
+    vehicleStatuses {
+      vehicleNumber
+      booked
+      goodCondition
+    }
+    acceptedPayment
+    carType
+    carBrand
+    transmissionType
+    consumption
+    features
+    name
+    rating
+    engineType
+    manufactureYear
+    maxDistance
+    additionalDistancePrice
+    price
+  }
+`;
+export const MotorBikeFragmentFragmentDoc = gql`
+  fragment MotorBikeFragment on MotorBike {
+    id
+    procedures {
+      mortgateProperty
+      mortgatePaper
+      verificationPaper
+    }
+    images {
+      fileUrl
+      filePath
+    }
+    totalQuantity
+    vehicleStatuses {
+      vehicleNumber
+      booked
+      goodCondition
+    }
+    acceptedPayment
+    transmissionType
+    name
+    rating
+    engineType
+    manufactureYear
+    maxDistance
+    additionalDistancePrice
+    price
+    motorBikeBrand
+  }
+`;
+export const BookingFragmentFragmentDoc = gql`
+  fragment BookingFragment on Booking {
+    id
+    payment
+    status
+    rating
+    feedBack
+    vehicleType
+    car {
+      ...CarFragment
+    }
+    motorBike {
+      ...MotorBikeFragment
+    }
+    bookingCode
+    user {
+      id
+      name
+      avatar {
+        fileUrl
+        filePath
+      }
+    }
+  }
+  ${CarFragmentFragmentDoc}
+  ${MotorBikeFragmentFragmentDoc}
+`;
+export const UserFragmentFragmentDoc = gql`
+  fragment UserFragment on User {
+    id
+    avatar {
+      fileUrl
+      filePath
+    }
+    email
+    verified
+    name
+    role
+    address
+    phoneNumber
+    bookings {
+      ...BookingFragment
+    }
+  }
+  ${BookingFragmentFragmentDoc}
+`;
+export const BookingDetailDocument = gql`
+  query BookingDetail($input: GetBookingDetailInput!) {
+    getBookingDetail(input: $input) {
+      ok
+      error {
+        message
+      }
+      booking {
+        ...BookingFragment
+      }
+    }
+  }
+  ${BookingFragmentFragmentDoc}
+`;
+
+/**
+ * __useBookingDetailQuery__
+ *
+ * To run a query within a React component, call `useBookingDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBookingDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBookingDetailQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useBookingDetailQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    BookingDetailQuery,
+    BookingDetailQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<BookingDetailQuery, BookingDetailQueryVariables>(
+    BookingDetailDocument,
+    options
+  );
+}
+export function useBookingDetailLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    BookingDetailQuery,
+    BookingDetailQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<BookingDetailQuery, BookingDetailQueryVariables>(
+    BookingDetailDocument,
+    options
+  );
+}
+export type BookingDetailQueryHookResult = ReturnType<
+  typeof useBookingDetailQuery
+>;
+export type BookingDetailLazyQueryHookResult = ReturnType<
+  typeof useBookingDetailLazyQuery
+>;
+export type BookingDetailQueryResult = Apollo.QueryResult<
+  BookingDetailQuery,
+  BookingDetailQueryVariables
+>;
+export const ForgotPasswordDocument = gql`
+  query ForgotPassword($input: ForgotPasswordInput!) {
+    forgotPassword(input: $input) {
+      ok
+      error {
+        message
+        mainReason
+      }
+    }
+  }
+`;
+
+/**
+ * __useForgotPasswordQuery__
+ *
+ * To run a query within a React component, call `useForgotPasswordQuery` and pass it any options that fit your needs.
+ * When your component renders, `useForgotPasswordQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useForgotPasswordQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useForgotPasswordQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    ForgotPasswordQuery,
+    ForgotPasswordQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ForgotPasswordQuery, ForgotPasswordQueryVariables>(
+    ForgotPasswordDocument,
+    options
+  );
+}
+export function useForgotPasswordLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ForgotPasswordQuery,
+    ForgotPasswordQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ForgotPasswordQuery, ForgotPasswordQueryVariables>(
+    ForgotPasswordDocument,
+    options
+  );
+}
+export type ForgotPasswordQueryHookResult = ReturnType<
+  typeof useForgotPasswordQuery
+>;
+export type ForgotPasswordLazyQueryHookResult = ReturnType<
+  typeof useForgotPasswordLazyQuery
+>;
+export type ForgotPasswordQueryResult = Apollo.QueryResult<
+  ForgotPasswordQuery,
+  ForgotPasswordQueryVariables
+>;
 export const LoginDocument = gql`
   query Login($input: LoginInput!) {
     login(input: $input) {
@@ -840,6 +1579,59 @@ export type LoginQueryResult = Apollo.QueryResult<
   LoginQuery,
   LoginQueryVariables
 >;
+export const ResetPasswordDocument = gql`
+  mutation ResetPassword($input: VerifyForgotPasswordInput!) {
+    verifyForgotPassword(input: $input) {
+      ok
+      error {
+        message
+      }
+    }
+  }
+`;
+export type ResetPasswordMutationFn = Apollo.MutationFunction<
+  ResetPasswordMutation,
+  ResetPasswordMutationVariables
+>;
+
+/**
+ * __useResetPasswordMutation__
+ *
+ * To run a mutation, you first call `useResetPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useResetPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [resetPasswordMutation, { data, loading, error }] = useResetPasswordMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useResetPasswordMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ResetPasswordMutation,
+    ResetPasswordMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ResetPasswordMutation,
+    ResetPasswordMutationVariables
+  >(ResetPasswordDocument, options);
+}
+export type ResetPasswordMutationHookResult = ReturnType<
+  typeof useResetPasswordMutation
+>;
+export type ResetPasswordMutationResult =
+  Apollo.MutationResult<ResetPasswordMutation>;
+export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<
+  ResetPasswordMutation,
+  ResetPasswordMutationVariables
+>;
 export const SignupDocument = gql`
   mutation Signup($input: SignUpInput!) {
     signup(input: $input) {
@@ -890,3 +1682,51 @@ export type SignupMutationOptions = Apollo.BaseMutationOptions<
   SignupMutation,
   SignupMutationVariables
 >;
+export const UserDocument = gql`
+  query User {
+    getDetailUser {
+      ok
+      error {
+        message
+      }
+      user {
+        ...UserFragment
+      }
+    }
+  }
+  ${UserFragmentFragmentDoc}
+`;
+
+/**
+ * __useUserQuery__
+ *
+ * To run a query within a React component, call `useUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserQuery(
+  baseOptions?: Apollo.QueryHookOptions<UserQuery, UserQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+}
+export function useUserLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<UserQuery, UserQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<UserQuery, UserQueryVariables>(
+    UserDocument,
+    options
+  );
+}
+export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
+export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
+export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;

@@ -1,0 +1,23 @@
+fragment BookingFragment on Booking {
+  id
+  payment
+  status
+  rating
+  feedBack
+  vehicleType
+  car {
+    ...CarFragment
+  }
+  motorBike {
+    ...MotorBikeFragment
+  }
+  bookingCode
+  user {
+    id
+    name
+    avatar {
+      fileUrl
+      filePath
+    }
+  }
+}
