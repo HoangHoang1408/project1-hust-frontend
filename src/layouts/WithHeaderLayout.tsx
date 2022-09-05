@@ -8,7 +8,7 @@ const WithHeaderLayout = (props: Props) => {
   return (
     <div className="w-full h-screen flex flex-col justify-between">
       <Header></Header>
-      <div className="grow">
+      <div className="grow bg-gray-100">
         <Outlet />
       </div>
       <Footer />

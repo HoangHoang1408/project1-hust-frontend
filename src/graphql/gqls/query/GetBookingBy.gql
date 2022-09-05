@@ -1,0 +1,16 @@
+query GetBookingBy($input: GetBookingsByInput!) {
+  getBookingsBy(input: $input) {
+    ok
+    error {
+      message
+      mainReason
+    }
+    bookings {
+      ...BookingFragment
+    }
+    pagination {
+      totalPages
+      totalResults
+    }
+  }
+}

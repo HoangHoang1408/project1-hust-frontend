@@ -1,0 +1,9 @@
+mutation BookingFeedback($input: BookingFeedBackInput!) {
+  bookingFeedback(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+  }
+}

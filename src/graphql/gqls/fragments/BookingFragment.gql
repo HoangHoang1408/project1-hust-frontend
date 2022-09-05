@@ -4,14 +4,15 @@ fragment BookingFragment on Booking {
   status
   rating
   feedBack
-  vehicleType
-  car {
-    ...CarFragment
-  }
-  motorBike {
-    ...MotorBikeFragment
-  }
   bookingCode
+  totalPrice
+  startDate
+  endDate
+  quantity
+  customerName
+  customerPhone
+  note
+  homeDelivery
   user {
     id
     name
@@ -19,5 +20,8 @@ fragment BookingFragment on Booking {
       fileUrl
       filePath
     }
+  }
+  carType {
+    ...CarTypeFragment
   }
 }

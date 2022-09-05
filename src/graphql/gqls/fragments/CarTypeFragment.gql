@@ -1,0 +1,12 @@
+fragment CarTypeFragment on CarType {
+  carType
+  price
+  maxDistance
+  additionalDistancePrice
+  procedures {
+    mortgateProperty
+    mortgatePaper
+    verificationPaper
+  }
+  acceptedPayment
+}

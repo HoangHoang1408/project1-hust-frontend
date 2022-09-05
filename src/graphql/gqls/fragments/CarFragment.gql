@@ -1,22 +1,12 @@
 fragment CarFragment on Car {
   id
-  procedures {
-    mortgateProperty
-    mortgatePaper
-    verificationPaper
+  carType {
+    ...CarTypeFragment
   }
   images {
     fileUrl
     filePath
   }
-  totalQuantity
-  vehicleStatuses {
-    vehicleNumber
-    booked
-    goodCondition
-  }
-  acceptedPayment
-  carType
   carBrand
   transmissionType
   consumption
@@ -25,7 +15,4 @@ fragment CarFragment on Car {
   rating
   engineType
   manufactureYear
-  maxDistance
-  additionalDistancePrice
-  price
 }

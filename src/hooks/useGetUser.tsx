@@ -8,13 +8,13 @@ export function useGetUser() {
   const [userQuery] = useUserLazyQuery({
     onCompleted(data) {
       const {
-        getDetailUser: { ok, user, error },
+        getDetailUser: { user, error },
       } = data;
       if (error || !user) toast.error("Không thể nhận thông tin người dùng");
-      toast.success(`Welcome ${user.name}`);
       userVar(user);
     },
     onError(err) {
+      console.log(err)
       toast.error("Lỗi server, thử lại sau");
     },
   });

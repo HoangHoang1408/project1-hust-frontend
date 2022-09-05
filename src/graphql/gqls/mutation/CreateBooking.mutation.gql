@@ -1,0 +1,10 @@
+mutation CreateBooking($input: CreateBookingInput!) {
+  createBooking(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+    bookingCode
+  }
+}

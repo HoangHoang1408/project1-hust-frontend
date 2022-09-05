@@ -1,0 +1,10 @@
+query CheckCarAvailable($input: CheckCarAvailableInput!) {
+  checkCarAvailable(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+    available
+  }
+}
