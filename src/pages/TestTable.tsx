@@ -3,6 +3,7 @@ import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { SearchIcon } from "@heroicons/react/solid";
 import { FC, Fragment, useEffect, useMemo, useState } from "react";
 import { useTable } from "react-table";
+import { classNames } from "../common/utilFunctions";
 
 const user = {
   name: "Tom Cook",
@@ -23,9 +24,6 @@ const userNavigation = [
   { name: "Sign out", href: "#" },
 ];
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
 type Props = {};
 interface DataSchema {
   vehicleId: number;
@@ -106,12 +104,14 @@ const TestTable: FC<Props> = (props) => {
     return [
       {
         Header: "Id",
+        //@ts-ignore
         accessor: (row) => row["vehicleId"],
       },
       ...Object.keys(mainData[0].dates).map((key) => ({
         Header: key,
         //@ts-ignore
         accessor: (row) => row.dates[key],
+        //@ts-ignore
         Cell: ({ value }) => {
           if (value == 1)
             return <div className="w-full h-12 bg-yellow-500"></div>;

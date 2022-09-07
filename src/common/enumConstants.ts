@@ -1,8 +1,9 @@
 export enum BookingStatusBackEnd {
   NOT_DEPOSITE = "Chưa cọc",
   DEPOSITED = "Đã cọc",
-  VEHICLE_TAKEN = "VEHICLE_TAKEN",
-  FINISHED = "FINISHED",
+  VEHICLE_TAKEN = "Đã nhận xe",
+  FINISHED = "Đã trả xe",
+  CANCEL = "Huỷ",
 }
 export enum CarTypeEnumBackEnd {
   SEAT4 = "Xe 4 chỗ",
@@ -15,4 +16,13 @@ export enum PaymentBackEnd {
   BEFORE = "Trả trước",
   AFTER = "Trả sau",
   BANK_TRANSFER = "Chuyển khoản",
+}
+export enum TransmissionTypeBackEnd {
+  MANUAL_TRANSMISSION = "Số sàn",
+  AUTOMATIC_TRANSMISSION = "Số tự động",
+}
+export enum EngineTypeBackEnd {
+  GASOLINE = "Xăng",
+  ELECTRIC = "Điện",
+  HIBRID = "Hỗn hợp",
 }

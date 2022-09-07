@@ -1,7 +1,7 @@
 import { Menu } from "@headlessui/react";
 import { FC, MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
-import { classNames } from "../Header";
+import { classNames } from "../../../common/utilFunctions";
 
 type Props = {
   onClick?: MouseEventHandler;

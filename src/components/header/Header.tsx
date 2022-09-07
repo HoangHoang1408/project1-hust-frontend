@@ -9,9 +9,6 @@ import { toast } from "react-toastify";
 import { logout, userVar } from "../../apollo/reactiveVar/loginStatus";
 import MenuItem from "./Components/MenuItem";
 
-export function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
 
 type Props = {};
 

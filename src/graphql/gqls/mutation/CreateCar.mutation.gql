@@ -1,0 +1,9 @@
+mutation CreateCar($input: CreateCarInput!) {
+  createCar(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+  }
+}

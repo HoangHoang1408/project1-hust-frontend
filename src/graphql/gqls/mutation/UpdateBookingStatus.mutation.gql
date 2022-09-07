@@ -1,0 +1,9 @@
+mutation UpdateBookingStatus($input: UpdateBookingStatusInput!) {
+  updateBookingStatus(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+  }
+}

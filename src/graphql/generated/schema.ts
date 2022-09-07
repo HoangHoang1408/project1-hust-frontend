@@ -71,6 +71,7 @@ export type BookingInputType = {
 };
 
 export enum BookingStatus {
+  Cancel = 'CANCEL',
   Deposited = 'DEPOSITED',
   Finished = 'FINISHED',
   NotDeposite = 'NOT_DEPOSITE',
@@ -204,9 +205,8 @@ export type CreateBookingOutput = {
 };
 
 export type CreateCarInput = {
-  bookings?: InputMaybe<Array<BookingInputType>>;
   carBrand: CarBrand;
-  carType: CarTypeInput;
+  carType?: InputMaybe<CarTypeEnum>;
   consumption: Scalars['Float'];
   engineType: EngineType;
   features: Array<Scalars['String']>;
@@ -257,6 +257,8 @@ export type GetBookingDetailOutput = {
 };
 
 export type GetBookingsByInput = {
+  bookingCode?: InputMaybe<Scalars['String']>;
+  bookingStatus?: InputMaybe<BookingStatus>;
   carType?: InputMaybe<CarTypeEnum>;
   endDate?: InputMaybe<Scalars['DateTime']>;
   pagination: PaginationInput;
@@ -291,6 +293,19 @@ export type GetCarTypeOutput = {
   carType?: Maybe<CarType>;
   error?: Maybe<CustomError>;
   ok: Scalars['Boolean'];
+};
+
+export type GetCarsByInput = {
+  carType?: InputMaybe<CarTypeEnum>;
+  pagination: PaginationInput;
+};
+
+export type GetCarsByOutput = {
+  __typename?: 'GetCarsByOutput';
+  cars?: Maybe<Array<Car>>;
+  error?: Maybe<CustomError>;
+  ok: Scalars['Boolean'];
+  pagination?: Maybe<PaginationOutput>;
 };
 
 export type GetDetailUserOutput = {
@@ -414,6 +429,7 @@ export type Query = {
   getBookingsBy: GetBookingsByOutput;
   getCarDetail: GetCarDetailOutput;
   getCarType: GetCarTypeOutput;
+  getCarsBy: GetCarsByOutput;
   getDetailUser: GetDetailUserOutput;
   login: LoginOutPut;
   newAccessToken: NewAccessTokenOutput;
@@ -448,6 +464,11 @@ export type QueryGetCarDetailArgs = {
 
 export type QueryGetCarTypeArgs = {
   input: GetCarTypeInput;
+};
+
+
+export type QueryGetCarsByArgs = {
+  input: GetCarsByInput;
 };
 
 
@@ -595,7 +616,7 @@ export type VerifyForgotPasswordOutput = {
 
 export type BookingFragmentFragment = { __typename?: 'Booking', id: string, payment: Payment, status: BookingStatus, rating?: number | null, feedBack?: string | null, bookingCode: string, totalPrice: number, startDate: any, endDate: any, quantity: number, customerName: string, customerPhone: string, note?: string | null, homeDelivery: string, user?: { __typename?: 'User', id: string, name: string, avatar?: { __typename?: 'StoredFile', fileUrl: string, filePath: string } | null } | null, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } } };
 
-export type CarFragmentFragment = { __typename?: 'Car', id: string, carBrand: CarBrand, transmissionType: TransmissionType, consumption: number, features: Array<string>, name: string, rating: number, engineType: EngineType, manufactureYear: number, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } }, images?: Array<{ __typename?: 'StoredFile', fileUrl: string, filePath: string }> | null };
+export type CarFragmentFragment = { __typename?: 'Car', id: string, carBrand: CarBrand, transmissionType: TransmissionType, consumption: number, features: Array<string>, name: string, rating: number, engineType: EngineType, manufactureYear: number, licensePlate: string, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } }, images?: Array<{ __typename?: 'StoredFile', fileUrl: string, filePath: string }> | null };
 
 export type CarTypeFragmentFragment = { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } };
 
@@ -622,6 +643,13 @@ export type CreateBookingMutationVariables = Exact<{
 
 export type CreateBookingMutation = { __typename?: 'Mutation', createBooking: { __typename?: 'CreateBookingOutput', ok: boolean, bookingCode?: string | null, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null } };
 
+export type CreateCarMutationVariables = Exact<{
+  input: CreateCarInput;
+}>;
+
+
+export type CreateCarMutation = { __typename?: 'Mutation', createCar: { __typename?: 'CreateCarOutput', ok: boolean, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null } };
+
 export type ResetPasswordMutationVariables = Exact<{
   input: VerifyForgotPasswordInput;
 }>;
@@ -636,6 +664,13 @@ export type SignupMutationVariables = Exact<{
 
 export type SignupMutation = { __typename?: 'Mutation', signup: { __typename?: 'SignUpOutPut', ok: boolean, error?: { __typename?: 'CustomError', message: string } | null } };
 
+export type UpdateBookingStatusMutationVariables = Exact<{
+  input: UpdateBookingStatusInput;
+}>;
+
+
+export type UpdateBookingStatusMutation = { __typename?: 'Mutation', updateBookingStatus: { __typename?: 'UpdateBookingStatusOutput', ok: boolean, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null } };
+
 export type UpdateUserMutationVariables = Exact<{
   input: UpdateUserInput;
 }>;
@@ -649,6 +684,13 @@ export type BookingDetailQueryVariables = Exact<{
 
 
 export type BookingDetailQuery = { __typename?: 'Query', getBookingDetail: { __typename?: 'GetBookingDetailOutput', ok: boolean, error?: { __typename?: 'CustomError', message: string } | null, booking?: { __typename?: 'Booking', id: string, payment: Payment, status: BookingStatus, rating?: number | null, feedBack?: string | null, bookingCode: string, totalPrice: number, startDate: any, endDate: any, quantity: number, customerName: string, customerPhone: string, note?: string | null, homeDelivery: string, user?: { __typename?: 'User', id: string, name: string, avatar?: { __typename?: 'StoredFile', fileUrl: string, filePath: string } | null } | null, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } } } | null } };
+
+export type CarDetailQueryVariables = Exact<{
+  input: GetCarDetailInput;
+}>;
+
+
+export type CarDetailQuery = { __typename?: 'Query', getCarDetail: { __typename?: 'GetCarDetailOutput', ok: boolean, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null, car?: { __typename?: 'Car', id: string, carBrand: CarBrand, transmissionType: TransmissionType, consumption: number, features: Array<string>, name: string, rating: number, engineType: EngineType, manufactureYear: number, licensePlate: string, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } }, images?: Array<{ __typename?: 'StoredFile', fileUrl: string, filePath: string }> | null } | null } };
 
 export type CheckCarAvailableQueryVariables = Exact<{
   input: CheckCarAvailableInput;
@@ -677,6 +719,13 @@ export type GetCarTypeQueryVariables = Exact<{
 
 
 export type GetCarTypeQuery = { __typename?: 'Query', getCarType: { __typename?: 'GetCarTypeOutput', ok: boolean, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null, carType?: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } } | null } };
+
+export type GetCarsByQueryVariables = Exact<{
+  input: GetCarsByInput;
+}>;
+
+
+export type GetCarsByQuery = { __typename?: 'Query', getCarsBy: { __typename?: 'GetCarsByOutput', ok: boolean, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null, cars?: Array<{ __typename?: 'Car', id: string, carBrand: CarBrand, transmissionType: TransmissionType, consumption: number, features: Array<string>, name: string, rating: number, engineType: EngineType, manufactureYear: number, licensePlate: string, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } }, images?: Array<{ __typename?: 'StoredFile', fileUrl: string, filePath: string }> | null }> | null, pagination?: { __typename?: 'PaginationOutput', totalPages?: number | null, totalResults?: number | null } | null } };
 
 export type LoginQueryVariables = Exact<{
   input: LoginInput;
@@ -722,6 +771,7 @@ export const CarFragmentFragmentDoc = gql`
   rating
   engineType
   manufactureYear
+  licensePlate
 }
     ${CarTypeFragmentFragmentDoc}`;
 export const BookingFragmentFragmentDoc = gql`
@@ -883,6 +933,43 @@ export function useCreateBookingMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateBookingMutationHookResult = ReturnType<typeof useCreateBookingMutation>;
 export type CreateBookingMutationResult = Apollo.MutationResult<CreateBookingMutation>;
 export type CreateBookingMutationOptions = Apollo.BaseMutationOptions<CreateBookingMutation, CreateBookingMutationVariables>;
+export const CreateCarDocument = gql`
+    mutation CreateCar($input: CreateCarInput!) {
+  createCar(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+  }
+}
+    `;
+export type CreateCarMutationFn = Apollo.MutationFunction<CreateCarMutation, CreateCarMutationVariables>;
+
+/**
+ * __useCreateCarMutation__
+ *
+ * To run a mutation, you first call `useCreateCarMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCarMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCarMutation, { data, loading, error }] = useCreateCarMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateCarMutation(baseOptions?: Apollo.MutationHookOptions<CreateCarMutation, CreateCarMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCarMutation, CreateCarMutationVariables>(CreateCarDocument, options);
+      }
+export type CreateCarMutationHookResult = ReturnType<typeof useCreateCarMutation>;
+export type CreateCarMutationResult = Apollo.MutationResult<CreateCarMutation>;
+export type CreateCarMutationOptions = Apollo.BaseMutationOptions<CreateCarMutation, CreateCarMutationVariables>;
 export const ResetPasswordDocument = gql`
     mutation ResetPassword($input: VerifyForgotPasswordInput!) {
   verifyForgotPassword(input: $input) {
@@ -955,6 +1042,43 @@ export function useSignupMutation(baseOptions?: Apollo.MutationHookOptions<Signu
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
 export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
+export const UpdateBookingStatusDocument = gql`
+    mutation UpdateBookingStatus($input: UpdateBookingStatusInput!) {
+  updateBookingStatus(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+  }
+}
+    `;
+export type UpdateBookingStatusMutationFn = Apollo.MutationFunction<UpdateBookingStatusMutation, UpdateBookingStatusMutationVariables>;
+
+/**
+ * __useUpdateBookingStatusMutation__
+ *
+ * To run a mutation, you first call `useUpdateBookingStatusMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateBookingStatusMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateBookingStatusMutation, { data, loading, error }] = useUpdateBookingStatusMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateBookingStatusMutation(baseOptions?: Apollo.MutationHookOptions<UpdateBookingStatusMutation, UpdateBookingStatusMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateBookingStatusMutation, UpdateBookingStatusMutationVariables>(UpdateBookingStatusDocument, options);
+      }
+export type UpdateBookingStatusMutationHookResult = ReturnType<typeof useUpdateBookingStatusMutation>;
+export type UpdateBookingStatusMutationResult = Apollo.MutationResult<UpdateBookingStatusMutation>;
+export type UpdateBookingStatusMutationOptions = Apollo.BaseMutationOptions<UpdateBookingStatusMutation, UpdateBookingStatusMutationVariables>;
 export const UpdateUserDocument = gql`
     mutation UpdateUser($input: UpdateUserInput!) {
   updateUser(input: $input) {
@@ -1033,6 +1157,48 @@ export function useBookingDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type BookingDetailQueryHookResult = ReturnType<typeof useBookingDetailQuery>;
 export type BookingDetailLazyQueryHookResult = ReturnType<typeof useBookingDetailLazyQuery>;
 export type BookingDetailQueryResult = Apollo.QueryResult<BookingDetailQuery, BookingDetailQueryVariables>;
+export const CarDetailDocument = gql`
+    query CarDetail($input: GetCarDetailInput!) {
+  getCarDetail(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+    car {
+      ...CarFragment
+    }
+  }
+}
+    ${CarFragmentFragmentDoc}`;
+
+/**
+ * __useCarDetailQuery__
+ *
+ * To run a query within a React component, call `useCarDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCarDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCarDetailQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCarDetailQuery(baseOptions: Apollo.QueryHookOptions<CarDetailQuery, CarDetailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CarDetailQuery, CarDetailQueryVariables>(CarDetailDocument, options);
+      }
+export function useCarDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CarDetailQuery, CarDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CarDetailQuery, CarDetailQueryVariables>(CarDetailDocument, options);
+        }
+export type CarDetailQueryHookResult = ReturnType<typeof useCarDetailQuery>;
+export type CarDetailLazyQueryHookResult = ReturnType<typeof useCarDetailLazyQuery>;
+export type CarDetailQueryResult = Apollo.QueryResult<CarDetailQuery, CarDetailQueryVariables>;
 export const CheckCarAvailableDocument = gql`
     query CheckCarAvailable($input: CheckCarAvailableInput!) {
   checkCarAvailable(input: $input) {
@@ -1200,6 +1366,52 @@ export function useGetCarTypeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetCarTypeQueryHookResult = ReturnType<typeof useGetCarTypeQuery>;
 export type GetCarTypeLazyQueryHookResult = ReturnType<typeof useGetCarTypeLazyQuery>;
 export type GetCarTypeQueryResult = Apollo.QueryResult<GetCarTypeQuery, GetCarTypeQueryVariables>;
+export const GetCarsByDocument = gql`
+    query GetCarsBy($input: GetCarsByInput!) {
+  getCarsBy(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+    cars {
+      ...CarFragment
+    }
+    pagination {
+      totalPages
+      totalResults
+    }
+  }
+}
+    ${CarFragmentFragmentDoc}`;
+
+/**
+ * __useGetCarsByQuery__
+ *
+ * To run a query within a React component, call `useGetCarsByQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCarsByQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCarsByQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGetCarsByQuery(baseOptions: Apollo.QueryHookOptions<GetCarsByQuery, GetCarsByQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCarsByQuery, GetCarsByQueryVariables>(GetCarsByDocument, options);
+      }
+export function useGetCarsByLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCarsByQuery, GetCarsByQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCarsByQuery, GetCarsByQueryVariables>(GetCarsByDocument, options);
+        }
+export type GetCarsByQueryHookResult = ReturnType<typeof useGetCarsByQuery>;
+export type GetCarsByLazyQueryHookResult = ReturnType<typeof useGetCarsByLazyQuery>;
+export type GetCarsByQueryResult = Apollo.QueryResult<GetCarsByQuery, GetCarsByQueryVariables>;
 export const LoginDocument = gql`
     query Login($input: LoginInput!) {
   login(input: $input) {

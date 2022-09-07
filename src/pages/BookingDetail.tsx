@@ -4,17 +4,18 @@ import { range } from "lodash";
 import { FC, Fragment, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import {
+  BookingStatusBackEnd,
+  CarTypeEnumBackEnd,
+} from "../common/enumConstants";
 import LoadingButton from "../components/form/LoadingButton";
 import Loading from "../components/Loading";
 import { PaymentBackEnd } from "../components/RentingPage/Step2";
 import {
-  BookingStatusBackEnd,
-  CarTypeEnumBackEnd,
-} from "../constants/enumConstants";
-import {
   BookingStatus,
   useBookingDetailQuery,
   useBookingFeedbackMutation,
+  useUpdateBookingStatusMutation,
 } from "../graphql/generated/schema";
 import { getApolloErrorMessage } from "../utils/getApolloErrorMessage";
 
@@ -34,7 +35,7 @@ const InforRow: FC<RowProps> = ({ title, value }) => {
   );
 };
 type Props = {};
-export const BookingDetail: FC<Props> = () => {
+export const AdminBookingDetail: FC<Props> = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [feedbackState, setFeedbackState] = useState<{
@@ -83,6 +84,27 @@ export const BookingDetail: FC<Props> = () => {
       toast.error("Lỗi xảy ra, thử lại sau");
     },
   });
+  const [updateBooking, { loading: updateStatusLoading }] =
+    useUpdateBookingStatusMutation({
+      variables: {
+        input: {
+          bookingId: +booking?.id!,
+          status: BookingStatus.Cancel,
+        },
+      },
+      onCompleted(data) {
+        const { updateBookingStatus } = data;
+        if (updateBookingStatus.error) {
+          toast.error(updateBookingStatus.error.message);
+          return;
+        }
+        toast.success("Đã huỷ đơn");
+      },
+      onError(error) {
+        toast.error("Lỗi xảy ra, thử lại sau");
+      },
+      refetchQueries: ["BookingDetail"],
+    });
   const sendFeedBack = () => {
     if (!booking) return;
     feedback({
@@ -110,10 +132,25 @@ export const BookingDetail: FC<Props> = () => {
               <InforRow title={"Họ tên"} value={booking.customerName} />
               <InforRow title={"Số điện thoại"} value={booking.customerPhone} />
               <InforRow title={"Mã đơn thuê"} value={booking.bookingCode} />
-              <InforRow
-                title={"Trạng thái"}
-                value={BookingStatusBackEnd[booking.status]}
-              />
+              <div className="py-3 sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                <dt className="text-sm font-medium text-gray-500">
+                  {"Trạng thái"}
+                </dt>
+                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex flex-col">
+                  <h1>{BookingStatusBackEnd[booking.status]}</h1>
+                  {(booking.status === BookingStatus.Deposited ||
+                    booking.status === BookingStatus.NotDeposite) && (
+                    <div className="flex flex-end w-full mt-4">
+                      <LoadingButton
+                        className="w-fit"
+                        loading={updateStatusLoading}
+                        text="Huỷ đơn"
+                        onClick={() => updateBooking()}
+                      />
+                    </div>
+                  )}
+                </dd>
+              </div>
               <InforRow
                 title={"Địa chỉ nhận xe"}
                 value={booking.homeDelivery}

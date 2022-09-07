@@ -1,6 +1,7 @@
 import { KeyIcon, UserCircleIcon } from "@heroicons/react/outline";
 import { range } from "lodash";
 import { useState } from "react";
+import { classNames } from "../common/utilFunctions";
 import ChangePassword from "../components/SettingsPage/ChangePassword";
 import Profile from "../components/SettingsPage/Profile";
 
@@ -16,9 +17,7 @@ const subNavigation = [
     element: <ChangePassword key={1} />,
   },
 ];
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
+
 const tempState = range(subNavigation.length).map(() => false);
 tempState[0] = true;
 export default function Settings() {

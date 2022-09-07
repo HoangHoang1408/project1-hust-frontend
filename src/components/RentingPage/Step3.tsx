@@ -1,8 +1,8 @@
 import { FC, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import { CarTypeEnumBackEnd } from "../../constants/enumConstants";
+import { CarTypeEnumBackEnd } from "../../common/enumConstants";
 import { GetCarTypeQuery } from "../../graphql/generated/schema";
-import { countRentingDay, RentingState } from "../../pages/RentingPage";
+import { countRentingDay, RentingState } from "../../pages/BookingPage";
 import { getFormatDate } from "./Step2";
 
 type Props = {

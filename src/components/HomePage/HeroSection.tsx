@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
-import { CarTypeEnumBackEnd } from "../../constants/enumConstants";
+import { CarTypeEnumBackEnd } from "../../common/enumConstants";
 import {
   CarTypeEnum,
   useCheckCarAvailableLazyQuery,

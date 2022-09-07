@@ -6,14 +6,14 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { userVar } from "../../apollo/reactiveVar/loginStatus";
-import { CarTypeEnumBackEnd } from "../../constants/enumConstants";
+import { CarTypeEnumBackEnd } from "../../common/enumConstants";
 import {
   GetCarTypeQuery,
   Payment,
   useCreateBookingMutation,
 } from "../../graphql/generated/schema";
 import { loadingWhite } from "../../images";
-import { countRentingDay, RentingState } from "../../pages/RentingPage";
+import { countRentingDay, RentingState } from "../../pages/BookingPage";
 import { getApolloErrorMessage } from "../../utils/getApolloErrorMessage";
 import { getDate } from "../HomePage/HeroSection";
 export enum PaymentBackEnd {

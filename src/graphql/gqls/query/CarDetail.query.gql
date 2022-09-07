@@ -1,0 +1,12 @@
+query CarDetail($input: GetCarDetailInput!) {
+  getCarDetail(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+    car {
+      ...CarFragment
+    }
+  }
+}

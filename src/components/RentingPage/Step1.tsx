@@ -3,13 +3,13 @@ import { toast } from "react-toastify";
 import {
   CarTypeEnumBackEnd,
   PaymentBackEnd,
-} from "../../constants/enumConstants";
+} from "../../common/enumConstants";
 import {
   GetCarTypeQuery,
   useCheckCarAvailableLazyQuery,
 } from "../../graphql/generated/schema";
 import { loadingWhite } from "../../images";
-import { countRentingDay, RentingState } from "../../pages/RentingPage";
+import { countRentingDay, RentingState } from "../../pages/BookingPage";
 import { getDate } from "../HomePage/HeroSection";
 import Loading from "../Loading";
 import TimeInput from "./TimeInput";

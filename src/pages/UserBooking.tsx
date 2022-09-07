@@ -7,13 +7,13 @@ import PaginationNav from "../components/PaginationNav";
 import {
   BookingStatusBackEnd,
   CarTypeEnumBackEnd,
-} from "../constants/enumConstants";
+} from "../common/enumConstants";
 import {
   CarTypeEnum,
   useGetBookingByLazyQuery,
 } from "../graphql/generated/schema";
 import { getApolloErrorMessage } from "../utils/getApolloErrorMessage";
-type FormInput = {
+type ByState = {
   carType?: CarTypeEnum | "all";
   startDate?: Date;
   endDate?: Date;
@@ -39,7 +39,7 @@ const UserRenting: FC<Props> = (props) => {
         toast.error("Lôi xảy ra, thử lại sau");
       },
     });
-  const [byState, setByState] = useState<FormInput>({
+  const [byState, setByState] = useState<ByState>({
     carType: "all",
   });
   const [page, setPage] = useState<number>(1);
@@ -137,7 +137,7 @@ const UserRenting: FC<Props> = (props) => {
     <Fragment>
       {loading && <Loading />}
       {!loading && bookingData && (
-        <div className="px-4 sm:px-6 lg:px-8 mt-8">
+        <div className="px-4 sm:px-6 lg:px-8 my-8">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
               <h1 className="text-xl font-semibold text-gray-900">

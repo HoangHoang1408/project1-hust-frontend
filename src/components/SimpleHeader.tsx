@@ -1,14 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Disclosure } from "@headlessui/react";
 import { Link } from "react-router-dom";
-
-// @ts-ignore
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
 type Props = {};
-
 function SimpleHeader({}: Props) {
   return (
     <Disclosure as="nav" className="bg-white shadow">

@@ -2,6 +2,7 @@
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { Fragment } from "react";
+import { classNames } from "../../../common/utilFunctions";
 
 const solutions = [
   {
@@ -33,10 +34,6 @@ const solutions = [
     href: "#",
   },
 ];
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function FlyOut() {
   return (
