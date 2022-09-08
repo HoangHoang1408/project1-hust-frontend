@@ -2,11 +2,15 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTable } from "react-table";
 import { toast } from "react-toastify";
-import { CarTypeEnumBackEnd } from "../../common/enumConstants";
+import {
+  CarBrandBackEnd,
+  CarTypeEnumBackEnd,
+} from "../../common/enumConstants";
 import TextSearchInput from "../../components/form/TextSearchInput";
 import Loading from "../../components/Loading";
 import PaginationNav from "../../components/PaginationNav";
 import {
+  CarBrand,
   CarTypeEnum,
   useGetCarsByLazyQuery,
 } from "../../graphql/generated/schema";
@@ -14,12 +18,15 @@ import { getApolloErrorMessage } from "../../utils/getApolloErrorMessage";
 type Props = {};
 type ByState = {
   carType?: CarTypeEnum | "all";
-  textSearch?: string;
+  name?: string;
+  licensePlate?: string;
+  carBrand?: CarBrand | "all";
 };
 const CarManager = (props: Props) => {
   const navigate = useNavigate();
   const [byState, setByState] = useState<ByState>({
     carType: "all",
+    carBrand: "all",
   });
   const [page, setPage] = useState<number>(1);
   const [getCars, { data: carsData, loading }] = useGetCarsByLazyQuery({
@@ -40,12 +47,16 @@ const CarManager = (props: Props) => {
     },
   });
   useEffect(() => {
-    let { carType, textSearch } = byState;
+    let { carType, name, carBrand, licensePlate } = byState;
     if (carType === "all") carType = undefined;
+    if (carBrand === "all") carBrand = undefined;
     getCars({
       variables: {
         input: {
           carType,
+          carBrand,
+          name,
+          licensePlate,
           pagination: {
             page,
             resultsPerPage: 15,
@@ -94,7 +105,12 @@ const CarManager = (props: Props) => {
               >
                 Chi tiết
               </button>
-              <button className="font-semibold text-indigo-500 cursor-pointer hover:text-indigo-700 p-1 hover:bg-indigo-300 text-left rounded transition w-fit">
+              <button
+                onClick={() => {
+                  navigate(`/admin/cars/update/${data["id"]}`);
+                }}
+                className="font-semibold text-indigo-500 cursor-pointer hover:text-indigo-700 p-1 hover:bg-indigo-300 text-left rounded transition w-fit"
+              >
                 Cập nhật
               </button>
               <button className="font-semibold text-indigo-500 cursor-pointer hover:text-indigo-700 p-1 hover:bg-indigo-300 text-left rounded transition w-fit">
@@ -122,9 +138,17 @@ const CarManager = (props: Props) => {
           </div>
           <div className="sm:ml-16 flex items-end h-full space-x-3">
             <TextSearchInput
-              labelText="Mã thuê"
-              setText={(v) => setByState((pre) => ({ ...pre, textSearch: v }))}
-              text={byState.textSearch}
+              labelText="Tên xe"
+              setText={(v) => setByState((pre) => ({ ...pre, name: v }))}
+              text={byState.name}
+              className="py-1"
+            />
+            <TextSearchInput
+              labelText="Biển số"
+              setText={(v) =>
+                setByState((pre) => ({ ...pre, licensePlate: v }))
+              }
+              text={byState.licensePlate}
               className="py-1"
             />
             <div className="flex flex-col space-y-1">
@@ -145,33 +169,30 @@ const CarManager = (props: Props) => {
                 ))}
               </select>
             </div>
+            <div className="flex flex-col space-y-1">
+              <h1 className="text-gray-700 font-medium">Hãng xe</h1>
+              <select
+                onChange={(e) =>
+                  //@ts-ignore
+                  setByState((pre) => ({ ...pre, carBrand: e.target.value }))
+                }
+                value={byState.carBrand}
+                className="appearance-none block w-full px-2 py-1 h-full border border-gray-300 shadow-sm rounded-none placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm font-semibold"
+              >
+                <option value="all">Tất cả</option>
+                {Object.values(CarBrand).map((t, i) => (
+                  <option key={i} value={t}>
+                    {CarBrandBackEnd[t]}
+                  </option>
+                ))}
+              </select>
+            </div>
             <button
               onClick={() => navigate("/admin/cars/create")}
               className="w-fit h-fit flex items-center justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
             >
               Thêm xe
             </button>
-            {/* <div className="flex flex-col space-y-1">
-              <h1 className="text-gray-700 font-medium">Trạng thái</h1>
-              <select
-                onChange={(e) =>
-                  //@ts-ignore
-                  setByState((pre) => ({
-                    ...pre,
-                    bookingStatus: e.target.value,
-                  }))
-                }
-                value={byState.bookingStatus}
-                className="appearance-none block w-full px-2 h-full border border-gray-300 shadow-sm rounded-none placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm font-semibold"
-              >
-                <option value="all">Tất cả</option>
-                {Object.values(BookingStatus).map((t, i) => (
-                  <option key={i} value={t}>
-                    {BookingStatusBackEnd[t]}
-                  </option>
-                ))}
-              </select>
-            </div> */}
           </div>
         </div>
         {/* Projects table (small breakpoint and up) */}

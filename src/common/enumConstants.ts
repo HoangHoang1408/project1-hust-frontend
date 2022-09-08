@@ -26,3 +26,13 @@ export enum EngineTypeBackEnd {
   ELECTRIC = "Điện",
   HIBRID = "Hỗn hợp",
 }
+export enum CarBrandBackEnd {
+  VINFAST = "Vinfast",
+  TOYOTA = "Toyota",
+  HUYNDAI = "Huyndai",
+  FORD = "Ford",
+  HONDA = "Honda",
+  NISSAN = "Nissan",
+  SUZUKI = "Suzuki",
+  VOLVO = "Volvo",
+}

@@ -90,7 +90,7 @@ export type Car = {
   id: Scalars['ID'];
   images?: Maybe<Array<StoredFile>>;
   licensePlate: Scalars['String'];
-  manufactureYear: Scalars['Float'];
+  manufactureYear: Scalars['Int'];
   name: Scalars['String'];
   rating: Scalars['Float'];
   transmissionType: TransmissionType;
@@ -118,7 +118,7 @@ export type CarInputType = {
   features: Array<Scalars['String']>;
   images?: InputMaybe<Array<StoredFileInputType>>;
   licensePlate: Scalars['String'];
-  manufactureYear: Scalars['Float'];
+  manufactureYear: Scalars['Int'];
   name: Scalars['String'];
   rating: Scalars['Float'];
   transmissionType: TransmissionType;
@@ -212,7 +212,7 @@ export type CreateCarInput = {
   features: Array<Scalars['String']>;
   images?: InputMaybe<Array<StoredFileInputType>>;
   licensePlate: Scalars['String'];
-  manufactureYear: Scalars['Float'];
+  manufactureYear: Scalars['Int'];
   name: Scalars['String'];
   transmissionType: TransmissionType;
 };
@@ -229,11 +229,30 @@ export type CustomError = {
   message: Scalars['String'];
 };
 
+export type DayData = {
+  __typename?: 'DayData';
+  day: Scalars['DateTime'];
+  status?: Maybe<BookingStatus>;
+};
+
 export enum EngineType {
   Electric = 'ELECTRIC',
   Gasoline = 'GASOLINE',
   Hibrid = 'HIBRID'
 }
+
+export type ForecastTableInput = {
+  carType: CarTypeEnum;
+  endDate: Scalars['DateTime'];
+  startDate: Scalars['DateTime'];
+};
+
+export type ForecastTableOutput = {
+  __typename?: 'ForecastTableOutput';
+  error?: Maybe<CustomError>;
+  ok: Scalars['Boolean'];
+  tableData?: Maybe<Array<TableRowData>>;
+};
 
 export type ForgotPasswordInput = {
   email: Scalars['String'];
@@ -296,7 +315,10 @@ export type GetCarTypeOutput = {
 };
 
 export type GetCarsByInput = {
+  carBrand?: InputMaybe<CarBrand>;
   carType?: InputMaybe<CarTypeEnum>;
+  licensePlate?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
   pagination: PaginationInput;
 };
 
@@ -313,6 +335,21 @@ export type GetDetailUserOutput = {
   error?: Maybe<CustomError>;
   ok: Scalars['Boolean'];
   user: User;
+};
+
+export type GetUserByInput = {
+  name?: InputMaybe<Scalars['String']>;
+  pagination: PaginationInput;
+  phoneNumber?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<UserRole>;
+};
+
+export type GetUserByOutput = {
+  __typename?: 'GetUserByOutput';
+  error?: Maybe<CustomError>;
+  ok: Scalars['Boolean'];
+  pagination?: Maybe<PaginationOutput>;
+  users?: Maybe<Array<User>>;
 };
 
 export type LoginInput = {
@@ -336,6 +373,7 @@ export type Mutation = {
   createCar: CreateCarOutput;
   signup: SignUpOutPut;
   updateBookingStatus: UpdateBookingStatusOutput;
+  updateCar: UpdateCarOutput;
   updateUser: UpdateUserOutput;
   verifyForgotPassword: VerifyForgotPasswordOutput;
 };
@@ -368,6 +406,11 @@ export type MutationSignupArgs = {
 
 export type MutationUpdateBookingStatusArgs = {
   input: UpdateBookingStatusInput;
+};
+
+
+export type MutationUpdateCarArgs = {
+  input: UpdateCarInput;
 };
 
 
@@ -424,6 +467,7 @@ export type ProcedureInputType = {
 export type Query = {
   __typename?: 'Query';
   checkCarAvailable: CheckCarAvailableOutput;
+  forecastTable: ForecastTableOutput;
   forgotPassword: ForgotPasswordOutput;
   getBookingDetail: GetBookingDetailOutput;
   getBookingsBy: GetBookingsByOutput;
@@ -431,6 +475,7 @@ export type Query = {
   getCarType: GetCarTypeOutput;
   getCarsBy: GetCarsByOutput;
   getDetailUser: GetDetailUserOutput;
+  getUserBy: GetUserByOutput;
   login: LoginOutPut;
   newAccessToken: NewAccessTokenOutput;
   verifyEmail: VerifyEmailOutput;
@@ -439,6 +484,11 @@ export type Query = {
 
 export type QueryCheckCarAvailableArgs = {
   input: CheckCarAvailableInput;
+};
+
+
+export type QueryForecastTableArgs = {
+  input: ForecastTableInput;
 };
 
 
@@ -469,6 +519,11 @@ export type QueryGetCarTypeArgs = {
 
 export type QueryGetCarsByArgs = {
   input: GetCarsByInput;
+};
+
+
+export type QueryGetUserByArgs = {
+  input: GetUserByInput;
 };
 
 
@@ -519,6 +574,13 @@ export type StoredFileInputType = {
   fileUrl: Scalars['String'];
 };
 
+export type TableRowData = {
+  __typename?: 'TableRowData';
+  car: Car;
+  dayDatas: Array<DayData>;
+  rowSumary: Scalars['String'];
+};
+
 export enum TransmissionType {
   AutomaticTransmission = 'AUTOMATIC_TRANSMISSION',
   ManualTransmission = 'MANUAL_TRANSMISSION'
@@ -531,6 +593,27 @@ export type UpdateBookingStatusInput = {
 
 export type UpdateBookingStatusOutput = {
   __typename?: 'UpdateBookingStatusOutput';
+  error?: Maybe<CustomError>;
+  ok: Scalars['Boolean'];
+};
+
+export type UpdateCarInput = {
+  carBrand?: InputMaybe<CarBrand>;
+  carId: Scalars['ID'];
+  carType?: InputMaybe<CarTypeEnum>;
+  consumption?: InputMaybe<Scalars['Float']>;
+  engineType?: InputMaybe<EngineType>;
+  features?: InputMaybe<Array<Scalars['String']>>;
+  images?: InputMaybe<Array<StoredFileInputType>>;
+  licensePlate?: InputMaybe<Scalars['String']>;
+  manufactureYear?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
+  transmissionType?: InputMaybe<TransmissionType>;
+  vehicleStatus?: InputMaybe<VehicleStatusInputType>;
+};
+
+export type UpdateCarOutput = {
+  __typename?: 'UpdateCarOutput';
   error?: Maybe<CustomError>;
   ok: Scalars['Boolean'];
 };
@@ -671,6 +754,13 @@ export type UpdateBookingStatusMutationVariables = Exact<{
 
 export type UpdateBookingStatusMutation = { __typename?: 'Mutation', updateBookingStatus: { __typename?: 'UpdateBookingStatusOutput', ok: boolean, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null } };
 
+export type UpdateCarMutationVariables = Exact<{
+  input: UpdateCarInput;
+}>;
+
+
+export type UpdateCarMutation = { __typename?: 'Mutation', updateCar: { __typename?: 'UpdateCarOutput', ok: boolean, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null } };
+
 export type UpdateUserMutationVariables = Exact<{
   input: UpdateUserInput;
 }>;
@@ -699,6 +789,13 @@ export type CheckCarAvailableQueryVariables = Exact<{
 
 export type CheckCarAvailableQuery = { __typename?: 'Query', checkCarAvailable: { __typename?: 'CheckCarAvailableOutput', ok: boolean, available?: boolean | null, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null } };
 
+export type ForecastTableQueryVariables = Exact<{
+  input: ForecastTableInput;
+}>;
+
+
+export type ForecastTableQuery = { __typename?: 'Query', forecastTable: { __typename?: 'ForecastTableOutput', ok: boolean, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null, tableData?: Array<{ __typename?: 'TableRowData', rowSumary: string, car: { __typename?: 'Car', id: string, name: string, licensePlate: string }, dayDatas: Array<{ __typename?: 'DayData', status?: BookingStatus | null, day: any }> }> | null } };
+
 export type ForgotPasswordQueryVariables = Exact<{
   input: ForgotPasswordInput;
 }>;
@@ -726,6 +823,13 @@ export type GetCarsByQueryVariables = Exact<{
 
 
 export type GetCarsByQuery = { __typename?: 'Query', getCarsBy: { __typename?: 'GetCarsByOutput', ok: boolean, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null, cars?: Array<{ __typename?: 'Car', id: string, carBrand: CarBrand, transmissionType: TransmissionType, consumption: number, features: Array<string>, name: string, rating: number, engineType: EngineType, manufactureYear: number, licensePlate: string, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } }, images?: Array<{ __typename?: 'StoredFile', fileUrl: string, filePath: string }> | null }> | null, pagination?: { __typename?: 'PaginationOutput', totalPages?: number | null, totalResults?: number | null } | null } };
+
+export type GetUserByQueryVariables = Exact<{
+  input: GetUserByInput;
+}>;
+
+
+export type GetUserByQuery = { __typename?: 'Query', getUserBy: { __typename?: 'GetUserByOutput', ok: boolean, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null, users?: Array<{ __typename?: 'User', id: string, email: string, verified: boolean, name: string, role: UserRole, address?: string | null, phoneNumber?: string | null, avatar?: { __typename?: 'StoredFile', fileUrl: string, filePath: string } | null }> | null, pagination?: { __typename?: 'PaginationOutput', totalPages?: number | null, totalResults?: number | null } | null } };
 
 export type LoginQueryVariables = Exact<{
   input: LoginInput;
@@ -1079,6 +1183,43 @@ export function useUpdateBookingStatusMutation(baseOptions?: Apollo.MutationHook
 export type UpdateBookingStatusMutationHookResult = ReturnType<typeof useUpdateBookingStatusMutation>;
 export type UpdateBookingStatusMutationResult = Apollo.MutationResult<UpdateBookingStatusMutation>;
 export type UpdateBookingStatusMutationOptions = Apollo.BaseMutationOptions<UpdateBookingStatusMutation, UpdateBookingStatusMutationVariables>;
+export const UpdateCarDocument = gql`
+    mutation UpdateCar($input: UpdateCarInput!) {
+  updateCar(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+  }
+}
+    `;
+export type UpdateCarMutationFn = Apollo.MutationFunction<UpdateCarMutation, UpdateCarMutationVariables>;
+
+/**
+ * __useUpdateCarMutation__
+ *
+ * To run a mutation, you first call `useUpdateCarMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCarMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCarMutation, { data, loading, error }] = useUpdateCarMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateCarMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCarMutation, UpdateCarMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCarMutation, UpdateCarMutationVariables>(UpdateCarDocument, options);
+      }
+export type UpdateCarMutationHookResult = ReturnType<typeof useUpdateCarMutation>;
+export type UpdateCarMutationResult = Apollo.MutationResult<UpdateCarMutation>;
+export type UpdateCarMutationOptions = Apollo.BaseMutationOptions<UpdateCarMutation, UpdateCarMutationVariables>;
 export const UpdateUserDocument = gql`
     mutation UpdateUser($input: UpdateUserInput!) {
   updateUser(input: $input) {
@@ -1239,6 +1380,57 @@ export function useCheckCarAvailableLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type CheckCarAvailableQueryHookResult = ReturnType<typeof useCheckCarAvailableQuery>;
 export type CheckCarAvailableLazyQueryHookResult = ReturnType<typeof useCheckCarAvailableLazyQuery>;
 export type CheckCarAvailableQueryResult = Apollo.QueryResult<CheckCarAvailableQuery, CheckCarAvailableQueryVariables>;
+export const ForecastTableDocument = gql`
+    query ForecastTable($input: ForecastTableInput!) {
+  forecastTable(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+    tableData {
+      car {
+        id
+        name
+        licensePlate
+      }
+      dayDatas {
+        status
+        day
+      }
+      rowSumary
+    }
+  }
+}
+    `;
+
+/**
+ * __useForecastTableQuery__
+ *
+ * To run a query within a React component, call `useForecastTableQuery` and pass it any options that fit your needs.
+ * When your component renders, `useForecastTableQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useForecastTableQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useForecastTableQuery(baseOptions: Apollo.QueryHookOptions<ForecastTableQuery, ForecastTableQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ForecastTableQuery, ForecastTableQueryVariables>(ForecastTableDocument, options);
+      }
+export function useForecastTableLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ForecastTableQuery, ForecastTableQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ForecastTableQuery, ForecastTableQueryVariables>(ForecastTableDocument, options);
+        }
+export type ForecastTableQueryHookResult = ReturnType<typeof useForecastTableQuery>;
+export type ForecastTableLazyQueryHookResult = ReturnType<typeof useForecastTableLazyQuery>;
+export type ForecastTableQueryResult = Apollo.QueryResult<ForecastTableQuery, ForecastTableQueryVariables>;
 export const ForgotPasswordDocument = gql`
     query ForgotPassword($input: ForgotPasswordInput!) {
   forgotPassword(input: $input) {
@@ -1412,6 +1604,62 @@ export function useGetCarsByLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetCarsByQueryHookResult = ReturnType<typeof useGetCarsByQuery>;
 export type GetCarsByLazyQueryHookResult = ReturnType<typeof useGetCarsByLazyQuery>;
 export type GetCarsByQueryResult = Apollo.QueryResult<GetCarsByQuery, GetCarsByQueryVariables>;
+export const GetUserByDocument = gql`
+    query GetUserBy($input: GetUserByInput!) {
+  getUserBy(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+    users {
+      id
+      avatar {
+        fileUrl
+        filePath
+      }
+      email
+      verified
+      name
+      role
+      address
+      phoneNumber
+    }
+    pagination {
+      totalPages
+      totalResults
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetUserByQuery__
+ *
+ * To run a query within a React component, call `useGetUserByQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserByQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserByQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGetUserByQuery(baseOptions: Apollo.QueryHookOptions<GetUserByQuery, GetUserByQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserByQuery, GetUserByQueryVariables>(GetUserByDocument, options);
+      }
+export function useGetUserByLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserByQuery, GetUserByQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserByQuery, GetUserByQueryVariables>(GetUserByDocument, options);
+        }
+export type GetUserByQueryHookResult = ReturnType<typeof useGetUserByQuery>;
+export type GetUserByLazyQueryHookResult = ReturnType<typeof useGetUserByLazyQuery>;
+export type GetUserByQueryResult = Apollo.QueryResult<GetUserByQuery, GetUserByQueryVariables>;
 export const LoginDocument = gql`
     query Login($input: LoginInput!) {
   login(input: $input) {

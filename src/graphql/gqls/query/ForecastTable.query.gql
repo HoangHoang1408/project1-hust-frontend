@@ -1,0 +1,21 @@
+query ForecastTable($input: ForecastTableInput!) {
+  forecastTable(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+    tableData {
+      car {
+        id
+        name
+        licensePlate
+      }
+      dayDatas {
+        status
+        day
+      }
+      rowSumary
+    }
+  }
+}

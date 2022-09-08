@@ -1,0 +1,9 @@
+mutation UpdateCar($input: UpdateCarInput!) {
+  updateCar(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+  }
+}

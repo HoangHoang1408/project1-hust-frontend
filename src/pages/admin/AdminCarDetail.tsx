@@ -8,6 +8,7 @@ import {
 import { range } from "lodash";
 import { FC, Fragment } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   CarTypeEnumBackEnd,
   EngineTypeBackEnd,
@@ -15,6 +16,7 @@ import {
 } from "../../common/enumConstants";
 import Loading from "../../components/Loading";
 import { useCarDetailQuery } from "../../graphql/generated/schema";
+import { getApolloErrorMessage } from "../../utils/getApolloErrorMessage";
 
 const product = {
   name: "Application UI Icon Pack",
@@ -128,8 +130,21 @@ const AdminCarDetail: FC<Props> = () => {
         carId: params.id!,
       },
     },
-    onCompleted(data) {},
-    onError(err) {},
+    onCompleted(data) {
+      const { getCarDetail } = data;
+      if (getCarDetail.error) {
+        toast.error(getCarDetail.error.message);
+        return;
+      }
+    },
+    onError(err) {
+      const msg = getApolloErrorMessage(err);
+      if (msg) {
+        toast.error(msg);
+        return;
+      }
+      toast.error("Lỗi xảy ra, thử lại sau");
+    },
   });
   const car = data?.getCarDetail.car;
   return (
@@ -143,10 +158,12 @@ const AdminCarDetail: FC<Props> = () => {
               {/* Product image */}
               <div className="lg:row-end-1 lg:col-span-4">
                 <div className="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden">
-                  <img
-                    src={product.imageSrc}
-                    className="object-center object-cover"
-                  />
+                  {car.images && (
+                    <img
+                      src={car.images[0].fileUrl}
+                      className="object-center object-cover"
+                    />
+                  )}
                 </div>
               </div>
               {/* Product details */}

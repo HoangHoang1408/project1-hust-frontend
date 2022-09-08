@@ -254,11 +254,12 @@ const BookingManager = (props: Props) => {
               Quản lí các đơn thuê
             </h1>
           </div>
-          <div className="mt-4 sm:mt-0 sm:ml-16 flex space-x-3">
+          <div className="mt-4 sm:mt-0 sm:ml-16 flex space-x-3 items-end">
             <TextSearchInput
               labelText="Mã thuê"
               setText={(v) => setByState((pre) => ({ ...pre, textSearch: v }))}
               text={byState.textSearch}
+              className="py-1"
             />
             <div className="flex flex-col space-y-1">
               <h1 className="text-gray-700 font-medium">Loại xe</h1>
@@ -268,7 +269,7 @@ const BookingManager = (props: Props) => {
                   setByState((pre) => ({ ...pre, carType: e.target.value }))
                 }
                 value={byState.carType}
-                className="appearance-none block w-full px-2 h-full border border-gray-300 shadow-sm rounded-none placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm font-semibold"
+                className="appearance-none block w-full px-2 h-full border border-gray-300 shadow-sm rounded-none placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm font-semibold py-1"
               >
                 <option value="all">Tất cả</option>
                 {Object.values(CarTypeEnum).map((t, i) => (
@@ -289,7 +290,7 @@ const BookingManager = (props: Props) => {
                   }))
                 }
                 value={byState.bookingStatus}
-                className="appearance-none block w-full px-2 h-full border border-gray-300 shadow-sm rounded-none placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm font-semibold"
+                className="appearance-none block w-full px-2 h-full border border-gray-300 shadow-sm rounded-none placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm font-semibold py-1"
               >
                 <option value="all">Tất cả</option>
                 {Object.values(BookingStatus).map((t, i) => (
@@ -337,6 +338,12 @@ const BookingManager = (props: Props) => {
                 className="appearance-none block w-full px-2 h-full border border-gray-300 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               ></input>
             </div>
+            <button
+              onClick={() => navigate("/admin/bookings/forecast")}
+              className="w-fit h-fit flex items-center justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
+            >
+              Forecast
+            </button>
           </div>
         </div>
         {/* Projects table (small breakpoint and up) */}
