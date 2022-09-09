@@ -53,6 +53,7 @@ const BookingManager = (props: Props) => {
         }
         toast.error("Lôi xảy ra, thử lại sau");
       },
+      fetchPolicy: "network-only",
     });
   const [byState, setByState] = useState<ByState>({
     carType: "all",

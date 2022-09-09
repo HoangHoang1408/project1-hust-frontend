@@ -43,11 +43,11 @@ const ForecastTable: FC<Props> = (props) => {
         }
         toast.error("Lôi xảy ra, thử lại sau");
       },
+      fetchPolicy: "network-only",
     }
   );
   useEffect(() => {
     let { carType, startDate, endDate } = byState;
-    console.log(byState);
     if (!carType) return;
     if (!(startDate && endDate)) return;
     foreCast({
@@ -137,7 +137,6 @@ const ForecastTable: FC<Props> = (props) => {
                 value={byState.carType}
                 className="appearance-none block w-full px-2 py-1 h-full border border-gray-300 shadow-sm rounded-none placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm font-semibold"
               >
-                <option value="all">Tất cả</option>
                 {Object.values(CarTypeEnum).map((t, i) => (
                   <option key={i} value={t}>
                     {CarTypeEnumBackEnd[t]}

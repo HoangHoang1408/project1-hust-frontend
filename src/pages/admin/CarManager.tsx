@@ -45,6 +45,7 @@ const CarManager = (props: Props) => {
       }
       toast.error("Lôi xảy ra, thử lại sau");
     },
+    fetchPolicy: "network-only",
   });
   useEffect(() => {
     let { carType, name, carBrand, licensePlate } = byState;
