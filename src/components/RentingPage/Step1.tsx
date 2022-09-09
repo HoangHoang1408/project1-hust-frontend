@@ -1,9 +1,6 @@
 import { Dispatch, FC, Fragment, SetStateAction, useEffect } from "react";
 import { toast } from "react-toastify";
-import {
-  CarTypeEnumBackEnd,
-  PaymentBackEnd,
-} from "../../common/enumConstants";
+import { CarTypeEnumBackEnd, PaymentBackEnd } from "../../common/enumConstants";
 import {
   GetCarTypeQuery,
   useCheckCarAvailableLazyQuery,
@@ -142,7 +139,7 @@ const Step1: FC<Props> = ({
                           Tối đa {carType.maxDistance}km/ngày
                         </h1>
                         <h1 className="text-gray-500 font-semibold ">
-                          Phụ trội {carType.additionalDistancePrice}.000đ/km
+                          Phụ trội {carType.additionalDistancePrice}đ/km
                         </h1>
                       </div>
                     </div>
@@ -189,8 +186,8 @@ const Step1: FC<Props> = ({
                 <h1>
                   Phí giao nhận xe tại địa chỉ khách hàng sẽ được tính theo:
                 </h1>
-                <h1>- Dưới 5 km: 50.000/lượt</h1>
-                <h1>- Trên 5km : 10.000vnđ/Km</h1>
+                <h1>- Dưới 5 km: 50/lượt</h1>
+                <h1>- Trên 5km : 10vnđ/Km</h1>
               </div>
             </div>
             <div className="bg-white px-4 py-5 shadow sm:rounded-lg sm:px-6 flex flex-col space-y-3">
@@ -284,7 +281,7 @@ const Step1: FC<Props> = ({
               <div className="mt-4 flex flex-col space-y-2">
                 <div className="flex justify-between">
                   <h1>Đơn giá</h1>
-                  <h1>{carType.price}000 đ</h1>
+                  <h1>{carType.price} đ</h1>
                 </div>
                 <div className="flex justify-between">
                   <h1>Thời gian thuê</h1>
@@ -298,8 +295,7 @@ const Step1: FC<Props> = ({
                 <div className="flex justify-between">
                   <h1>Tổng</h1>
                   <h1>
-                    {carType.price * rentingState.quantity! * rentingDays}
-                    000 đ
+                    {carType.price * rentingState.quantity! * rentingDays}đ
                   </h1>
                 </div>
               </div>

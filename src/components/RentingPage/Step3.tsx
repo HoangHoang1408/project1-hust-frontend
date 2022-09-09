@@ -181,8 +181,7 @@ const Step3: FC<Props> = ({ rentingState, carTypeData }) => {
                 <div className="grid grid-cols-3 gap-x-1">
                   <h1 className="col-span-1">Giá trị xe</h1>
                   <h1 className="col-span-2">
-                    {carType.price * rentingState.quantity! * rentingDays}
-                    000 đ
+                    {carType.price * rentingState.quantity! * rentingDays}đ
                   </h1>
                 </div>
               </div>

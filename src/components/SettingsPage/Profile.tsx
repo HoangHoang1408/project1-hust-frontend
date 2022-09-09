@@ -77,7 +77,7 @@ const Profile: FC<Props> = (props) => {
 
   const submitHandler = async () => {
     const { name, address, phoneNumber } = getValues();
-    if (!phoneRegExp.test(phoneNumber || "")) {
+    if (phoneNumber && !phoneRegExp.test(phoneNumber)) {
       setError("phoneNumber", {
         message: "Sai định dạng số điện thoại",
       });

@@ -201,7 +201,7 @@ const Step2: FC<Props> = ({
               <div className="mt-4 flex flex-col space-y-2">
                 <div className="flex justify-between">
                   <h1>Đơn giá</h1>
-                  <h1>{carType.price}000 đ</h1>
+                  <h1>{carType.price}đ</h1>
                 </div>
                 <div className="flex justify-between">
                   <h1>Thời gian thuê</h1>
@@ -215,8 +215,7 @@ const Step2: FC<Props> = ({
                 <div className="flex justify-between">
                   <h1>Tổng</h1>
                   <h1>
-                    {carType.price * rentingState.quantity! * rentingDays}
-                    000 đ
+                    {carType.price * rentingState.quantity! * rentingDays}đ
                   </h1>
                 </div>
               </div>
