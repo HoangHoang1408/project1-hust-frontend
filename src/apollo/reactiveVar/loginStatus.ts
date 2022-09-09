@@ -23,7 +23,7 @@ export function logout() {
     accessToken: null,
     isLoggedIn: false,
   });
-  userVar(null);
+  userVar(undefined);
   localStorage.removeItem(LOGIN_STATUS);
 }
 export const loginStatusVar = makeVar<LoginStatus>(getLoginStatusFromLocal());
