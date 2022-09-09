@@ -27,6 +27,7 @@ const DesktopSidebar = ({ navState, setNavState }: Props) => {
           <div className="space-y-1">
             {navState.map((item, i) => (
               <button
+              //@ts-ignore
                 onClick={() => navigate(navState[i].routes[0])}
                 key={item.name}
                 className={classNames(

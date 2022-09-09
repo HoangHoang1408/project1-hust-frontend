@@ -83,6 +83,7 @@ const MobileSideBar = ({
                   </div>
                   {navState.map((item, i) => (
                     <button
+                      //@ts-ignore
                       onClick={() => navigate(navState[i].routes[0])}
                       key={item.name}
                       className={classNames(

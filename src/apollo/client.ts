@@ -7,9 +7,10 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import jwtDecode from "jwt-decode";
+import { SERVER_URL } from "../config";
 import { loginStatusVar } from "./reactiveVar/loginStatus";
 const httpLink = new HttpLink({
-  uri: "http://127.0.0.1:4000/graphql",
+  uri: `${SERVER_URL}/graphql`,
   credentials: "include",
 });
 const zeroClient = new ApolloClient({

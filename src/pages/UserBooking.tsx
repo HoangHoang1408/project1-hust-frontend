@@ -2,12 +2,12 @@ import { FC, Fragment, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTable } from "react-table";
 import { toast } from "react-toastify";
-import Loading from "../components/Loading";
-import PaginationNav from "../components/PaginationNav";
 import {
   BookingStatusBackEnd,
   CarTypeEnumBackEnd,
 } from "../common/enumConstants";
+import Loading from "../components/Loading";
+import PaginationNav from "../components/PaginationNav";
 import {
   CarTypeEnum,
   useGetBookingByLazyQuery,
@@ -66,28 +66,34 @@ const UserRenting: FC<Props> = (props) => {
     return [
       {
         Header: "Id",
+        //@ts-ignore
         accessor: (row) => row["id"],
       },
       {
         Header: "Mã thuê",
+        //@ts-ignore
         accessor: (row) => row["bookingCode"],
       },
       {
         Header: "Loại xe",
         // @ts-ignore
+        //@ts-ignore
         accessor: (row) => CarTypeEnumBackEnd[row["carType"]["carType"]],
       },
       {
         Header: "Số lượng",
+        //@ts-ignore
         accessor: (row) => row["quantity"],
       },
       {
         Header: "Trạng thái",
         // @ts-ignore
+        //@ts-ignore
         accessor: (row) => BookingStatusBackEnd[row["status"]],
       },
       {
         Header: "Bắt đầu",
+        //@ts-ignore
         accessor: (row) =>
           new Date(row["startDate"]).toLocaleDateString("vn", {
             year: "numeric",
@@ -99,6 +105,7 @@ const UserRenting: FC<Props> = (props) => {
       },
       {
         Header: "Kết thúc",
+        //@ts-ignore
         accessor: (row) =>
           new Date(row["endDate"]).toLocaleDateString("vn", {
             year: "numeric",
@@ -110,12 +117,14 @@ const UserRenting: FC<Props> = (props) => {
       },
       {
         Header: "Tổng tiền",
+        //@ts-ignore
         accessor: (row) => row["totalPrice"],
       },
       {
         Header: "Chi tiết",
         //@ts-ignore
         accessor: (row) => row["id"],
+        //@ts-ignore
         Cell: ({ value }) => {
           return (
             <Link
