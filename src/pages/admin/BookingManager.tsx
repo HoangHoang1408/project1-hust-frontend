@@ -190,7 +190,7 @@ const BookingManager = (props: Props) => {
         }
         toast.error("Lỗi xảy ra, thử lại sau");
       },
-      refetchQueries: ["GetBookingBy"],
+      refetchQueries: ["GetBookingBy", "ForecastTable"],
     });
   return (
     <Fragment>

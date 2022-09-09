@@ -45,7 +45,6 @@ const UserManager = (props: Props) => {
       }
       toast.error("Lôi xảy ra, thử lại sau");
     },
-    fetchPolicy: "network-only",
   });
   const [byState, setByState] = useState<ByState>({
     role: "all",
