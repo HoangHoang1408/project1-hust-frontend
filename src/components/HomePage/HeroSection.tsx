@@ -1,8 +1,10 @@
+import { useReactiveVar } from "@apollo/client";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
+import { loginStatusVar } from "../../apollo/reactiveVar/loginStatus";
 import { CarTypeEnumBackEnd } from "../../common/enumConstants";
 import {
   CarTypeEnum,
@@ -80,6 +82,7 @@ export function getDate(startDate: Date, startTime: string): Date {
   );
 }
 export default function HeroSection() {
+  const loginStatus = useReactiveVar(loginStatusVar);
   const navigate = useNavigate();
   const { register, handleSubmit, setError, getValues } =
     useForm<CheckCarAvailableInput>({
@@ -130,6 +133,10 @@ export default function HeroSection() {
   const submitHandler = async () => {
     const { carType, endDate, endTime, startDate, startTime, quantity } =
       getValues();
+    if (!loginStatus.isLoggedIn) {
+      toast.warn("Đăng nhập trước khi thực hiện");
+      return;
+    }
     await checkCarAvailable({
       variables: {
         input: {
