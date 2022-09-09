@@ -19,12 +19,12 @@ export function getLoginStatusFromLocal(): LoginStatus {
   return JSON.parse(temp) as LoginStatus;
 }
 export function logout() {
+  localStorage.removeItem(LOGIN_STATUS);
   loginStatusVar({
     accessToken: null,
     isLoggedIn: false,
   });
-  userVar(undefined);
-  localStorage.removeItem(LOGIN_STATUS);
+  userVar(null);
 }
 export const loginStatusVar = makeVar<LoginStatus>(getLoginStatusFromLocal());
 export const userVar = makeVar<UserFragmentFragment | null>(null);
