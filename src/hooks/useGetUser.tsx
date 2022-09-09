@@ -17,6 +17,7 @@ export function useGetUser() {
       console.log(err);
       toast.error("Lỗi server, thử lại sau");
     },
+    fetchPolicy: "network-only",
   });
   const user = useReactiveVar(userVar);
   const loginStatus = useReactiveVar(loginStatusVar);
