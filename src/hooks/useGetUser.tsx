@@ -14,14 +14,15 @@ export function useGetUser() {
       userVar(user);
     },
     onError(err) {
-      console.log(err)
+      console.log(err);
       toast.error("Lỗi server, thử lại sau");
     },
   });
   const user = useReactiveVar(userVar);
   const loginStatus = useReactiveVar(loginStatusVar);
   useEffect(() => {
-    if (!loginStatus?.isLoggedIn) return;
+    if (!loginStatus) return;
+    if (!loginStatus.isLoggedIn) return;
     if (!user) userQuery();
   }, [user, loginStatus]);
 }

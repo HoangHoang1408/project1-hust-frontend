@@ -11,7 +11,6 @@ const LoginProtect = (props: Props) => {
   useEffect(() => {
     if (loginStatus && !loginStatus.isLoggedIn) {
       navigate("/");
-      navigate(0);
     }
   }, [loginStatus]);
   return (
