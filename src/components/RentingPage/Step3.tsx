@@ -1,6 +1,6 @@
 import { FC, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import { CarTypeEnumBackEnd } from "../../common/enumConstants";
+import { CarTypeEnumBackEnd, PaymentBackEnd } from "../../common/enumConstants";
 import { GetCarTypeQuery } from "../../graphql/generated/schema";
 import { countRentingDay, RentingState } from "../../pages/BookingPage";
 import { getFormatDate } from "./Step2";
@@ -172,7 +172,9 @@ const Step3: FC<Props> = ({ rentingState, carTypeData }) => {
 
                 <div className="grid grid-cols-3 gap-x-1">
                   <h1 className="col-span-1">Thanh toán</h1>
-                  <h1 className="col-span-2">Trả sau</h1>
+                  <h1 className="col-span-2">
+                    {PaymentBackEnd[rentingState.payment]}
+                  </h1>
                 </div>
                 <div className="grid grid-cols-3 gap-x-1">
                   <h1 className="col-span-1">Ghi chú</h1>
