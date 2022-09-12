@@ -8,7 +8,11 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import jwtDecode from "jwt-decode";
 import { SERVER_URL } from "../config";
-import { loginStatusVar } from "./reactiveVar/loginStatus";
+import {
+  loginStatusVar,
+  LOGIN_STATUS,
+  userVar,
+} from "./reactiveVar/loginStatus";
 const httpLink = new HttpLink({
   uri: `${SERVER_URL}/graphql`,
   credentials: "include",
@@ -21,34 +25,45 @@ type JwtDecodedObject = {
   exp: number;
 };
 const getAccessToken = async (): Promise<string | null> => {
-  const oldAccessToken = loginStatusVar().accessToken;
-  if (!oldAccessToken) return null;
-  const { exp } = jwtDecode<JwtDecodedObject>(oldAccessToken);
-  if (exp > Date.now() / 1000 + 1.2) return oldAccessToken;
-  const { data } = await zeroClient.query({
-    query: gql`
-      query NewAccessTokenQuery($input: NewAccessTokenInput!) {
-        newAccessToken(input: $input) {
-          accessToken
-          ok
-          error {
-            message
+  try {
+    const oldAccessToken = loginStatusVar().accessToken;
+    if (!oldAccessToken) return null;
+    const dcobj = jwtDecode<JwtDecodedObject>(oldAccessToken);
+    if (!dcobj || !dcobj.exp) throw new Error();
+    if (dcobj.exp > Date.now() / 1000 + 1.2) return oldAccessToken;
+    const { data } = await zeroClient.query({
+      query: gql`
+        query NewAccessTokenQuery($input: NewAccessTokenInput!) {
+          newAccessToken(input: $input) {
+            accessToken
+            ok
+            error {
+              message
+            }
           }
         }
-      }
-    `,
-    variables: {
-      input: {
-        accessToken: oldAccessToken,
+      `,
+      variables: {
+        input: {
+          accessToken: oldAccessToken,
+        },
       },
-    },
-  });
-  const newAccessToken = data["accessToken"];
-  loginStatusVar({
-    accessToken: newAccessToken,
-    isLoggedIn: true,
-  });
-  return newAccessToken;
+    });
+    const newAccessToken = data["accessToken"];
+    loginStatusVar({
+      accessToken: newAccessToken,
+      isLoggedIn: true,
+    });
+    return newAccessToken;
+  } catch (error) {
+    loginStatusVar({
+      isLoggedIn: false,
+      accessToken: null,
+    });
+    userVar(null);
+    localStorage.removeItem(LOGIN_STATUS);
+    return null;
+  }
 };
 const headersTokenLink = setContext(async (_, { headers = {} }) => {
   const accessToken = await getAccessToken();
