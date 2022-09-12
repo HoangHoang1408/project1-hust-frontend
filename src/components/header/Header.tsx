@@ -7,8 +7,8 @@ import { Fragment, useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { logout, userVar } from "../../apollo/reactiveVar/loginStatus";
+import { logo2 } from "../../images";
 import MenuItem from "./Components/MenuItem";
-
 
 type Props = {};
 
@@ -29,16 +29,7 @@ function Header({}: Props) {
             <div className="flex justify-between h-16">
               <div className="flex">
                 <Link to="/" className="flex-shrink-0 flex items-center">
-                  <img
-                    className="block lg:hidden h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                    alt="Workflow"
-                  />
-                  <img
-                    className="hidden lg:block h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
-                    alt="Workflow"
-                  />
+                  <img className="pt-1 h-16 w-auto" src={logo2} />
                 </Link>
                 <div className="ml-4 flex items-center">
                   <div
@@ -51,18 +42,42 @@ function Header({}: Props) {
                     <h1>Xem xe</h1>
                     {hover && (
                       <div className="absolute top-[100%] left-1/2 w-max p-2 transform -translate-x-1/2 flex flex-col space-y-1 shadow z-[1000] bg-white">
-                        <h1 className="font-normal p-2 hover:bg-indigo-200 rounded">
+                        <Link
+                          to={"/cars/xe-4-cho"}
+                          className="font-normal p-2 hover:bg-indigo-200 rounded"
+                        >
                           Xe 4 chỗ
-                        </h1>
-                        <h1 className="font-normal p-2 hover:bg-indigo-200 rounded">
+                        </Link>
+                        <Link
+                          to={"/cars/xe-5-cho"}
+                          className="font-normal p-2 hover:bg-indigo-200 rounded"
+                        >
+                          Xe 5 chỗ
+                        </Link>
+                        <Link
+                          to={"/cars/xe-7-cho"}
+                          className="font-normal p-2 hover:bg-indigo-200 rounded"
+                        >
                           Xe 7 chỗ
-                        </h1>
-                        <h1 className="font-normal p-2 hover:bg-indigo-200 rounded">
+                        </Link>
+                        <Link
+                          to={"/cars/xe-12-cho"}
+                          className="font-normal p-2 hover:bg-indigo-200 rounded"
+                        >
                           Xe 12 chỗ
-                        </h1>
-                        <h1 className="font-normal p-2 hover:bg-indigo-200 rounded">
+                        </Link>
+                        <Link
+                          to={"/cars/xe-16-cho"}
+                          className="font-normal p-2 hover:bg-indigo-200 rounded"
+                        >
                           Xe 16 chỗ
-                        </h1>
+                        </Link>
+                        <Link
+                          to={"/cars/xe-hang-sang"}
+                          className="font-normal p-2 hover:bg-indigo-200 rounded"
+                        >
+                          Xe hạng sang
+                        </Link>
                       </div>
                     )}
                   </div>

@@ -145,7 +145,9 @@ export enum CarTypeEnum {
   PickupTruck = 'PICKUP_TRUCK',
   Seat4 = 'SEAT4',
   Seat5 = 'SEAT5',
-  Seat7 = 'SEAT7'
+  Seat7 = 'SEAT7',
+  Seat12 = 'SEAT12',
+  Seat16 = 'SEAT16'
 }
 
 export type CarTypeInput = {

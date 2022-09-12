@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { FormInput } from "../../components/form/FormInput";
 import LoadingButton from "../../components/form/LoadingButton";
 import { useResetPasswordMutation } from "../../graphql/generated/schema";
+import { logo } from "../../images";
 type ResetPasswordInputForm = {
   password: string;
   confirmPassword: string;
@@ -67,11 +68,7 @@ export default function ResetPasswordPage() {
   return (
     <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <img
-          className="mx-auto h-12 w-auto"
-          src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-          alt="Workflow"
-        />
+        <img className="mx-auto h-16 w-auto" src={logo} alt="carIT" />
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Đổi mật khẩu
         </h2>

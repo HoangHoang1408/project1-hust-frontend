@@ -1,6 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Disclosure } from "@headlessui/react";
 import { Link } from "react-router-dom";
+import { logo2 } from "../images";
 type Props = {};
 function SimpleHeader({}: Props) {
   return (
@@ -11,16 +12,7 @@ function SimpleHeader({}: Props) {
             <div className="flex justify-between h-16">
               <div className="flex">
                 <Link to="/" className="flex-shrink-0 flex items-center">
-                  <img
-                    className="block lg:hidden h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                    alt="Workflow"
-                  />
-                  <img
-                    className="hidden lg:block h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
-                    alt="Workflow"
-                  />
+                  <img className="pt-1 h-16 w-auto" src={logo2} />
                 </Link>
               </div>
             </div>

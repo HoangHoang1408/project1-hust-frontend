@@ -106,7 +106,7 @@ function Footer({}: Props) {
           ))}
         </div>
         <p className="mt-8 text-center text-base text-gray-400">
-          &copy; 2020 Workflow, Inc. All rights reserved.
+          &copy; 2022 Car IT, Inc. All rights reserved.
         </p>
       </div>
     </footer>

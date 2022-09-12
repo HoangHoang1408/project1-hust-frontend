@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { logo2 } from "../../images";
 
 type Props = {};
 
@@ -9,12 +10,8 @@ function NotFoundPage({}: Props) {
         <main className="flex-grow flex flex-col justify-center max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex-shrink-0 flex justify-center">
             <a href="/" className="inline-flex">
-              <span className="sr-only">Workflow</span>
-              <img
-                className="h-12 w-auto"
-                src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
-                alt=""
-              />
+              <span className="sr-only">Car IT</span>
+              <img className="h-20 w-auto" src={logo2} alt="" />
             </a>
           </div>
           <div className="py-16">
@@ -23,17 +20,17 @@ function NotFoundPage({}: Props) {
                 404 error
               </p>
               <h1 className="mt-2 text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">
-                Page not found.
+                Trang không tồn tại
               </h1>
               <p className="mt-2 text-base text-gray-500">
-                Sorry, we couldn’t find the page you’re looking for.
+                Không thể tìm thấy trang bạn yêu cầu
               </p>
               <div className="mt-6">
                 <Link
                   to="/"
                   className="text-base font-medium text-indigo-600 hover:text-indigo-500"
                 >
-                  Go back home<span aria-hidden="true"> &rarr;</span>
+                  Trở về trang chủ<span aria-hidden="true"> &rarr;</span>
                 </Link>
               </div>
             </div>

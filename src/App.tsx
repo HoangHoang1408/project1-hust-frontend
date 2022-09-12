@@ -20,6 +20,14 @@ import NotFoundPage from "./pages/auth/NotFoundPage";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 import SignUpPage from "./pages/auth/SignUpPage";
 import RentingPage from "./pages/BookingPage";
+import Seat12Car from "./pages/carView/12SeatCar";
+import Seat16Car from "./pages/carView/16SeatCar";
+import Seat4Car from "./pages/carView/4SeatCar";
+import Seat5Car from "./pages/carView/5SeatCar";
+import Seat7Car from "./pages/carView/7SeatCar";
+import CarDetail from "./pages/carView/CarDetail";
+import LuxuryCar from "./pages/carView/LuxuryCar";
+import PickUpTruck from "./pages/carView/PickupTruck";
 import HomePage from "./pages/HomePage";
 import Settings from "./pages/SettingsPage";
 import UserRenting from "./pages/UserBooking";
@@ -29,9 +37,22 @@ function App() {
     <div className="transition">
       <div className="w-screen min-h-screen flex flex-col justify-between">
         <Routes>
-          <Route element={<LoginProtect />}>
-            <Route path="/" element={<WithHeaderLayout />}>
-              <Route index element={<HomePage />} />
+          {/* customer routes */}
+          <Route path="/" element={<WithHeaderLayout />}>
+            <Route index element={<HomePage />} />
+            <Route path="cars">
+              <Route path=":id" element={<CarDetail />} />
+              <Route path="xe-4-cho" element={<Seat4Car />} />
+              <Route path="xe-5-cho" element={<Seat5Car />} />
+              <Route path="xe-7-cho" element={<Seat7Car />} />
+              <Route path="xe-12-cho" element={<Seat12Car />} />
+              <Route path="xe-16-cho" element={<Seat16Car />} />
+              <Route path="xe-ban-tai" element={<PickUpTruck />} />
+              <Route path="xe-hang-sang" element={<LuxuryCar />} />
+            </Route>
+
+            {/* require-login routes */}
+            <Route element={<LoginProtect />}>
               <Route path="renting" element={<RentingPage />} />
               <Route path="user">
                 <Route path="settings" element={<Settings />} />
@@ -39,6 +60,10 @@ function App() {
               </Route>
               <Route path="bookings/:id" element={<AdminBookingDetail />} />
             </Route>
+          </Route>
+
+          {/* auth routes */}
+          <Route element={<LoginProtect />}>
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<BookingManager />} />
               <Route path="bookings">
@@ -54,6 +79,8 @@ function App() {
               <Route path="users" element={<UserManager />} />
             </Route>
           </Route>
+
+          {/* auth routes */}
           <Route path="/auth" element={<WithSimpleHeaderLayout />}>
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignUpPage />} />
@@ -63,6 +90,8 @@ function App() {
               element={<ResetPasswordPage />}
             />
           </Route>
+
+          {/* handle notfound */}
           <Route path="*" element={<Navigate to="/notfound" replace />} />
           <Route path="/notfound" element={<NotFoundPage />} />
         </Routes>

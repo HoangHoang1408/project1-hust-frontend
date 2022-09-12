@@ -1,8 +1,9 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 import { Dispatch, Fragment, SetStateAction } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { classNames } from "../../common/utilFunctions";
+import { logo } from "../../images";
 import { NavState } from "../../layouts/AdminLayout";
 import UserDropdown from "./UserDropdown";
 
@@ -69,11 +70,9 @@ const MobileSideBar = ({
               </div>
             </Transition.Child>
             <div className="flex-shrink-0 flex items-center px-4">
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/workflow-logo-purple-500-mark-gray-700-text.svg"
-                alt="Workflow"
-              />
+              <Link to={"/admin"}>
+                <img className="h-16 w-auto" src={logo} />
+              </Link>
             </div>
             <div className="mt-5 flex-1 h-0 overflow-y-auto">
               <nav className="px-2 select-none">

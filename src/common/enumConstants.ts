@@ -9,6 +9,8 @@ export enum CarTypeEnumBackEnd {
   SEAT4 = "Xe 4 chỗ",
   SEAT5 = "Xe 5 chỗ",
   SEAT7 = "Xe 7 chỗ",
+  SEAT12 = "Xe 12 chỗ",
+  SEAT16 = "Xe 16 chỗ",
   PICKUP_TRUCK = "Xe bán tải",
   LUXURY_CAR = "Xe hạng sang",
 }

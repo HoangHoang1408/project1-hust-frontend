@@ -1,11 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { FormInput } from "../../components/form/FormInput";
 import LoadingButton from "../../components/form/LoadingButton";
 import { useForgotPasswordLazyQuery } from "../../graphql/generated/schema";
+import { logo } from "../../images";
 type ForgotPasswordInputForm = {
   email: string;
 };
@@ -46,11 +46,7 @@ export default function ForgotPasswordPage() {
   return (
     <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <img
-          className="mx-auto h-12 w-auto"
-          src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-          alt="Workflow"
-        />
+        <img className="mx-auto h-16 w-auto" src={logo} alt="carIT" />
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Quên mật khẩu
         </h2>

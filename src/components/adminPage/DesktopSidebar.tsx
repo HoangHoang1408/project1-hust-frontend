@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { classNames } from "../../common/utilFunctions";
+import { logo2 } from "../../images";
 import { NavState } from "../../layouts/AdminLayout";
 import UserDropdown from "./UserDropdown";
 
@@ -12,12 +13,10 @@ const DesktopSidebar = ({ navState, setNavState }: Props) => {
   const navigate = useNavigate();
   return (
     <div className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:border-r lg:border-gray-200 lg:pt-5 lg:pb-4 lg:bg-gray-100">
-      <div className="flex items-center flex-shrink-0 px-6">
-        <img
-          className="h-8 w-auto"
-          src="https://tailwindui.com/img/logos/workflow-logo-purple-500-mark-gray-700-text.svg"
-          alt="Workflow"
-        />
+      <div className="flex justify-center flex-shrink-0 px-6">
+        <Link to={"/admin"}>
+          <img className="h-16 w-auto" src={logo2} />
+        </Link>
       </div>
       {/* Sidebar component, swap this element with another sidebar if you like */}
       <div className="mt-6 h-0 flex-1 flex flex-col overflow-y-auto px-3">
@@ -27,7 +26,7 @@ const DesktopSidebar = ({ navState, setNavState }: Props) => {
           <div className="space-y-1">
             {navState.map((item, i) => (
               <button
-              //@ts-ignore
+                //@ts-ignore
                 onClick={() => navigate(navState[i].routes[0])}
                 key={item.name}
                 className={classNames(

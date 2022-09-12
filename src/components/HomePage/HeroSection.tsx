@@ -10,6 +10,7 @@ import {
   CarTypeEnum,
   useCheckCarAvailableLazyQuery,
 } from "../../graphql/generated/schema";
+import { heroImage } from "../../images";
 import { getApolloErrorMessage } from "../../utils/getApolloErrorMessage";
 import { FormInput } from "../form/FormInput";
 import LoadingButton from "../form/LoadingButton";
@@ -154,7 +155,7 @@ export default function HeroSection() {
         <div className="mx-auto max-w-7xl w-full pt-16 pb-20 text-center lg:py-48 lg:text-left flex justify-center lg:justify-start">
           <div className="px-4 lg:w-1/2 sm:px-8 xl:pr-16 space-y-8 flex flex-col items-center md:items-start">
             <div className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl space-y-2">
-              <h1 className="block xl:inline">Company name</h1>
+              <h1 className="block xl:inline text-center">Car IT</h1>
               <h1 className="block text-2xl  sm:text-3xl text-indigo-600">
                 Đồng hành cùng bạn trên mọi chặng đường
               </h1>
@@ -245,8 +246,8 @@ export default function HeroSection() {
         </div>
         <div className="relative w-full h-64 sm:h-72 md:h-96 lg:h-full lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 ">
           <img
-            className="absolute inset-0 w-full h-full object-cover"
-            src="https://images.unsplash.com/photo-1520333789090-1afc82db536a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80"
+            className="absolute inset-0 w-full h-full object-cover object-center"
+            src={heroImage}
             alt=""
           />
         </div>

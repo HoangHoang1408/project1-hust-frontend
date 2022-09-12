@@ -4,10 +4,11 @@ import {
   CogIcon,
   FireIcon,
   StarIcon,
+  TruckIcon,
 } from "@heroicons/react/solid";
 import { range } from "lodash";
-import { FC, Fragment } from "react";
-import { useParams } from "react-router-dom";
+import { FC, Fragment, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   CarTypeEnumBackEnd,
@@ -15,11 +16,15 @@ import {
   TransmissionTypeBackEnd,
 } from "../../common/enumConstants";
 import Loading from "../../components/Loading";
-import { useCarDetailQuery } from "../../graphql/generated/schema";
+import {
+  useCarDetailQuery,
+  useGetCarsByLazyQuery,
+} from "../../graphql/generated/schema";
+import { loadingWhite } from "../../images";
 import { getApolloErrorMessage } from "../../utils/getApolloErrorMessage";
 
 type Props = {};
-const AdminCarDetail: FC<Props> = () => {
+const CarDetail: FC<Props> = () => {
   const params = useParams();
   const { data, loading } = useCarDetailQuery({
     variables: {
@@ -44,6 +49,43 @@ const AdminCarDetail: FC<Props> = () => {
     },
   });
   const car = data?.getCarDetail.car;
+  const [
+    getRelatedCars,
+    { data: relatedCarsData, loading: relatedCarLoadings },
+  ] = useGetCarsByLazyQuery({
+    onCompleted(data) {
+      const { getCarsBy } = data;
+      if (getCarsBy.error) {
+        toast.error(getCarsBy.error.message);
+        return;
+      }
+    },
+    onError(err) {
+      const msg = getApolloErrorMessage(err);
+      if (msg) {
+        toast.error(msg);
+        return;
+      }
+      toast.error("Lỗi xảy ra, thử lại sau");
+    },
+  });
+  useEffect(() => {
+    if (!car) return;
+    getRelatedCars({
+      variables: {
+        input: {
+          pagination: {
+            page: 1,
+            resultsPerPage: 5,
+          },
+          carType: car.carType.carType,
+        },
+      },
+    });
+  }, [car]);
+  const relatedCars = relatedCarsData?.getCarsBy.cars
+    ?.filter((c) => c.id !== car?.id)
+    .slice(0, 5);
   return (
     <Fragment>
       {loading && <Loading />}
@@ -58,7 +100,7 @@ const AdminCarDetail: FC<Props> = () => {
                   {car.images && (
                     <img
                       src={car.images[0].fileUrl}
-                      className="object-center object-cover"
+                      className="object-center object-cover w-full h-[30rem]"
                     />
                   )}
                 </div>
@@ -140,8 +182,69 @@ const AdminCarDetail: FC<Props> = () => {
                   </div>
                 </div>
               </div>
-
               <div className="w-full max-w-2xl mx-auto mt-16 lg:max-w-none lg:mt-0 lg:col-span-4"></div>
+            </div>
+
+            <div className="max-w-2xl mx-auto mt-24 sm:mt-32 lg:max-w-none">
+              <div className="flex items-center justify-between space-x-4">
+                <h2 className="text-lg font-medium text-gray-900">
+                  Xem xe khác
+                </h2>
+                <Link
+                  to={"/"}
+                  className="whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                >
+                  Tất cả<span aria-hidden="true"> &rarr;</span>
+                </Link>
+              </div>
+              {relatedCarLoadings && (
+                <div className="flex justify-center">
+                  <img className="" src={loadingWhite}></img>
+                </div>
+              )}
+              {relatedCars && (
+                <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
+                  {relatedCars.map((car) => {
+                    console.log(car.images![0]);
+                    return (
+                      <div key={car.id} className="relative group">
+                        <div className="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden bg-gray-100">
+                          {car.images && (
+                            <img
+                              src={car.images[0].fileUrl}
+                              className="object-center object-cover w-full h-44"
+                            />
+                          )}
+                          {!car.images && (
+                            <div className="flex justify-center">
+                              <TruckIcon className="text-indigo-400 h-40 w-auto" />
+                            </div>
+                          )}
+                          <div
+                            className="flex items-end opacity-0 p-4 group-hover:opacity-100"
+                            aria-hidden="true"
+                          >
+                            <div className="w-full bg-white bg-opacity-75 backdrop-filter backdrop-blur py-2 px-4 rounded-md text-sm font-medium text-gray-900 text-center">
+                              Xem xe
+                            </div>
+                          </div>
+                        </div>
+                        <div className="mt-4 flex items-center justify-between text-base font-medium text-gray-900 space-x-8">
+                          <h3>
+                            <Link to={`/cars/${car.id}`}>
+                              <span
+                                aria-hidden="true"
+                                className="absolute inset-0"
+                              />
+                              {car.name}
+                            </Link>
+                          </h3>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </main>
         </div>
@@ -149,4 +252,4 @@ const AdminCarDetail: FC<Props> = () => {
     </Fragment>
   );
 };
-export default AdminCarDetail;
+export default CarDetail;
