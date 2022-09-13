@@ -56,12 +56,12 @@ const getAccessToken = async (): Promise<string | null> => {
     });
     return newAccessToken;
   } catch (error) {
+    localStorage.removeItem(LOGIN_STATUS);
     loginStatusVar({
       isLoggedIn: false,
       accessToken: null,
     });
     userVar(null);
-    localStorage.removeItem(LOGIN_STATUS);
     return null;
   }
 };
