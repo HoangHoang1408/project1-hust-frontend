@@ -342,7 +342,7 @@ const BookingManager = (props: Props) => {
               ></input>
             </div>
             <button
-              onClick={() => navigate("/admin/bookings/forecast")}
+              onClick={() => navigate("/admin/rentings/forecast")}
               className="w-fit h-fit flex items-center justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
             >
               Forecast
