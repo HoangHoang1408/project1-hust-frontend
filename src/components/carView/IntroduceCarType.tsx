@@ -1,8 +1,9 @@
 type Props = {
   imageSources?: (string | undefined)[];
+  title: string;
 };
 
-const IntroduceCarType = ({ imageSources }: Props) => {
+const IntroduceCarType = ({ imageSources, title }: Props) => {
   return (
     <div className="space-y-6 lg:col-span-7">
       {/* Description list*/}
@@ -16,7 +17,7 @@ const IntroduceCarType = ({ imageSources }: Props) => {
               id="applicant-information-title"
               className="text-xl leading-6 font-medium text-gray-900"
             >
-              Dịch vụ thuê xe 4 chỗ
+              Dịch vụ thuê xe {title}
             </h2>
             <p className="mt-1 max-w-2xl text-sm text-gray-500">
               Giá rẻ, uy tín, đảm bảo
@@ -24,12 +25,12 @@ const IntroduceCarType = ({ imageSources }: Props) => {
           </div>
           <div className="border-t border-gray-200 px-4 py-5 sm:px-6 space-y-2 flex flex-col">
             <h1>
-              Dịch vụ thuê xe du lịch 4-5 chỗ của công ty chúng tôi là dịch vụ
-              chuyên nghiệp dành cho những khách hàng đang có nhu cầu thuê xe
-              cho mục đích cá nhân. Nếu bạn có nhu cầu về thuê xe 4 – 5 chỗ mà
-              chưa tìm được địa chỉ thuê xe uy tín thì gợi ý dành cho bạn là hãy
-              đến ngay với công ty chúng tôi. Chúng tôi đảm bảo mang đến cho bạn
-              sự hài lòng khi chọn dịch vụ tại công ty.
+              Dịch vụ thuê xe {title} của công ty chúng tôi là dịch vụ chuyên
+              nghiệp dành cho những khách hàng đang có nhu cầu thuê xe cho mục
+              đích cá nhân. Nếu bạn có nhu cầu về thuê xe {title} mà chưa tìm
+              được địa chỉ thuê xe uy tín thì gợi ý dành cho bạn là hãy đến ngay
+              với công ty chúng tôi. Chúng tôi đảm bảo mang đến cho bạn sự hài
+              lòng khi chọn dịch vụ tại công ty.
             </h1>
             {imageSources && (
               <img
@@ -50,32 +51,19 @@ const IntroduceCarType = ({ imageSources }: Props) => {
           </div>
           <div className="border-t border-gray-200 px-4 py-5 sm:px-6 flex flex-col space-y-2">
             <div className="font-semibold text-gray-700">
-              Cung cấp đa dạng các loại xe 4-5 chỗ
+              Cung cấp đa dạng các loại xe {title}
             </div>
             <div className="flex flex-col space-x-3">
               <h1>
                 Để đáp ứng một nhu cầu ngày càng tăng cao từ phía khách hàng đối
                 với dịch vụ thuê xe du lịch thì công ty luôn sẵn sàng cung cấp
-                đa dạng các dòng xe 4 chỗ để cho khách hàng lựa chọn. Hiện tại
+                đa dạng các dòng xe {title} để cho khách hàng lựa chọn. Hiện tại
                 công ty chúng tôi phục vụ khách hàng đảm bảo đều là các dòng xe
                 đời mới, với mẫu mã, kiểu dáng, màu sắc đều được nhiều người yêu
                 thích, kèm theo đó là chất lượng đến trang bị tiện nghi vô cùng
                 đảm bảo. Sẵn sàng đáp ứng các yêu cầu khác nhau, tăng thêm sự
-                lựa chọn cho khách hàng. Một số dòng xe 4 - 5 chỗ cho bạn tham
-                khảo như sau:
+                lựa chọn cho khách hàng
               </h1>
-              <div>
-                <li className="font-semibold">
-                  Xe Toyota-Altis phong cách, kiểu dáng hiện đại.
-                </li>
-                <li className="font-semibold">
-                  Xe Toyota-Vios nhỏ gọn, thể thao.
-                </li>
-                <li className="font-semibold">
-                  Xe Toyota - Camry sang trọng đẳng cấp: 2.4G, 3.5Q, và còn rất
-                  nhiều dòng xe khác để phục vụ theo nhu cầu.
-                </li>
-              </div>
             </div>
             <h1>
               Nếu bạn chọn là khách hàng sử dụng dịch vụ này của công ty thì với

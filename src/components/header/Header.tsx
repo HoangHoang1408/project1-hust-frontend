@@ -2,6 +2,7 @@
 import { useReactiveVar } from "@apollo/client";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import { UserCircleIcon } from "@heroicons/react/solid";
 import { startCase, toLower } from "lodash";
 import { Fragment, useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -105,11 +106,14 @@ function Header({}: Props) {
                   <Menu as="div" className="ml-3 relative">
                     <div>
                       <Menu.Button className="bg-white rounded-full flex items-center space-x-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 pr-1">
-                        <img
-                          className="h-8 w-8 rounded-full"
-                          src={user.avatar?.fileUrl}
-                          alt=""
-                        />
+                        {user.avatar && (
+                          <img
+                            className="h-8 w-8 rounded-full"
+                            src={user.avatar.fileUrl}
+                            alt=""
+                          />
+                        )}
+                        {!user.avatar && <UserCircleIcon className="w-8 h-8" />}
                         <p className="text-base">
                           {startCase(toLower(user.name))}
                         </p>

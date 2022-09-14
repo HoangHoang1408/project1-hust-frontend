@@ -253,7 +253,7 @@ const UpdateCar: FC<Props> = () => {
                   />
                   <SelectInput
                     id="carType"
-                    labelText="carType"
+                    labelText="Loại xe"
                     showedValues={Object.values(CarTypeEnum).map(
                       (e) => CarTypeEnumBackEnd[e]
                     )}

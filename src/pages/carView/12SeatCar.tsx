@@ -43,6 +43,7 @@ export default function Seat12Car() {
           <main className="py-10">
             <div className="max-w-3xl mx-auto grid grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-12">
               <IntroduceCarType
+              title="12 chỗ"
                 imageSources={cars?.map((car) =>
                   car.images ? car.images[0].fileUrl || undefined : undefined
                 )}
