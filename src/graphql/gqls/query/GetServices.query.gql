@@ -1,0 +1,16 @@
+query GetServicesBy($input: GetServicesByInput!) {
+  getServices(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+    pagination {
+      totalPages
+      totalResults
+    }
+    services {
+      ...ServiceFragment
+    }
+  }
+}

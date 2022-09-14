@@ -8,5 +8,6 @@ query getCarType($input: GetCarTypeInput!) {
     carType {
       ...CarTypeFragment
     }
+    numOfCars
   }
 }

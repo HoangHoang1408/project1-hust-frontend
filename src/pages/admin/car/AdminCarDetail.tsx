@@ -13,10 +13,10 @@ import {
   CarTypeEnumBackEnd,
   EngineTypeBackEnd,
   TransmissionTypeBackEnd,
-} from "../../common/enumConstants";
-import Loading from "../../components/Loading";
-import { useCarDetailQuery } from "../../graphql/generated/schema";
-import { getApolloErrorMessage } from "../../utils/getApolloErrorMessage";
+} from "../../../common/enumConstants";
+import Loading from "../../../components/Loading";
+import { useCarDetailQuery } from "../../../graphql/generated/schema";
+import { getApolloErrorMessage } from "../../../utils/getApolloErrorMessage";
 
 type Props = {};
 const AdminCarDetail: FC<Props> = () => {

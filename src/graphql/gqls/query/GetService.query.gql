@@ -1,0 +1,12 @@
+query GetService($input: GetServiceInput!) {
+  getService(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+    service {
+      ...ServiceFragment
+    }
+  }
+}

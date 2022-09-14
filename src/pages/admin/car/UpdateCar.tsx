@@ -10,13 +10,13 @@ import {
   CarTypeEnumBackEnd,
   EngineTypeBackEnd,
   TransmissionTypeBackEnd,
-} from "../../common/enumConstants";
-import Features from "../../components/adminPage/createCar/Feature";
-import FormInput from "../../components/adminPage/createCar/FormInput";
-import SelectInput from "../../components/adminPage/createCar/SelectInput";
-import LoadingButton from "../../components/form/LoadingButton";
-import Loading from "../../components/Loading";
-import { SERVER_URL } from "../../config";
+} from "../../../common/enumConstants";
+import FormInput from "../../../components/adminPage/createCar/FormInput";
+import InputAddable from "../../../components/adminPage/createCar/InputAddable";
+import SelectInput from "../../../components/adminPage/createCar/SelectInput";
+import LoadingButton from "../../../components/form/LoadingButton";
+import Loading from "../../../components/Loading";
+import { SERVER_URL } from "../../../config";
 import {
   CarBrand,
   CarTypeEnum,
@@ -25,8 +25,8 @@ import {
   TransmissionType,
   useCarDetailQuery,
   useUpdateCarMutation,
-} from "../../graphql/generated/schema";
-import { getApolloErrorMessage } from "../../utils/getApolloErrorMessage";
+} from "../../../graphql/generated/schema";
+import { getApolloErrorMessage } from "../../../utils/getApolloErrorMessage";
 
 type UpdateCarInputForm = {
   name: string; //
@@ -230,7 +230,7 @@ const UpdateCar: FC<Props> = () => {
           <div className="space-y-8 sm:space-y-5">
             <div className="flex flex-col">
               <h3 className="leading-6 font-semibold text-gray-900 text-2xl mb-8">
-                Thêm xe mới
+                Cập nhật xe
               </h3>
               <div className="border-b-2 border-gray-200 pb-8">
                 <h1 className="text-indigo-700 font-semibold">
@@ -366,14 +366,16 @@ const UpdateCar: FC<Props> = () => {
                 />
               </div>
             </div>
-            <Features
+            <InputAddable
               setValues={(v: string[]) =>
                 setValue("features", v, {
                   shouldValidate: true,
                 })
               }
               errorMessage={errors.features?.message}
-              defaultFeatures={car.features}
+              defaultValues={car.features}
+              labelText="Tính năng"
+              labelValue="Tính năng"
             />
           </div>
           <div className="pt-5">

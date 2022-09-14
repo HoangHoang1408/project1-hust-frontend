@@ -1,0 +1,16 @@
+query GetCarTypes($input: GetCarTypesInput!) {
+  getCarTypes(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+    pagination {
+      totalPages
+      totalResults
+    }
+    carTypes {
+      ...CarTypeFragment
+    }
+  }
+}

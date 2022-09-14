@@ -5,16 +5,16 @@ import { toast } from "react-toastify";
 import {
   CarBrandBackEnd,
   CarTypeEnumBackEnd,
-} from "../../common/enumConstants";
-import TextSearchInput from "../../components/form/TextSearchInput";
-import Loading from "../../components/Loading";
-import PaginationNav from "../../components/PaginationNav";
+} from "../../../common/enumConstants";
+import TextSearchInput from "../../../components/form/TextSearchInput";
+import Loading from "../../../components/Loading";
+import PaginationNav from "../../../components/PaginationNav";
 import {
   CarBrand,
   CarTypeEnum,
   useGetCarsByLazyQuery,
-} from "../../graphql/generated/schema";
-import { getApolloErrorMessage } from "../../utils/getApolloErrorMessage";
+} from "../../../graphql/generated/schema";
+import { getApolloErrorMessage } from "../../../utils/getApolloErrorMessage";
 type Props = {};
 type ByState = {
   carType?: CarTypeEnum | "all";
@@ -65,6 +65,9 @@ const CarManager = (props: Props) => {
       },
     });
   }, [byState, page]);
+  useEffect(() => {
+    setPage(1);
+  }, [byState]);
   const cars = carsData?.getCarsBy.cars;
   const columns = useMemo(() => {
     return [
@@ -125,7 +128,6 @@ const CarManager = (props: Props) => {
   const data = useMemo(() => cars || [], [cars]);
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ data, columns });
-
   return (
     <Fragment>
       <main className="flex-1 mb-8">

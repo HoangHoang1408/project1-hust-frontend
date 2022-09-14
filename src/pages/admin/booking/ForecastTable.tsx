@@ -1,14 +1,14 @@
 import { FC, Fragment, useEffect, useMemo, useState } from "react";
 import { useTable } from "react-table";
 import { toast } from "react-toastify";
-import { CarTypeEnumBackEnd } from "../../common/enumConstants";
-import Loading from "../../components/Loading";
+import { CarTypeEnumBackEnd } from "../../../common/enumConstants";
+import Loading from "../../../components/Loading";
 import {
   BookingStatus,
   CarTypeEnum,
   useForecastTableLazyQuery,
-} from "../../graphql/generated/schema";
-import { getApolloErrorMessage } from "../../utils/getApolloErrorMessage";
+} from "../../../graphql/generated/schema";
+import { getApolloErrorMessage } from "../../../utils/getApolloErrorMessage";
 type Props = {};
 type ByState = {
   carType?: CarTypeEnum;

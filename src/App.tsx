@@ -6,19 +6,26 @@ import AdminLayout from "./layouts/AdminLayout";
 import LoginProtect from "./layouts/LoginProtect";
 import WithHeaderLayout from "./layouts/WithHeaderLayout";
 import WithSimpleHeaderLayout from "./layouts/WithSimpleHeaderLayout";
-import { AdminBookingDetail } from "./pages/admin/AdminBookingDetail";
-import { default as AdminCarDetail } from "./pages/admin/AdminCarDetail";
-import BookingManager from "./pages/admin/BookingManager";
-import CarManager from "./pages/admin/CarManager";
-import CreateCar from "./pages/admin/CreateCar";
-import TestTable from "./pages/admin/ForecastTable";
-import UpdateCar from "./pages/admin/UpdateCar";
-import UserManager from "./pages/admin/UserMangager";
+import { AdminBookingDetail } from "./pages/admin/booking/AdminBookingDetail";
+import BookingManager from "./pages/admin/booking/BookingManager";
+import TestTable from "./pages/admin/booking/ForecastTable";
+import AdminCarDetail from "./pages/admin/car/AdminCarDetail";
+import CarManager from "./pages/admin/car/CarManager";
+import CreateCar from "./pages/admin/car/CreateCar";
+import UpdateCar from "./pages/admin/car/UpdateCar";
+import AdminCarTypeDetail from "./pages/admin/carType/AdminCarTypeDetail";
+import CarTypeManager from "./pages/admin/carType/CarTypeManager";
+import UpdateCarType from "./pages/admin/carType/UpdateCarType";
+import CreateService from "./pages/admin/service/CreateService";
+import ServiceManager from "./pages/admin/service/ServiceManager";
+import UpdateService from "./pages/admin/service/UpdateService";
+import UserManager from "./pages/admin/user/UserMangager";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
 import LoginPage from "./pages/auth/LoginPage";
 import NotFoundPage from "./pages/auth/NotFoundPage";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 import SignUpPage from "./pages/auth/SignUpPage";
+import { BookingDetail } from "./pages/BookingDetail";
 import RentingPage from "./pages/BookingPage";
 import Seat12Car from "./pages/carView/12SeatCar";
 import Seat16Car from "./pages/carView/16SeatCar";
@@ -56,17 +63,17 @@ function App() {
               <Route path="renting" element={<RentingPage />} />
               <Route path="user">
                 <Route path="settings" element={<Settings />} />
-                <Route path="renting" element={<UserRenting />} />
+                <Route path="rentings" element={<UserRenting />} />
+                <Route path="rentings/:id" element={<BookingDetail />} />
               </Route>
-              <Route path="bookings/:id" element={<AdminBookingDetail />} />
             </Route>
           </Route>
 
-          {/* auth routes */}
+          {/* admin routes */}
           <Route element={<LoginProtect />}>
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<BookingManager />} />
-              <Route path="bookings">
+              <Route path="rentings">
                 <Route path="forecast" element={<TestTable />} />
                 <Route path=":id" element={<AdminBookingDetail />} />
               </Route>
@@ -77,6 +84,16 @@ function App() {
                 <Route path=":id" element={<AdminCarDetail />} />
               </Route>
               <Route path="users" element={<UserManager />} />
+              <Route path="cartypes">
+                <Route index element={<CarTypeManager />} />
+                <Route path=":cartype" element={<AdminCarTypeDetail />} />
+                <Route path="update/:cartype" element={<UpdateCarType />} />
+              </Route>
+              <Route path="services">
+                <Route index element={<ServiceManager />} />
+                <Route path="update/:id" element={<UpdateService />} />
+                <Route path="create" element={<CreateService />} />
+              </Route>
             </Route>
           </Route>
 

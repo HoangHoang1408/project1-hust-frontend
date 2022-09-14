@@ -1,0 +1,9 @@
+mutation UpdateCarType($input: UpdateCarTypeInput!) {
+  updateCarType(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+  }
+}

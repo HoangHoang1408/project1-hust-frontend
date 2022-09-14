@@ -1,0 +1,9 @@
+mutation DeleteService($input: DeleteServiceInput!) {
+  deleteService(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+  }
+}

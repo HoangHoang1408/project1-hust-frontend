@@ -1,0 +1,9 @@
+mutation CreateService($input: CreateServiceInput!) {
+  createService(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+  }
+}

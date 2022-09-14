@@ -126,7 +126,7 @@ function Header({}: Props) {
                     >
                       <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <MenuItem to="user/settings" title="Settings" />
-                        <MenuItem to="user/renting" title="Đơn thuê" />
+                        <MenuItem to="user/rentings" title="Đơn thuê" />
                         <MenuItem
                           to="/"
                           onClick={() => handleLogout()}
@@ -204,7 +204,7 @@ function Header({}: Props) {
                     Settings
                   </Disclosure.Button>
                   <Disclosure.Button
-                    onClick={() => navigate("user/settings")}
+                    onClick={() => navigate("user/rentings")}
                     className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
                   >
                     Đơn thuê

@@ -13,7 +13,11 @@ import {
   useCreateBookingMutation,
 } from "../../graphql/generated/schema";
 import { loadingWhite } from "../../images";
-import { countRentingDay, RentingState } from "../../pages/BookingPage";
+import {
+  calcServicePrice,
+  countRentingDay,
+  RentingState,
+} from "../../pages/BookingPage";
 import { getApolloErrorMessage } from "../../utils/getApolloErrorMessage";
 import { getDate } from "../HomePage/HeroSection";
 export enum PaymentBackEnd {
@@ -113,6 +117,7 @@ const Step2: FC<Props> = ({
       startDate,
       startTime,
       deliveryAddress,
+      rentingServices,
     } = rentingState;
     await createBooking({
       variables: {
@@ -126,6 +131,7 @@ const Step2: FC<Props> = ({
           customerPhone: phoneNumber,
           payment,
           note,
+          serviceIds: rentingServices?.map((s) => s.id),
         },
       },
       onCompleted(data) {
@@ -160,26 +166,26 @@ const Step2: FC<Props> = ({
               </h2>
               <div className="mt-4 flex flex-col space-y-3">
                 <div>
-                  <h1 className="text-lg text-gray-700 font-semibold">
+                  <h1 className="text-base text-gray-900 font-semibold">
                     Loại xe thuê
                   </h1>
-                  <h1 className="text-gray-500 font-semibold">
+                  <h1 className="text-gray-700">
                     {CarTypeEnumBackEnd[carType.carType]}
                   </h1>
                 </div>
                 <div className="">
-                  <h1 className="text-lg text-gray-700 font-semibold">
+                  <h1 className="text-base text-gray-900 font-semibold">
                     Địa điểm giao xe
                   </h1>
-                  <h1 className="text-gray-500 font-semibold">
+                  <h1 className="text-gray-700">
                     {rentingState.deliveryAddress}
                   </h1>
                 </div>
                 <div>
-                  <h1 className="text-lg text-gray-700 font-semibold">
+                  <h1 className="text-base text-gray-900 font-semibold">
                     Thời gian thuê
                   </h1>
-                  <h1 className="text-gray-500 font-semibold">
+                  <h1 className="text-gray-700">
                     {`${rentingState.startTime} ${getFormatDate(
                       rentingState.startDate!
                     )}`}{" "}
@@ -189,6 +195,61 @@ const Step2: FC<Props> = ({
                     )}`}{" "}
                   </h1>
                 </div>
+              </div>
+            </div>
+            <div className="bg-white px-4 py-5 shadow sm:rounded-lg sm:px-6 flex flex-col space-y-3">
+              <h2
+                id="timeline-title"
+                className="text-lg font-medium text-gray-900 border-b border-b-gray-200 pb-1"
+              >
+                Dịch vụ kèm theo
+              </h2>
+              <div className="flex flex-col space-y-2 text-sm text-gray-700">
+                {rentingState.rentingServices && (
+                  <div className="p-2 rounded">
+                    <div>
+                      <div className="grid grid-cols-12 gap-1 font-semibold text-indigo-700">
+                        <div className="col-span-8">Tên dịch vụ</div>
+                        <div className="col-span-4">Giá thành</div>
+                      </div>
+                      <div className="w-4 h-1"></div>
+                    </div>
+                    <div className="flex flex-col space-y-1">
+                      {rentingState.rentingServices.map((e, i) => (
+                        <div key={i} className="flex space-x-2">
+                          <div className="grid gap-1 grid-cols-12 grow">
+                            <div className="col-span-8">{e.serviceName}</div>
+                            <div className="col-span-4">
+                              {e.servicePrice}đ {e.perDay ? "/ngày" : "/lượt"}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {rentingState.rentingServices && (
+                  <Fragment>
+                    <div className="flex justify-between text-base border-t pt-3 border-t-gray-300">
+                      <h1>Thời gian: </h1>
+                      <h1>{rentingDays} ngày</h1>
+                    </div>
+                    <div className="flex justify-between font-semibold text-base">
+                      <h1>Tổng tiền dịch vụ: </h1>
+                      <h1>
+                        {calcServicePrice(
+                          rentingDays!,
+                          rentingState.rentingServices.map((s) => ({
+                            perday: s.perDay,
+                            price: s.servicePrice,
+                          }))
+                        )}
+                        đ
+                      </h1>
+                    </div>
+                  </Fragment>
+                )}
               </div>
             </div>
             <div className="bg-white px-4 py-5 shadow sm:rounded-lg sm:px-6">
@@ -211,11 +272,43 @@ const Step2: FC<Props> = ({
                   <h1>Số lượng xe</h1>
                   <h1>x{rentingState.quantity} xe</h1>
                 </div>
-                <div className="border border-gray-200 mt-4 mb-2"></div>
-                <div className="flex justify-between">
-                  <h1>Tổng</h1>
+                <div className="flex justify-between border-t border-t-gray-200 pt-2">
+                  <h1>Tạm tính</h1>
                   <h1>
                     {carType.price * rentingState.quantity! * rentingDays}đ
+                  </h1>
+                </div>
+                {rentingState.rentingServices && (
+                  <div className="flex justify-between">
+                    <h1>Tiền dịch vụ</h1>
+                    <h1>
+                      {calcServicePrice(
+                        rentingDays!,
+                        rentingState.rentingServices.map((s) => ({
+                          perday: s.perDay,
+                          price: s.servicePrice,
+                        }))
+                      )}
+                      đ
+                    </h1>
+                  </div>
+                )}
+
+                <div className="border border-gray-200 mt-4 mb-2"></div>
+                <div className="flex justify-between font-semibold">
+                  <h1>Tổng</h1>
+                  <h1>
+                    {carType.price * rentingState.quantity! * rentingDays +
+                      (rentingState.rentingServices
+                        ? calcServicePrice(
+                            rentingDays!,
+                            rentingState.rentingServices.map((s) => ({
+                              perday: s.perDay,
+                              price: s.servicePrice,
+                            }))
+                          )
+                        : 0)}
+                    đ
                   </h1>
                 </div>
               </div>

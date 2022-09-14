@@ -1,0 +1,7 @@
+fragment ServiceFragment on Service {
+  id
+  serviceName
+  servicePrice
+  description
+  perDay
+}

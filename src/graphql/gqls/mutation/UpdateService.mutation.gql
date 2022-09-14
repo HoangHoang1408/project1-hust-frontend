@@ -1,0 +1,9 @@
+mutation UpdateService($input: UpdateServiceInput!) {
+  updateService(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+  }
+}

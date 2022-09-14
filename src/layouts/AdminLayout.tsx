@@ -1,6 +1,11 @@
 import { useReactiveVar } from "@apollo/client";
-import { MenuAlt1Icon } from "@heroicons/react/outline";
-import { TableIcon, TruckIcon, UserGroupIcon } from "@heroicons/react/solid";
+import { CurrencyDollarIcon, MenuAlt1Icon } from "@heroicons/react/outline";
+import {
+  TableIcon,
+  TagIcon,
+  TruckIcon,
+  UserGroupIcon,
+} from "@heroicons/react/solid";
 import { cloneDeep } from "lodash";
 import { Fragment, SVGProps, useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -10,7 +15,7 @@ import MobileSideBar from "../components/adminPage/MobileSideBar";
 import { UserRole } from "../graphql/generated/schema";
 const navigation = [
   {
-    routes: ["/admin", "/admin/bookings", RegExp("/admin/bookings/*")],
+    routes: ["/admin", "/admin/rentings", RegExp("/admin/rentings/*")],
     name: "Quản lí đơn thuê",
     icon: TableIcon,
     current: true,
@@ -25,6 +30,18 @@ const navigation = [
     routes: ["/admin/cars", RegExp("/admin/cars/*")],
     name: "Quản lí xe",
     icon: TruckIcon,
+    current: false,
+  },
+  {
+    routes: ["/admin/cartypes", RegExp("/admin/cartypes/*")],
+    name: "Quản lí loại xe",
+    icon: TagIcon,
+    current: false,
+  },
+  {
+    routes: ["/admin/services", RegExp("/admin/services/*")],
+    name: "Quản lí dịch vụ",
+    icon: CurrencyDollarIcon,
     current: false,
   },
 ];

@@ -7,8 +7,16 @@ type Props = {
   children?: ReactNode;
   actionText: string;
   action: () => void;
+  className?: string;
 };
-const Modal: FC<Props> = ({ open, children, setClose, actionText, action }) => {
+const Modal: FC<Props> = ({
+  open,
+  children,
+  setClose,
+  actionText,
+  action,
+  className,
+}) => {
   const cancelButtonRef = useRef(null);
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -68,7 +76,7 @@ const Modal: FC<Props> = ({ open, children, setClose, actionText, action }) => {
                   }}
                   ref={cancelButtonRef}
                 >
-                  Cancel
+                  Huỷ
                 </button>
               </div>
             </div>

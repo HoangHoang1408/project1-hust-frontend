@@ -9,6 +9,7 @@ import { StepsProgress } from "../components/RentingPage/StepsProgress";
 import {
   CarTypeEnum,
   Payment,
+  ServiceFragmentFragment,
   useGetCarTypeLazyQuery,
 } from "../graphql/generated/schema";
 export interface RentingState {
@@ -24,6 +25,7 @@ export interface RentingState {
   note?: string;
   payment: Payment;
   rentingCode?: string;
+  rentingServices?: ServiceFragmentFragment[];
 }
 export const countRentingDay = (
   startDate: Date,
@@ -34,6 +36,15 @@ export const countRentingDay = (
   const start = getDate(startDate, startTime).getTime();
   const end = getDate(endDate, endTime).getTime();
   return Math.round(((end - start) * 2) / 86400000) / 2;
+};
+export const calcServicePrice = (
+  numOfDays: number,
+  services: { price: number; perday: boolean }[]
+) => {
+  return services.reduce(
+    (pre, c) => pre + c.price * (c.perday ? numOfDays : 1),
+    0
+  );
 };
 export default function RentingPage() {
   const navigate = useNavigate();

@@ -10,12 +10,12 @@ import {
   CarTypeEnumBackEnd,
   EngineTypeBackEnd,
   TransmissionTypeBackEnd,
-} from "../../common/enumConstants";
-import Features from "../../components/adminPage/createCar/Feature";
-import FormInput from "../../components/adminPage/createCar/FormInput";
-import SelectInput from "../../components/adminPage/createCar/SelectInput";
-import LoadingButton from "../../components/form/LoadingButton";
-import { SERVER_URL } from "../../config";
+} from "../../../common/enumConstants";
+import FormInput from "../../../components/adminPage/createCar/FormInput";
+import InputAddable from "../../../components/adminPage/createCar/InputAddable";
+import SelectInput from "../../../components/adminPage/createCar/SelectInput";
+import LoadingButton from "../../../components/form/LoadingButton";
+import { SERVER_URL } from "../../../config";
 import {
   CarBrand,
   CarTypeEnum,
@@ -23,8 +23,8 @@ import {
   StoredFileInputType,
   TransmissionType,
   useCreateCarMutation,
-} from "../../graphql/generated/schema";
-import { getApolloErrorMessage } from "../../utils/getApolloErrorMessage";
+} from "../../../graphql/generated/schema";
+import { getApolloErrorMessage } from "../../../utils/getApolloErrorMessage";
 
 type CreateCarInputForm = {
   name: string; //
@@ -285,13 +285,15 @@ const CreateCar: FC<Props> = () => {
             />
           </div>
         </div>
-        <Features
+        <InputAddable
           setValues={(v: string[]) =>
             setValue("features", v, {
               shouldValidate: true,
             })
           }
           errorMessage={errors.features?.message}
+          labelText="Tính năng"
+          labelValue="Tính năng"
         />
       </div>
       <div className="pt-5">

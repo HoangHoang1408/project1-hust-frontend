@@ -35,7 +35,7 @@ const InforRow: FC<RowProps> = ({ title, value }) => {
   );
 };
 type Props = {};
-export const AdminBookingDetail: FC<Props> = () => {
+export const BookingDetail: FC<Props> = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [feedbackState, setFeedbackState] = useState<{
@@ -117,6 +117,7 @@ export const AdminBookingDetail: FC<Props> = () => {
       },
     });
   };
+
   return (
     <Fragment>
       {loading && <Loading />}
@@ -171,17 +172,33 @@ export const AdminBookingDetail: FC<Props> = () => {
                   minute: "2-digit",
                 })}`}
               />
+              {booking.services && booking.services.length > 0 && (
+                <div className="py-3 sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                  <dt className="text-sm font-medium text-gray-500">
+                    Dịch vụ kèm theo
+                  </dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                    {booking.services.map((e, i) => (
+                      <div key={i} className="">
+                        <div>
+                          {e.serviceName} ({e.servicePrice}đ{" "}
+                          {e.perDay ? "theo ngày" : "theo xe"})
+                        </div>
+                      </div>
+                    ))}
+                  </dd>
+                </div>
+              )}
+              <InforRow title={"Số lượng"} value={booking.quantity} />
               <InforRow
                 title={"Thanh toán"}
                 value={PaymentBackEnd[booking.payment]}
               />
-
-              <InforRow title={"Số lượng"} value={booking.quantity} />
               <InforRow
                 title={"Loại xe"}
                 value={CarTypeEnumBackEnd[booking.carType.carType]}
               />
-              <InforRow title={"Tổng tiền"} value={booking.totalPrice} />
+              <InforRow title={"Tổng tiền"} value={`${booking.totalPrice}đ`} />
               {booking.status === BookingStatus.Finished &&
                 (booking.rating === null || booking.rating === undefined) && (
                   <div className="py-3 sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4">

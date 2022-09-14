@@ -10,7 +10,4 @@ fragment UserFragment on User {
   role
   address
   phoneNumber
-  bookings {
-    ...BookingFragment
-  }
 }

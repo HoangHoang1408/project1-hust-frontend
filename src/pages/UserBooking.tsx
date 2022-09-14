@@ -128,7 +128,7 @@ const UserRenting: FC<Props> = (props) => {
         Cell: ({ value }) => {
           return (
             <Link
-              to={`/bookings/${value}`}
+              to={`/user/rentings/${value}`}
               className="font-semibold text-indigo-500 cursor-pointer hover:text-indigo-700 p-1 hover:bg-indigo-300 text-left rounded transition w-fit"
             >
               Chi tiết

@@ -24,4 +24,7 @@ fragment BookingFragment on Booking {
   carType {
     ...CarTypeFragment
   }
+  services {
+    ...ServiceFragment
+  }
 }

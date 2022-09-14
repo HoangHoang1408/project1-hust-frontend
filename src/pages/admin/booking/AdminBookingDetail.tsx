@@ -1,6 +1,4 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { StarIcon } from "@heroicons/react/solid";
-import { range } from "lodash";
 import { FC, Fragment, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -8,15 +6,13 @@ import {
   BookingStatusBackEnd,
   CarTypeEnumBackEnd,
   PaymentBackEnd,
-} from "../../common/enumConstants";
-import LoadingButton from "../../components/form/LoadingButton";
-import Loading from "../../components/Loading";
+} from "../../../common/enumConstants";
+import Loading from "../../../components/Loading";
 import {
-  BookingStatus,
   useBookingDetailQuery,
   useBookingFeedbackMutation,
-} from "../../graphql/generated/schema";
-import { getApolloErrorMessage } from "../../utils/getApolloErrorMessage";
+} from "../../../graphql/generated/schema";
+import { getApolloErrorMessage } from "../../../utils/getApolloErrorMessage";
 
 type RowProps = {
   title: string;
@@ -145,87 +141,36 @@ export const AdminBookingDetail: FC<Props> = () => {
                     minute: "2-digit",
                   })}`}
                 />
-                <InforRow
-                  title={"Thanh toán"}
-                  value={PaymentBackEnd[booking.payment]}
-                />
-
+                {booking.services && booking.services.length > 0 && (
+                  <div className="py-3 sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                    <dt className="text-sm font-medium text-gray-500">
+                      Dịch vụ kèm theo
+                    </dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                      {booking.services.map((e, i) => (
+                        <div key={i} className="">
+                          <div>
+                            {e.serviceName} ({e.servicePrice}đ{" "}
+                            {e.perDay ? "theo ngày" : "theo xe"})
+                          </div>
+                        </div>
+                      ))}
+                    </dd>
+                  </div>
+                )}
                 <InforRow title={"Số lượng"} value={booking.quantity} />
                 <InforRow
                   title={"Loại xe"}
                   value={CarTypeEnumBackEnd[booking.carType.carType]}
                 />
-                <InforRow title={"Tổng tiền"} value={booking.totalPrice} />
-                {booking.status === BookingStatus.Finished &&
-                  (booking.rating === null || booking.rating === undefined) && (
-                    <div className="py-3 sm:py-4 sm:grid sm:grid-cols-3 sm:gap-4">
-                      <dt className="text-sm font-medium text-gray-500">
-                        Đánh giá
-                      </dt>
-                      <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex flex-col space-y-4">
-                        <div className="flex flex-col space-y-2">
-                          <h1>Đánh giá</h1>
-                          <div className="flex">
-                            {range(5).map((e) => {
-                              if (e < feedbackState.star) {
-                                return (
-                                  <StarIcon
-                                    onClick={() =>
-                                      setFeedbackState((pre) => ({
-                                        ...pre,
-                                        star: e + 1,
-                                      }))
-                                    }
-                                    key={e}
-                                    className="w-8 h-8 text-yellow-300 cursor-pointer hover:text-yellow-400"
-                                  />
-                                );
-                              }
-                              return (
-                                <StarIcon
-                                  onClick={() =>
-                                    setFeedbackState((pre) => ({
-                                      ...pre,
-                                      star: e + 1,
-                                    }))
-                                  }
-                                  key={e}
-                                  className="w-8 h-8 text-gray-300 cursor-pointer hover:text-gray-400"
-                                />
-                              );
-                            })}
-                          </div>
-                        </div>
-                        <div>
-                          <label
-                            htmlFor="feedback"
-                            className="block text-sm font-medium text-gray-700 text-start"
-                          >
-                            Phản hồi dịch vụ
-                          </label>
-                          <div className="mt-1">
-                            <textarea
-                              value={feedbackState?.text}
-                              onChange={(e) =>
-                                setFeedbackState((pre) => ({
-                                  ...pre,
-                                  text: e.target.value,
-                                }))
-                              }
-                              id="feedback"
-                              className="appearance-none block w-full md:w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            />
-                          </div>
-                        </div>
-                        <LoadingButton
-                          onClick={sendFeedBack}
-                          loading={feedbackLoading}
-                          text="Gửi"
-                          className="w-full md:w-1/2"
-                        />
-                      </dd>
-                    </div>
-                  )}
+                <InforRow
+                  title={"Thanh toán"}
+                  value={PaymentBackEnd[booking.payment]}
+                />
+                <InforRow
+                  title={"Tổng tiền"}
+                  value={`${booking.totalPrice}đ`}
+                />
               </dl>
             </div>
           </div>

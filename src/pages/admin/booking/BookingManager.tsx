@@ -5,18 +5,18 @@ import { toast } from "react-toastify";
 import {
   BookingStatusBackEnd,
   CarTypeEnumBackEnd,
-} from "../../common/enumConstants";
-import TextSearchInput from "../../components/form/TextSearchInput";
-import Loading from "../../components/Loading";
-import Modal from "../../components/Modal";
-import PaginationNav from "../../components/PaginationNav";
+} from "../../../common/enumConstants";
+import TextSearchInput from "../../../components/form/TextSearchInput";
+import Loading from "../../../components/Loading";
+import Modal from "../../../components/Modal";
+import PaginationNav from "../../../components/PaginationNav";
 import {
   BookingStatus,
   CarTypeEnum,
   useGetBookingByLazyQuery,
   useUpdateBookingStatusMutation,
-} from "../../graphql/generated/schema";
-import { getApolloErrorMessage } from "../../utils/getApolloErrorMessage";
+} from "../../../graphql/generated/schema";
+import { getApolloErrorMessage } from "../../../utils/getApolloErrorMessage";
 type ByState = {
   carType?: CarTypeEnum | "all";
   startDate?: Date;
@@ -79,6 +79,9 @@ const BookingManager = (props: Props) => {
       },
     });
   }, [byState, page]);
+  useEffect(() => {
+    setPage(1);
+  }, [byState]);
   const bookings = bookingData?.getBookingsBy.bookings;
   const columns = useMemo(() => {
     return [
@@ -142,7 +145,7 @@ const BookingManager = (props: Props) => {
             <div className="space-x-2">
               <button
                 onClick={() => {
-                  navigate(`/admin/bookings/${data["id"]}`);
+                  navigate(`/admin/rentings/${data["id"]}`);
                 }}
                 className="font-semibold text-indigo-500 cursor-pointer hover:text-indigo-700 p-1 hover:bg-indigo-300 text-left rounded transition w-fit"
               >

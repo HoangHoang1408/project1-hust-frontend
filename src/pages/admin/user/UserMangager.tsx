@@ -3,15 +3,15 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGlobalFilter, useTable } from "react-table";
 import { toast } from "react-toastify";
-import TextSearchInput from "../../components/form/TextSearchInput";
-import Loading from "../../components/Loading";
-import PaginationNav from "../../components/PaginationNav";
+import TextSearchInput from "../../../components/form/TextSearchInput";
+import Loading from "../../../components/Loading";
+import PaginationNav from "../../../components/PaginationNav";
 import {
   BookingStatus,
   useGetUserByLazyQuery,
   UserRole,
-} from "../../graphql/generated/schema";
-import { getApolloErrorMessage } from "../../utils/getApolloErrorMessage";
+} from "../../../graphql/generated/schema";
+import { getApolloErrorMessage } from "../../../utils/getApolloErrorMessage";
 type ByState = {
   name?: string;
   phoneNumber?: string;
@@ -68,10 +68,9 @@ const UserManager = (props: Props) => {
     });
   }, [byState, page]);
   const users = userData?.getUserBy.users;
-  // avatar {
-  //   fileUrl
-  //   filePath
-  // }
+  useEffect(() => {
+    setPage(1);
+  }, [byState]);
   const columns = useMemo(() => {
     return [
       {

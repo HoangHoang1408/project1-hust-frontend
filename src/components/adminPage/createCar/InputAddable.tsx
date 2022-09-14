@@ -1,21 +1,23 @@
 import { PlusIcon, XIcon } from "@heroicons/react/solid";
 import { cloneDeep } from "lodash";
 import { FC, useEffect, useState } from "react";
-const Features: FC<{
+const InputAddable: FC<{
   setValues: (v: string[]) => void;
   errorMessage?: string;
-  defaultFeatures?: string[];
-}> = ({ setValues, errorMessage, defaultFeatures }) => {
+  defaultValues?: string[];
+  labelText: string;
+  labelValue: string;
+}> = ({ setValues, errorMessage, defaultValues, labelText, labelValue }) => {
   const [features, setFeatures] = useState<string[]>([""]);
   useEffect(() => {
     setValues(features.map((v) => v.trim()).filter((v) => v.length > 0));
   }, [features]);
   useEffect(() => {
-    if (defaultFeatures) setFeatures(defaultFeatures);
-  }, [defaultFeatures]);
+    if (defaultValues) setFeatures(defaultValues);
+  }, [defaultValues]);
   return (
-    <div className="border-b-2 border-gray-200 pb-8">
-      <h1 className="font-semibold text-indigo-700">Tính năng</h1>
+    <div className="pb-8">
+      <h1 className="font-semibold text-indigo-700">{labelText}</h1>
       <div className="pl-4">
         {features.map((e, i) => (
           <div
@@ -26,7 +28,7 @@ const Features: FC<{
               htmlFor={"hello"}
               className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
             >
-              Tính năng {i + 1}
+              {labelValue} {i + 1}
             </label>
             <div className="mt-1 sm:mt-0 sm:col-span-2 flex items-center space-x-3">
               <div className="max-w-lg grow rounded-md shadow-sm">
@@ -60,7 +62,7 @@ const Features: FC<{
           <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"></label>
           <span className="text-xs text-red-500">{errorMessage}</span>
         </div>
-        <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5 flex place-items-center">
+        <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start flex place-items-center">
           <label
             htmlFor={"hello"}
             className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
@@ -84,4 +86,4 @@ const Features: FC<{
     </div>
   );
 };
-export default Features;
+export default InputAddable;
