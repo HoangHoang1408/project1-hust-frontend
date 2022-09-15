@@ -16,6 +16,7 @@ import UpdateCar from "./pages/admin/car/UpdateCar";
 import AdminCarTypeDetail from "./pages/admin/carType/AdminCarTypeDetail";
 import CarTypeManager from "./pages/admin/carType/CarTypeManager";
 import UpdateCarType from "./pages/admin/carType/UpdateCarType";
+import FileManager from "./pages/admin/fileManager";
 import CreateService from "./pages/admin/service/CreateService";
 import ServiceManager from "./pages/admin/service/ServiceManager";
 import UpdateService from "./pages/admin/service/UpdateService";
@@ -94,6 +95,7 @@ function App() {
                 <Route path="update/:id" element={<UpdateService />} />
                 <Route path="create" element={<CreateService />} />
               </Route>
+              <Route path="files" element={<FileManager />} />
             </Route>
           </Route>
 

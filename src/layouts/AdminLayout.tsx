@@ -1,6 +1,7 @@
 import { useReactiveVar } from "@apollo/client";
 import { CurrencyDollarIcon, MenuAlt1Icon } from "@heroicons/react/outline";
 import {
+  FolderDownloadIcon,
   TableIcon,
   TagIcon,
   TruckIcon,
@@ -42,6 +43,12 @@ const navigation = [
     routes: ["/admin/services", RegExp("/admin/services/*")],
     name: "Quản lí dịch vụ",
     icon: CurrencyDollarIcon,
+    current: false,
+  },
+  {
+    routes: ["/admin/files"],
+    name: "Mẫu văn bản",
+    icon: FolderDownloadIcon,
     current: false,
   },
 ];
