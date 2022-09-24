@@ -7,6 +7,7 @@ import { FormInput } from "../../components/form/FormInput";
 import LoadingButton from "../../components/form/LoadingButton";
 import { useResetPasswordMutation } from "../../graphql/generated/schema";
 import { logo } from "../../images";
+import { getApolloErrorMessage } from "../../utils/getApolloErrorMessage";
 type ResetPasswordInputForm = {
   password: string;
   confirmPassword: string;
@@ -40,6 +41,11 @@ export default function ResetPasswordPage() {
       }
     },
     onError(err) {
+      const errMsg = getApolloErrorMessage(err);
+      if (errMsg) {
+        toast.error(errMsg);
+        return;
+      }
       toast.error("Lỗi server, thử lại sau");
     },
   });

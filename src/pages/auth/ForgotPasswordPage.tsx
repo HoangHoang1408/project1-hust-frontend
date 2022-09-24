@@ -1,11 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { FormInput } from "../../components/form/FormInput";
 import LoadingButton from "../../components/form/LoadingButton";
 import { useForgotPasswordLazyQuery } from "../../graphql/generated/schema";
 import { logo } from "../../images";
+import { getApolloErrorMessage } from "../../utils/getApolloErrorMessage";
 type ForgotPasswordInputForm = {
   email: string;
 };
@@ -20,7 +22,9 @@ export default function ForgotPasswordPage() {
     formState: { errors },
   } = useForm<ForgotPasswordInputForm>({
     resolver: yupResolver(inputSchema),
+    mode: "onBlur",
   });
+  const navigate = useNavigate();
   const [forgotPassword, { loading }] = useForgotPasswordLazyQuery({
     onCompleted({ forgotPassword }) {
       const { ok, error } = forgotPassword;
@@ -28,9 +32,17 @@ export default function ForgotPasswordPage() {
         toast.error(error.message);
         return;
       }
-      if (ok) toast.success("Đã gửi email");
+      if (ok) {
+        toast.success("Đã gửi email");
+        navigate("/");
+      }
     },
     onError(err) {
+      const errMsg = getApolloErrorMessage(err);
+      if (errMsg) {
+        toast.error(errMsg);
+        return;
+      }
       toast.error("Lỗi server, thử lại sau");
     },
   });

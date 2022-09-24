@@ -16,7 +16,7 @@ import UpdateCar from "./pages/admin/car/UpdateCar";
 import AdminCarTypeDetail from "./pages/admin/carType/AdminCarTypeDetail";
 import CarTypeManager from "./pages/admin/carType/CarTypeManager";
 import UpdateCarType from "./pages/admin/carType/UpdateCarType";
-import FileManager from "./pages/admin/fileManager";
+import FileManager from "./pages/admin/FileManager";
 import CreateService from "./pages/admin/service/CreateService";
 import ServiceManager from "./pages/admin/service/ServiceManager";
 import UpdateService from "./pages/admin/service/UpdateService";
@@ -26,6 +26,7 @@ import LoginPage from "./pages/auth/LoginPage";
 import NotFoundPage from "./pages/auth/NotFoundPage";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 import SignUpPage from "./pages/auth/SignUpPage";
+import VerifyEmailPage from "./pages/auth/VerifyEmailPage";
 import { BookingDetail } from "./pages/BookingDetail";
 import RentingPage from "./pages/BookingPage";
 import Seat12Car from "./pages/carView/12SeatCar";
@@ -108,6 +109,7 @@ function App() {
               path="forgotPassword/changePassword"
               element={<ResetPasswordPage />}
             />
+            <Route path="confirmEmail" element={<VerifyEmailPage />} />
           </Route>
 
           {/* handle notfound */}

@@ -1048,6 +1048,13 @@ export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type UserQuery = { __typename?: 'Query', getDetailUser: { __typename?: 'GetDetailUserOutput', ok: boolean, error?: { __typename?: 'CustomError', message: string } | null, user: { __typename?: 'User', id: string, email: string, verified: boolean, name: string, role: UserRole, address?: string | null, phoneNumber?: string | null, avatar?: { __typename?: 'StoredFile', fileUrl: string, filePath: string } | null } } };
 
+export type VerifyEmailQueryVariables = Exact<{
+  input: VerifyEmailInput;
+}>;
+
+
+export type VerifyEmailQuery = { __typename?: 'Query', verifyEmail: { __typename?: 'VerifyEmailOutput', ok: boolean, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null } };
+
 export const CarTypeFragmentFragmentDoc = gql`
     fragment CarTypeFragment on CarType {
   carType
@@ -2243,3 +2250,42 @@ export function useUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserQ
 export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
 export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
 export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
+export const VerifyEmailDocument = gql`
+    query VerifyEmail($input: VerifyEmailInput!) {
+  verifyEmail(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+  }
+}
+    `;
+
+/**
+ * __useVerifyEmailQuery__
+ *
+ * To run a query within a React component, call `useVerifyEmailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useVerifyEmailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useVerifyEmailQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useVerifyEmailQuery(baseOptions: Apollo.QueryHookOptions<VerifyEmailQuery, VerifyEmailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<VerifyEmailQuery, VerifyEmailQueryVariables>(VerifyEmailDocument, options);
+      }
+export function useVerifyEmailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<VerifyEmailQuery, VerifyEmailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<VerifyEmailQuery, VerifyEmailQueryVariables>(VerifyEmailDocument, options);
+        }
+export type VerifyEmailQueryHookResult = ReturnType<typeof useVerifyEmailQuery>;
+export type VerifyEmailLazyQueryHookResult = ReturnType<typeof useVerifyEmailLazyQuery>;
+export type VerifyEmailQueryResult = Apollo.QueryResult<VerifyEmailQuery, VerifyEmailQueryVariables>;

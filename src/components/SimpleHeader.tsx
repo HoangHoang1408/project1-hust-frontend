@@ -5,7 +5,7 @@ import { logo2 } from "../images";
 type Props = {};
 function SimpleHeader({}: Props) {
   return (
-    <Disclosure as="nav" className="bg-white shadow">
+    <Disclosure as="nav" className="bg-white shadow border-b">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

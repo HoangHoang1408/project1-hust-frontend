@@ -1,0 +1,9 @@
+query VerifyEmail($input: VerifyEmailInput!) {
+  verifyEmail(input: $input) {
+    ok
+    error {
+      mainReason
+      message
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import { useReactiveVar } from "@apollo/client";
 import { yupResolver } from "@hookform/resolvers/yup";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -77,6 +77,7 @@ const Profile: FC<Props> = (props) => {
 
   const submitHandler = async () => {
     const { name, address, phoneNumber } = getValues();
+    if (phoneNumber) console.log("hello");
     if (phoneNumber && !phoneRegExp.test(phoneNumber)) {
       setError("phoneNumber", {
         message: "Sai định dạng số điện thoại",
@@ -87,7 +88,7 @@ const Profile: FC<Props> = (props) => {
     const input: UpdateUserInput = {
       name,
       address,
-      phoneNumber,
+      phoneNumber: phoneNumber || undefined,
     };
     if (image) {
       try {
@@ -100,8 +101,18 @@ const Profile: FC<Props> = (props) => {
           },
         });
         input.avatar = res.data.fileReference;
+        if (user?.avatar)
+          await axios.post(SERVER_URL + "/delete/file", {
+            storagePath: user?.avatar.filePath,
+          });
       } catch (err) {
-        toast.error("Lỗi server, thử lại sausdfsdfsd");
+        const errMessage = (err as AxiosError<{ message: string }>).response
+          ?.data.message;
+        if (errMessage) {
+          toast.error(errMessage);
+          return;
+        }
+        toast.error("Lỗi xảy ra, thử lại sau");
         setLoadingMain(false);
         return;
       }
@@ -130,51 +141,55 @@ const Profile: FC<Props> = (props) => {
                 >
                   Ảnh
                 </p>
-                <div className="relative self-center rounded-full w-40 overflow-hidden">
-                  {image && (
-                    <img
-                      className="relative rounded-full w-40 h-40"
-                      src={URL.createObjectURL(image)}
-                      alt=""
-                    />
-                  )}
-                  {user?.avatar?.fileUrl && !image && (
-                    <img
-                      className="relative rounded-full w-40 h-40"
-                      src={user.avatar.fileUrl}
-                      alt=""
-                    />
-                  )}
-                  {!user?.avatar?.fileUrl && !image && (
-                    <svg
-                      className="relative rounded-full w-40 h-40"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
-                        clipRule="evenodd"
+                <div className="self-center">
+                  <div className="relative rounded-full w-40 overflow-hidden">
+                    {image && (
+                      <img
+                        className="relative rounded-full w-40 h-40"
+                        src={URL.createObjectURL(image)}
+                        alt=""
                       />
-                    </svg>
-                  )}
-                  <label
-                    htmlFor="desktop-user-photo"
-                    className="absolute inset-0 w-40 h-40 rounded-full bg-black bg-opacity-75 flex items-center justify-center text-sm font-medium text-white opacity-0 hover:opacity-100 focus-within:opacity-100"
-                  >
-                    <span>Change</span>
-                    <span className="sr-only"> user photo</span>
-                    <input
-                      onChange={(e) => {
-                        if (e.target.files) setImage(e.target.files[0]);
-                      }}
-                      type="file"
-                      id="desktop-user-photo"
-                      name="user-photo"
-                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer border-gray-300 rounded-md"
-                    />
-                  </label>
+                    )}
+                    {user?.avatar?.fileUrl && !image && (
+                      <img
+                        className="relative rounded-full w-40 h-40"
+                        src={user.avatar.fileUrl}
+                        alt=""
+                      />
+                    )}
+                    {!user?.avatar?.fileUrl && !image && (
+                      <svg
+                        className="relative rounded-full w-40 h-40"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    )}
+                    <label
+                      htmlFor="desktop-user-photo"
+                      className="absolute inset-0 w-40 h-40 rounded-full bg-black bg-opacity-75 flex items-center justify-center text-sm font-medium text-white opacity-0 hover:opacity-100 focus-within:opacity-100"
+                    >
+                      <span>Change</span>
+                      <span className="sr-only"> user photo</span>
+                      <input
+                        onChange={(e) => {
+                          if (e.target.files) setImage(e.target.files[0]);
+                          //@ts-ignore
+                          e.target.value = null;
+                        }}
+                        type="file"
+                        id="desktop-user-photo"
+                        name="user-photo"
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer border-gray-300 rounded-md"
+                      />
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
