@@ -17,5 +17,6 @@ query ForecastTable($input: ForecastTableInput!) {
       }
       rowSumary
     }
+    columnSummary
   }
 }

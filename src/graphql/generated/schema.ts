@@ -277,6 +277,7 @@ export type ForecastTableInput = {
 
 export type ForecastTableOutput = {
   __typename?: 'ForecastTableOutput';
+  columnSummary?: Maybe<Array<Scalars['String']>>;
   error?: Maybe<CustomError>;
   ok: Scalars['Boolean'];
   tableData?: Maybe<Array<TableRowData>>;
@@ -851,7 +852,7 @@ export type VerifyForgotPasswordOutput = {
   ok: Scalars['Boolean'];
 };
 
-export type BookingFragmentFragment = { __typename?: 'Booking', id: string, payment: Payment, status: BookingStatus, rating?: number | null, feedBack?: string | null, bookingCode: string, totalPrice: number, startDate: any, endDate: any, quantity: number, customerName: string, customerPhone: string, note?: string | null, homeDelivery: string, user?: { __typename?: 'User', id: string, name: string, avatar?: { __typename?: 'StoredFile', fileUrl: string, filePath: string } | null } | null, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } }, services?: Array<{ __typename?: 'Service', id: string, serviceName: string, servicePrice: number, description: string, perDay: boolean }> | null };
+export type BookingFragmentFragment = { __typename?: 'Booking', id: string, createdAt: any, payment: Payment, status: BookingStatus, rating?: number | null, feedBack?: string | null, bookingCode: string, totalPrice: number, startDate: any, endDate: any, quantity: number, customerName: string, customerPhone: string, note?: string | null, homeDelivery: string, user?: { __typename?: 'User', id: string, name: string, avatar?: { __typename?: 'StoredFile', fileUrl: string, filePath: string } | null } | null, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } }, services?: Array<{ __typename?: 'Service', id: string, serviceName: string, servicePrice: number, description: string, perDay: boolean }> | null };
 
 export type CarFragmentFragment = { __typename?: 'Car', id: string, carBrand: CarBrand, transmissionType: TransmissionType, consumption: number, features: Array<string>, name: string, rating: number, engineType: EngineType, manufactureYear: number, licensePlate: string, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } }, images?: Array<{ __typename?: 'StoredFile', fileUrl: string, filePath: string }> | null };
 
@@ -957,7 +958,7 @@ export type BookingDetailQueryVariables = Exact<{
 }>;
 
 
-export type BookingDetailQuery = { __typename?: 'Query', getBookingDetail: { __typename?: 'GetBookingDetailOutput', ok: boolean, error?: { __typename?: 'CustomError', message: string } | null, booking?: { __typename?: 'Booking', id: string, payment: Payment, status: BookingStatus, rating?: number | null, feedBack?: string | null, bookingCode: string, totalPrice: number, startDate: any, endDate: any, quantity: number, customerName: string, customerPhone: string, note?: string | null, homeDelivery: string, user?: { __typename?: 'User', id: string, name: string, avatar?: { __typename?: 'StoredFile', fileUrl: string, filePath: string } | null } | null, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } }, services?: Array<{ __typename?: 'Service', id: string, serviceName: string, servicePrice: number, description: string, perDay: boolean }> | null } | null } };
+export type BookingDetailQuery = { __typename?: 'Query', getBookingDetail: { __typename?: 'GetBookingDetailOutput', ok: boolean, error?: { __typename?: 'CustomError', message: string } | null, booking?: { __typename?: 'Booking', id: string, createdAt: any, payment: Payment, status: BookingStatus, rating?: number | null, feedBack?: string | null, bookingCode: string, totalPrice: number, startDate: any, endDate: any, quantity: number, customerName: string, customerPhone: string, note?: string | null, homeDelivery: string, user?: { __typename?: 'User', id: string, name: string, avatar?: { __typename?: 'StoredFile', fileUrl: string, filePath: string } | null } | null, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } }, services?: Array<{ __typename?: 'Service', id: string, serviceName: string, servicePrice: number, description: string, perDay: boolean }> | null } | null } };
 
 export type CarDetailQueryVariables = Exact<{
   input: GetCarDetailInput;
@@ -978,7 +979,7 @@ export type ForecastTableQueryVariables = Exact<{
 }>;
 
 
-export type ForecastTableQuery = { __typename?: 'Query', forecastTable: { __typename?: 'ForecastTableOutput', ok: boolean, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null, tableData?: Array<{ __typename?: 'TableRowData', rowSumary: string, car: { __typename?: 'Car', id: string, name: string, licensePlate: string }, dayDatas: Array<{ __typename?: 'DayData', status?: BookingStatus | null, day: any }> }> | null } };
+export type ForecastTableQuery = { __typename?: 'Query', forecastTable: { __typename?: 'ForecastTableOutput', ok: boolean, columnSummary?: Array<string> | null, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null, tableData?: Array<{ __typename?: 'TableRowData', rowSumary: string, car: { __typename?: 'Car', id: string, name: string, licensePlate: string }, dayDatas: Array<{ __typename?: 'DayData', status?: BookingStatus | null, day: any }> }> | null } };
 
 export type ForgotPasswordQueryVariables = Exact<{
   input: ForgotPasswordInput;
@@ -992,7 +993,7 @@ export type GetBookingByQueryVariables = Exact<{
 }>;
 
 
-export type GetBookingByQuery = { __typename?: 'Query', getBookingsBy: { __typename?: 'GetBookingsByOutput', ok: boolean, error?: { __typename?: 'CustomError', message: string, mainReason: string } | null, bookings?: Array<{ __typename?: 'Booking', id: string, payment: Payment, status: BookingStatus, rating?: number | null, feedBack?: string | null, bookingCode: string, totalPrice: number, startDate: any, endDate: any, quantity: number, customerName: string, customerPhone: string, note?: string | null, homeDelivery: string, user?: { __typename?: 'User', id: string, name: string, avatar?: { __typename?: 'StoredFile', fileUrl: string, filePath: string } | null } | null, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } }, services?: Array<{ __typename?: 'Service', id: string, serviceName: string, servicePrice: number, description: string, perDay: boolean }> | null }> | null, pagination?: { __typename?: 'PaginationOutput', totalPages?: number | null, totalResults?: number | null } | null } };
+export type GetBookingByQuery = { __typename?: 'Query', getBookingsBy: { __typename?: 'GetBookingsByOutput', ok: boolean, error?: { __typename?: 'CustomError', message: string, mainReason: string } | null, bookings?: Array<{ __typename?: 'Booking', id: string, createdAt: any, payment: Payment, status: BookingStatus, rating?: number | null, feedBack?: string | null, bookingCode: string, totalPrice: number, startDate: any, endDate: any, quantity: number, customerName: string, customerPhone: string, note?: string | null, homeDelivery: string, user?: { __typename?: 'User', id: string, name: string, avatar?: { __typename?: 'StoredFile', fileUrl: string, filePath: string } | null } | null, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } }, services?: Array<{ __typename?: 'Service', id: string, serviceName: string, servicePrice: number, description: string, perDay: boolean }> | null }> | null, pagination?: { __typename?: 'PaginationOutput', totalPages?: number | null, totalResults?: number | null } | null } };
 
 export type GetCarTypeQueryVariables = Exact<{
   input: GetCarTypeInput;
@@ -1081,6 +1082,7 @@ export const ServiceFragmentFragmentDoc = gql`
 export const BookingFragmentFragmentDoc = gql`
     fragment BookingFragment on Booking {
   id
+  createdAt
   payment
   status
   rating
@@ -1770,6 +1772,7 @@ export const ForecastTableDocument = gql`
       }
       rowSumary
     }
+    columnSummary
   }
 }
     `;

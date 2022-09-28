@@ -6,6 +6,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import LoginProtect from "./layouts/LoginProtect";
 import WithHeaderLayout from "./layouts/WithHeaderLayout";
 import WithSimpleHeaderLayout from "./layouts/WithSimpleHeaderLayout";
+import AboutUsPage from "./pages/AboutUsPage";
 import { AdminBookingDetail } from "./pages/admin/booking/AdminBookingDetail";
 import BookingManager from "./pages/admin/booking/BookingManager";
 import TestTable from "./pages/admin/booking/ForecastTable";
@@ -49,6 +50,7 @@ function App() {
           {/* customer routes */}
           <Route path="/" element={<WithHeaderLayout />}>
             <Route index element={<HomePage />} />
+            <Route path="aboutus" element={<AboutUsPage />} />
             <Route path="cars">
               <Route path=":id" element={<CarDetail />} />
               <Route path="xe-4-cho" element={<Seat4Car />} />

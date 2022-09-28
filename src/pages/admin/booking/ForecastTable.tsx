@@ -61,6 +61,7 @@ const ForecastTable: FC<Props> = (props) => {
     });
   }, [byState]);
   const tableData = foreCastData?.forecastTable.tableData;
+  const columnSummary = foreCastData?.forecastTable.columnSummary;
   const columns = useMemo(() => {
     let cl = [
       {
@@ -230,6 +231,17 @@ const ForecastTable: FC<Props> = (props) => {
                           </tr>
                         );
                       })}
+                      <tr>
+                        <td className="whitespace-nowrap py-1 px-1 text-sm text-center font-medium text-gray-600 border">
+                          Tổng kết
+                        </td>
+                        {columnSummary &&
+                          columnSummary.map((s) => (
+                            <td className="whitespace-nowrap py-1 px-1 text-sm text-center font-medium text-gray-600 border">
+                              {s}
+                            </td>
+                          ))}
+                      </tr>
                     </tbody>
                   </table>
                 </div>

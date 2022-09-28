@@ -73,6 +73,7 @@ const TimeInput: FC<Props> = ({
         <input
           onChange={hanldeDateChange}
           type="date"
+          min={new Date().toISOString().split("T")[0]}
           defaultValue={defaultDate}
           className="appearance-none block w-1/2 px-2 py-1 border border-gray-300 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         ></input>

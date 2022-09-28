@@ -92,10 +92,22 @@ const UserRenting: FC<Props> = (props) => {
         accessor: (row) => BookingStatusBackEnd[row["status"]],
       },
       {
+        Header: "Ngày đặt",
+        //@ts-ignore
+        accessor: (row) =>
+          new Date(row["createdAt"]).toLocaleDateString("vi", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+      },
+      {
         Header: "Bắt đầu",
         //@ts-ignore
         accessor: (row) =>
-          new Date(row["startDate"]).toLocaleDateString("vn", {
+          new Date(row["startDate"]).toLocaleDateString("vi", {
             year: "numeric",
             month: "2-digit",
             day: "2-digit",
@@ -107,7 +119,7 @@ const UserRenting: FC<Props> = (props) => {
         Header: "Kết thúc",
         //@ts-ignore
         accessor: (row) =>
-          new Date(row["endDate"]).toLocaleDateString("vn", {
+          new Date(row["endDate"]).toLocaleDateString("vi", {
             year: "numeric",
             month: "2-digit",
             day: "2-digit",

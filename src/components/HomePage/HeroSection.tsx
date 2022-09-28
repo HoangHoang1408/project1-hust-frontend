@@ -192,6 +192,7 @@ export default function HeroSection() {
                   <input
                     {...register("startDate")}
                     type="date"
+                    min={new Date().toISOString().split("T")[0]}
                     defaultValue={new Date().toISOString().split("T")[0]}
                     className="appearance-none block w-1/2 px-2 py-1 border border-gray-300 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   ></input>
@@ -217,6 +218,7 @@ export default function HeroSection() {
                     {...register("endDate")}
                     defaultValue={new Date().toISOString().split("T")[0]}
                     type="date"
+                    min={new Date().toISOString().split("T")[0]}
                     className="appearance-none block w-1/2 px-2 py-1 border border-gray-300 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   ></input>
                   <select

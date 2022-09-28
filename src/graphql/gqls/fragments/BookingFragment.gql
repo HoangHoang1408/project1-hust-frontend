@@ -1,5 +1,6 @@
 fragment BookingFragment on Booking {
   id
+  createdAt
   payment
   status
   rating

@@ -106,10 +106,22 @@ const BookingManager = (props: Props) => {
         accessor: (row) => BookingStatusBackEnd[row["status"]],
       },
       {
+        Header: "Thời gian đặt",
+        // @ts-ignore
+        accessor: (row) =>
+          new Date(row["createdAt"]).toLocaleDateString("vi", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+      },
+      {
         Header: "Bắt đầu",
         // @ts-ignore
         accessor: (row) =>
-          new Date(row["startDate"]).toLocaleDateString("vn", {
+          new Date(row["startDate"]).toLocaleDateString("vi", {
             year: "numeric",
             month: "2-digit",
             day: "2-digit",
@@ -121,7 +133,7 @@ const BookingManager = (props: Props) => {
         Header: "Kết thúc",
         // @ts-ignore
         accessor: (row) =>
-          new Date(row["endDate"]).toLocaleDateString("vn", {
+          new Date(row["endDate"]).toLocaleDateString("vi", {
             year: "numeric",
             month: "2-digit",
             day: "2-digit",
@@ -258,12 +270,6 @@ const BookingManager = (props: Props) => {
             </h1>
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-16 flex space-x-3 items-end">
-            <TextSearchInput
-              labelText="Mã thuê"
-              setText={(v) => setByState((pre) => ({ ...pre, textSearch: v }))}
-              text={byState.textSearch}
-              className="py-1"
-            />
             <div className="flex flex-col space-y-1">
               <h1 className="text-gray-700 font-medium">Loại xe</h1>
               <select
@@ -272,7 +278,7 @@ const BookingManager = (props: Props) => {
                   setByState((pre) => ({ ...pre, carType: e.target.value }))
                 }
                 value={byState.carType}
-                className="appearance-none block w-full px-2 h-full border border-gray-300 shadow-sm rounded-none placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm font-semibold py-1"
+                className="appearance-none block w-full px-2 h-full border border-gray-300 shadow-sm rounded-none placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-1 font-semibold"
               >
                 <option value="all">Tất cả</option>
                 {Object.values(CarTypeEnum).map((t, i) => (
@@ -293,7 +299,7 @@ const BookingManager = (props: Props) => {
                   }))
                 }
                 value={byState.bookingStatus}
-                className="appearance-none block w-full px-2 h-full border border-gray-300 shadow-sm rounded-none placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm font-semibold py-1"
+                className="appearance-none block w-full px-2 border border-gray-300 shadow-sm rounded-none placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-1 font-semibold"
               >
                 <option value="all">Tất cả</option>
                 {Object.values(BookingStatus).map((t, i) => (
@@ -303,6 +309,12 @@ const BookingManager = (props: Props) => {
                 ))}
               </select>
             </div>
+            <TextSearchInput
+              labelText="Mã thuê"
+              setText={(v) => setByState((pre) => ({ ...pre, textSearch: v }))}
+              text={byState.textSearch}
+              className="py-1"
+            />
             <div className="flex flex-col space-y-1">
               <h1 className="text-gray-700 font-medium">Bắt đầu</h1>
               <input

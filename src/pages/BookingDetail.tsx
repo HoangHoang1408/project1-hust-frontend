@@ -158,13 +158,13 @@ export const BookingDetail: FC<Props> = () => {
               />
               <InforRow
                 title="Thời gian"
-                value={`${new Date(booking.startDate).toLocaleDateString("vn", {
+                value={`${new Date(booking.startDate).toLocaleDateString("vi", {
                   year: "numeric",
                   month: "2-digit",
                   day: "2-digit",
                   hour: "2-digit",
                   minute: "2-digit",
-                })} đến ${new Date(booking.endDate).toLocaleDateString("vn", {
+                })} đến ${new Date(booking.endDate).toLocaleDateString("vi", {
                   year: "numeric",
                   month: "2-digit",
                   day: "2-digit",

@@ -70,6 +70,10 @@ const Step1: FC<Props> = ({
   const [openModal, setOpenModal] = useState(false);
 
   const nextStep = () => {
+    if (rentingDays <= 0) {
+      toast.error("Thời gian thuê không hợp lệ");
+      return;
+    }
     const { deliveryAddress: address, quantity } = rentingState;
     if (!quantity || quantity <= 0 || isNaN(quantity)) {
       toast.error("Số lượng xe không hợp lệ");
@@ -81,6 +85,9 @@ const Step1: FC<Props> = ({
     }
     setStep(1);
   };
+
+  const carType = carTypeData?.getCarType.carType;
+  const carAvailable = checkData?.checkCarAvailable;
   const rentingDays = countRentingDay(
     rentingState.startDate!,
     rentingState.endDate!,
@@ -94,9 +101,14 @@ const Step1: FC<Props> = ({
         perday: s.perDay,
         price: s.servicePrice,
       })) || []
-    ) * (rentingState.quantity || 0); 
-  const carType = carTypeData?.getCarType.carType;
-  const carAvailable = checkData?.checkCarAvailable;
+    ) *
+    (rentingState.quantity
+      ? rentingState.quantity < 0
+        ? 0
+        : rentingState.quantity
+      : 0);
+  const carPrice =
+    rentingDays * (carType?.price || 0) * (rentingState.quantity || 0);
   return (
     <Fragment>
       {openModal && (
@@ -275,6 +287,7 @@ const Step1: FC<Props> = ({
                         }));
                       }}
                       type="number"
+                      min={1}
                       defaultValue={rentingState.quantity}
                       className="appearance-none block w-full px-2 py-1 border border-gray-300 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     ></input>
@@ -404,7 +417,12 @@ const Step1: FC<Props> = ({
                     </div>
                     <div className="flex justify-between text-base">
                       <h1>Số lượng xe: </h1>
-                      <h1>{rentingState.quantity} xe</h1>
+                      <h1>
+                        {rentingState.quantity && rentingState.quantity > 0
+                          ? rentingState.quantity
+                          : 0}{" "}
+                        xe
+                      </h1>
                     </div>
                     <div className="flex justify-between font-semibold text-base border-t pt-2 border-t-gray-300">
                       <h1>Tổng tiền dịch vụ: </h1>
@@ -432,13 +450,17 @@ const Step1: FC<Props> = ({
                 </div>
                 <div className="flex justify-between">
                   <h1>Số lượng xe</h1>
-                  <h1>x{rentingState.quantity} xe</h1>
+                  <h1>
+                    x
+                    {rentingState.quantity && rentingState.quantity > 0
+                      ? rentingState.quantity
+                      : 0}{" "}
+                    xe
+                  </h1>
                 </div>
                 <div className="flex justify-between border-t border-t-gray-200 pt-2">
                   <h1>Tổng tiền xe</h1>
-                  <h1>
-                    {carType.price * rentingState.quantity! * rentingDays}đ
-                  </h1>
+                  <h1>{carPrice}đ</h1>
                 </div>
                 {rentingState.rentingServices && (
                   <div className="flex justify-between">
@@ -450,11 +472,7 @@ const Step1: FC<Props> = ({
                 <div className="border border-gray-200 mt-4 mb-2"></div>
                 <div className="flex justify-between font-semibold">
                   <h1>Tổng</h1>
-                  <h1>
-                    {carType.price * rentingState.quantity! * rentingDays +
-                      servicePrice}
-                    đ
-                  </h1>
+                  <h1>{carPrice + servicePrice}đ</h1>
                 </div>
               </div>
               <div className="mt-6 flex flex-col justify-stretch">

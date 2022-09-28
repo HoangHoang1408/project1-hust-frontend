@@ -90,11 +90,11 @@ const Step1Modal = ({ open, setClose, action }: Props) => {
                 setModalState((pre) => ({ ...pre, serviceName: v }))
               }
               text={modalState?.serviceName}
-              className="py-1"
+              className="p-2"
             />
             {serviceLoading && (
-              <div>
-                <img className="w-6 h-6" src={loadingWhite} alt="" />
+              <div className="flex border-2 justify-center absolute top-full left-0 bg-white p-1 rounded w-full shadow">
+                <img className="w-10 h-10" src={loadingWhite} alt="" />
               </div>
             )}
             {services && modalState.canSearch && (

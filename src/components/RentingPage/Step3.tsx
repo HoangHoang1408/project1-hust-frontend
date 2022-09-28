@@ -2,7 +2,11 @@ import { FC, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { CarTypeEnumBackEnd, PaymentBackEnd } from "../../common/enumConstants";
 import { GetCarTypeQuery } from "../../graphql/generated/schema";
-import { countRentingDay, RentingState } from "../../pages/BookingPage";
+import {
+  calcServicePrice,
+  countRentingDay,
+  RentingState,
+} from "../../pages/BookingPage";
 import { getFormatDate } from "./Step2";
 
 type Props = {
@@ -19,6 +23,21 @@ const Step3: FC<Props> = ({ rentingState, carTypeData }) => {
     rentingState.startTime!,
     rentingState.endTime!
   );
+  const servicePrice =
+    calcServicePrice(
+      rentingDays!,
+      rentingState.rentingServices?.map((s) => ({
+        perday: s.perDay,
+        price: s.servicePrice,
+      })) || []
+    ) *
+    (rentingState.quantity
+      ? rentingState.quantity < 0
+        ? 0
+        : rentingState.quantity
+      : 0);
+  const carPrice =
+    rentingDays * (carType?.price || 0) * (rentingState.quantity || 0);
   return (
     <Fragment>
       {carType && (
@@ -32,7 +51,7 @@ const Step3: FC<Props> = ({ rentingState, carTypeData }) => {
                     id="applicant-information-title"
                     className="leading-6 pt-6 text-3xl font-bold text-center text-indigo-700"
                   >
-                    Đặt xe thành công
+                    Giữ xe thành công
                   </h2>
                   <div className="text-center mt-8 flex flex-col space-y-2 text-gray-700">
                     <h1 className="font-normal">Mã đặt xe của bạn:</h1>
@@ -40,22 +59,14 @@ const Step3: FC<Props> = ({ rentingState, carTypeData }) => {
                       {rentingState.rentingCode}
                     </h1>
                     <div className="font-normal ">
-                      <h1>Cảm ơn bạn đã sử dụng dịch vụ của công ty!</h1>
-                      <h1>Chúng tôi đã tiếp nhận yêu cầu và giữ xe cho bạn.</h1>
                       <h1>
-                        Bạn vui lòng đặt cọc giữ xe để hệ thống xác nhận đơn
-                        hàng
+                        Cảm ơn bạn đã sử dụng dịch vụ của công ty! Chúng tôi đã
+                        tiếp nhận yêu cầu và giữ xe cho bạn. Bạn sẽ nhận được
+                        hướng dẫn từ nhân viên của chúng tôi, vui lòng làm theo
+                        hướng dẫn để hoàn thành đặt xe
                       </h1>
                     </div>
-                    <div className="flex space-x-6 py-6">
-                      <button
-                        type="submit"
-                        className={
-                          "w-full h-10 flex items-center justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer"
-                        }
-                      >
-                        Đặt cọc
-                      </button>
+                    <div className="flex space-x-6 py-6 w-2/3 mx-auto">
                       <button
                         onClick={() => navigate("/")}
                         type="submit"
@@ -183,7 +194,7 @@ const Step3: FC<Props> = ({ rentingState, carTypeData }) => {
                 <div className="grid grid-cols-3 gap-x-1">
                   <h1 className="col-span-1">Giá trị xe</h1>
                   <h1 className="col-span-2">
-                    {carType.price * rentingState.quantity! * rentingDays}đ
+                    {servicePrice + carPrice}đ
                   </h1>
                 </div>
               </div>

@@ -10,7 +10,7 @@ import {
   CarTypeEnum,
   Payment,
   ServiceFragmentFragment,
-  useGetCarTypeLazyQuery,
+  useGetCarTypeLazyQuery
 } from "../graphql/generated/schema";
 export interface RentingState {
   carType?: CarTypeEnum;
@@ -35,6 +35,7 @@ export const countRentingDay = (
 ) => {
   const start = getDate(startDate, startTime).getTime();
   const end = getDate(endDate, endTime).getTime();
+  if (start > end) return 0;
   return Math.round(((end - start) * 2) / 86400000) / 2;
 };
 export const calcServicePrice = (
@@ -61,6 +62,10 @@ export default function RentingPage() {
       },
     });
   useEffect(() => {
+    if (!location.state) {
+      navigate("/");
+      return;
+    }
     const state = location.state as RentingState;
     getCarType({
       variables: {
@@ -72,27 +77,31 @@ export default function RentingPage() {
   }, [location.state]);
   return (
     <div className="min-h-full">
-      <main className="py-10">
-        <StepsProgress stepNumber={step} setStepNumber={setStep} />
-        {step === 0 && (
-          <Step1
-            carTypeData={data}
-            loadingCarType={loadingCarType}
-            setStep={setStep}
-            rentingState={rentingState}
-            setRentingState={setRentingState}
-          />
-        )}
-        {step === 1 && (
-          <Step2
-            rentingState={rentingState}
-            setStep={setStep}
-            carTypeData={data}
-            setRentingState={setRentingState}
-          />
-        )}
-        {step === 2 && <Step3 rentingState={rentingState} carTypeData={data} />}
-      </main>
+      {rentingState && (
+        <main className="py-10">
+          <StepsProgress stepNumber={step} setStepNumber={setStep} />
+          {step === 0 && (
+            <Step1
+              carTypeData={data}
+              loadingCarType={loadingCarType}
+              setStep={setStep}
+              rentingState={rentingState}
+              setRentingState={setRentingState}
+            />
+          )}
+          {step === 1 && (
+            <Step2
+              rentingState={rentingState}
+              setStep={setStep}
+              carTypeData={data}
+              setRentingState={setRentingState}
+            />
+          )}
+          {step === 2 && (
+            <Step3 rentingState={rentingState} carTypeData={data} />
+          )}
+        </main>
+      )}
     </div>
   );
 }

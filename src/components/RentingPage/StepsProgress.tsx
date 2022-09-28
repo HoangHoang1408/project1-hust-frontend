@@ -5,7 +5,7 @@ import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 const steps = [
   { id: "Bước 1", name: "Xem giá và thủ tục", status: "current" },
   { id: "Bước 2", name: "Thông tin khách hàng", status: "upcoming" },
-  { id: "Bước 3", name: "Hoàn tất thanh toán", status: "upcoming" },
+  { id: "Bước 3", name: "Hoàn tất", status: "upcoming" },
 ];
 type Step = {
   id: string;
