@@ -21,6 +21,7 @@ import FileManager from "./pages/admin/FileManager";
 import CreateService from "./pages/admin/service/CreateService";
 import ServiceManager from "./pages/admin/service/ServiceManager";
 import UpdateService from "./pages/admin/service/UpdateService";
+import AdminUserDetail from "./pages/admin/user/AdminUserDetail";
 import UserManager from "./pages/admin/user/UserMangager";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
 import LoginPage from "./pages/auth/LoginPage";
@@ -87,7 +88,10 @@ function App() {
                 <Route path="update/:id" element={<UpdateCar />} />
                 <Route path=":id" element={<AdminCarDetail />} />
               </Route>
-              <Route path="users" element={<UserManager />} />
+              <Route path="users">
+                <Route index element={<UserManager />} />
+                <Route path=":id" element={<AdminUserDetail />} />
+              </Route>
               <Route path="cartypes">
                 <Route index element={<CarTypeManager />} />
                 <Route path=":cartype" element={<AdminCarTypeDetail />} />

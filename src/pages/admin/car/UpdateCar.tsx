@@ -38,6 +38,7 @@ type UpdateCarInputForm = {
   consumption: number;
   features: string[];
   carType: CarTypeEnum; //
+  goodCondition: string;
 };
 const UpdateCarInputSchema = yup.object().shape({
   name: yup.string().required("Cần điền thông tin"),
@@ -58,6 +59,7 @@ const UpdateCarInputSchema = yup.object().shape({
     .required("Cần điền thông tin")
     .min(1, "Cần có ít nhất 1 mục"),
   carType: yup.string().required("Cần điền thông tin"),
+  goodCondition: yup.string(),
 });
 type Props = {};
 const UpdateCar: FC<Props> = () => {
@@ -113,6 +115,7 @@ const UpdateCar: FC<Props> = () => {
       manufactureYear,
       name,
       transmissionType,
+      vehicleStatus: { goodCondition },
     } = car;
     reset({
       carBrand,
@@ -124,6 +127,7 @@ const UpdateCar: FC<Props> = () => {
       manufactureYear,
       name,
       transmissionType,
+      goodCondition: goodCondition ? "true" : "",
     });
   }, [carData]);
   const [updateCar, { loading }] = useUpdateCarMutation({
@@ -159,6 +163,7 @@ const UpdateCar: FC<Props> = () => {
       manufactureYear,
       name,
       transmissionType,
+      goodCondition,
     } = getValues();
     let sendImages: StoredFileInputType[] | undefined = undefined;
     try {
@@ -201,6 +206,10 @@ const UpdateCar: FC<Props> = () => {
             transmissionType,
             carType,
             images: sendImages,
+            vehicleStatus: {
+              booked: false,
+              goodCondition: goodCondition.length > 0,
+            },
           },
         },
       });
@@ -270,6 +279,14 @@ const UpdateCar: FC<Props> = () => {
                     values={Object.values(CarBrand)}
                     registerReturn={register("carBrand")}
                     errorMessage={errors.carBrand?.message}
+                  />
+                  <SelectInput
+                    id="goodCondition"
+                    labelText="Tình trạng xe"
+                    showedValues={["Tốt", "Không tốt"]}
+                    values={["true", ""]}
+                    registerReturn={register("goodCondition")}
+                    errorMessage={errors.goodCondition?.message}
                   />
                   <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
                     <label

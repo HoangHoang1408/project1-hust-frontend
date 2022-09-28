@@ -127,7 +127,9 @@ const UserManager = (props: Props) => {
           return (
             <div className="space-x-2">
               <button
-                onClick={() => {}}
+                onClick={() => {
+                  navigate(`/admin/users/${data["id"]}`);
+                }}
                 className="font-semibold text-indigo-500 cursor-pointer hover:text-indigo-700 p-1 hover:bg-indigo-300 text-left rounded transition w-fit"
               >
                 Chi tiết

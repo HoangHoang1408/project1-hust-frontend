@@ -1,3 +1,4 @@
+import { CheckIcon, XIcon } from "@heroicons/react/solid";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTable } from "react-table";
@@ -92,6 +93,21 @@ const CarManager = (props: Props) => {
         accessor: (row) => CarTypeEnumBackEnd[row["carType"]["carType"]],
       },
       {
+        Header: "Tình trạng",
+        // @ts-ignore
+        accessor: (row) => CarTypeEnumBackEnd[row["carType"]["carType"]],
+        // @ts-ignore
+        Cell: (row) => {
+          const good = row["row"]["original"]["vehicleStatus"]["goodCondition"];
+          return (
+            <div className="">
+              {good && <CheckIcon className="w-8 h-8 text-green-500" />}
+              {!good && <XIcon className="w-8 h-8 text-red-500" />}
+            </div>
+          );
+        },
+      },
+      {
         Header: "Hành động",
         //@ts-ignore
         accessor: (row) => row,
@@ -115,9 +131,6 @@ const CarManager = (props: Props) => {
                 className="font-semibold text-indigo-500 cursor-pointer hover:text-indigo-700 p-1 hover:bg-indigo-300 text-left rounded transition w-fit"
               >
                 Cập nhật
-              </button>
-              <button className="font-semibold text-indigo-500 cursor-pointer hover:text-indigo-700 p-1 hover:bg-indigo-300 text-left rounded transition w-fit">
-                Trạng thái
               </button>
             </div>
           );

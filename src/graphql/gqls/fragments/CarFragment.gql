@@ -16,4 +16,8 @@ fragment CarFragment on Car {
   engineType
   manufactureYear
   licensePlate
+  vehicleStatus {
+    booked
+    goodCondition
+  }
 }

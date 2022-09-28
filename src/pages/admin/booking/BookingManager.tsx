@@ -144,7 +144,7 @@ const BookingManager = (props: Props) => {
       {
         Header: "Tổng tiền",
         // @ts-ignore
-        accessor: (row) => row["totalPrice"],
+        accessor: (row) => `${row["totalPrice"]}đ`,
       },
       {
         Header: "Hành động",

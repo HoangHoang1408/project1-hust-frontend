@@ -130,6 +130,7 @@ export default function HeroSection() {
       }
       toast.error("Lỗi xảy ra, thử lại sau");
     },
+    fetchPolicy: "network-only",
   });
   const submitHandler = async () => {
     const { carType, endDate, endTime, startDate, startTime, quantity } =

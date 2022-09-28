@@ -1,0 +1,12 @@
+query GetUserDetail($input: GetUserDetailInput!) {
+  getUserDetail(input: $input) {
+    ok
+    error {
+      message
+      mainReason
+    }
+    user {
+      ...UserFragment
+    }
+  }
+}

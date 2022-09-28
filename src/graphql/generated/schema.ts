@@ -418,6 +418,17 @@ export type GetUserByOutput = {
   users?: Maybe<Array<User>>;
 };
 
+export type GetUserDetailInput = {
+  useId: Scalars['ID'];
+};
+
+export type GetUserDetailOutput = {
+  __typename?: 'GetUserDetailOutput';
+  error?: Maybe<CustomError>;
+  ok: Scalars['Boolean'];
+  user?: Maybe<User>;
+};
+
 export type LoginInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -569,6 +580,7 @@ export type Query = {
   getService: GetServiceOutput;
   getServices: GetServicesByOutput;
   getUserBy: GetUserByOutput;
+  getUserDetail: GetUserDetailOutput;
   login: LoginOutPut;
   newAccessToken: NewAccessTokenOutput;
   verifyEmail: VerifyEmailOutput;
@@ -632,6 +644,11 @@ export type QueryGetServicesArgs = {
 
 export type QueryGetUserByArgs = {
   input: GetUserByInput;
+};
+
+
+export type QueryGetUserDetailArgs = {
+  input: GetUserDetailInput;
 };
 
 
@@ -854,7 +871,7 @@ export type VerifyForgotPasswordOutput = {
 
 export type BookingFragmentFragment = { __typename?: 'Booking', id: string, createdAt: any, payment: Payment, status: BookingStatus, rating?: number | null, feedBack?: string | null, bookingCode: string, totalPrice: number, startDate: any, endDate: any, quantity: number, customerName: string, customerPhone: string, note?: string | null, homeDelivery: string, user?: { __typename?: 'User', id: string, name: string, avatar?: { __typename?: 'StoredFile', fileUrl: string, filePath: string } | null } | null, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } }, services?: Array<{ __typename?: 'Service', id: string, serviceName: string, servicePrice: number, description: string, perDay: boolean }> | null };
 
-export type CarFragmentFragment = { __typename?: 'Car', id: string, carBrand: CarBrand, transmissionType: TransmissionType, consumption: number, features: Array<string>, name: string, rating: number, engineType: EngineType, manufactureYear: number, licensePlate: string, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } }, images?: Array<{ __typename?: 'StoredFile', fileUrl: string, filePath: string }> | null };
+export type CarFragmentFragment = { __typename?: 'Car', id: string, carBrand: CarBrand, transmissionType: TransmissionType, consumption: number, features: Array<string>, name: string, rating: number, engineType: EngineType, manufactureYear: number, licensePlate: string, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } }, images?: Array<{ __typename?: 'StoredFile', fileUrl: string, filePath: string }> | null, vehicleStatus: { __typename?: 'VehicleStatus', booked: boolean, goodCondition: boolean } };
 
 export type CarTypeFragmentFragment = { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } };
 
@@ -965,7 +982,7 @@ export type CarDetailQueryVariables = Exact<{
 }>;
 
 
-export type CarDetailQuery = { __typename?: 'Query', getCarDetail: { __typename?: 'GetCarDetailOutput', ok: boolean, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null, car?: { __typename?: 'Car', id: string, carBrand: CarBrand, transmissionType: TransmissionType, consumption: number, features: Array<string>, name: string, rating: number, engineType: EngineType, manufactureYear: number, licensePlate: string, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } }, images?: Array<{ __typename?: 'StoredFile', fileUrl: string, filePath: string }> | null } | null } };
+export type CarDetailQuery = { __typename?: 'Query', getCarDetail: { __typename?: 'GetCarDetailOutput', ok: boolean, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null, car?: { __typename?: 'Car', id: string, carBrand: CarBrand, transmissionType: TransmissionType, consumption: number, features: Array<string>, name: string, rating: number, engineType: EngineType, manufactureYear: number, licensePlate: string, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } }, images?: Array<{ __typename?: 'StoredFile', fileUrl: string, filePath: string }> | null, vehicleStatus: { __typename?: 'VehicleStatus', booked: boolean, goodCondition: boolean } } | null } };
 
 export type CheckCarAvailableQueryVariables = Exact<{
   input: CheckCarAvailableInput;
@@ -1014,7 +1031,7 @@ export type GetCarsByQueryVariables = Exact<{
 }>;
 
 
-export type GetCarsByQuery = { __typename?: 'Query', getCarsBy: { __typename?: 'GetCarsByOutput', ok: boolean, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null, cars?: Array<{ __typename?: 'Car', id: string, carBrand: CarBrand, transmissionType: TransmissionType, consumption: number, features: Array<string>, name: string, rating: number, engineType: EngineType, manufactureYear: number, licensePlate: string, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } }, images?: Array<{ __typename?: 'StoredFile', fileUrl: string, filePath: string }> | null }> | null, pagination?: { __typename?: 'PaginationOutput', totalPages?: number | null, totalResults?: number | null } | null } };
+export type GetCarsByQuery = { __typename?: 'Query', getCarsBy: { __typename?: 'GetCarsByOutput', ok: boolean, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null, cars?: Array<{ __typename?: 'Car', id: string, carBrand: CarBrand, transmissionType: TransmissionType, consumption: number, features: Array<string>, name: string, rating: number, engineType: EngineType, manufactureYear: number, licensePlate: string, carType: { __typename?: 'CarType', carType: CarTypeEnum, price: number, maxDistance?: number | null, additionalDistancePrice?: number | null, acceptedPayment: Array<Payment>, procedures: { __typename?: 'Procedure', mortgateProperty?: Array<string> | null, mortgatePaper?: Array<string> | null, verificationPaper?: Array<string> | null } }, images?: Array<{ __typename?: 'StoredFile', fileUrl: string, filePath: string }> | null, vehicleStatus: { __typename?: 'VehicleStatus', booked: boolean, goodCondition: boolean } }> | null, pagination?: { __typename?: 'PaginationOutput', totalPages?: number | null, totalResults?: number | null } | null } };
 
 export type GetServiceQueryVariables = Exact<{
   input: GetServiceInput;
@@ -1036,6 +1053,13 @@ export type GetUserByQueryVariables = Exact<{
 
 
 export type GetUserByQuery = { __typename?: 'Query', getUserBy: { __typename?: 'GetUserByOutput', ok: boolean, error?: { __typename?: 'CustomError', mainReason: string, message: string } | null, users?: Array<{ __typename?: 'User', id: string, email: string, verified: boolean, name: string, role: UserRole, address?: string | null, phoneNumber?: string | null, avatar?: { __typename?: 'StoredFile', fileUrl: string, filePath: string } | null }> | null, pagination?: { __typename?: 'PaginationOutput', totalPages?: number | null, totalResults?: number | null } | null } };
+
+export type GetUserDetailQueryVariables = Exact<{
+  input: GetUserDetailInput;
+}>;
+
+
+export type GetUserDetailQuery = { __typename?: 'Query', getUserDetail: { __typename?: 'GetUserDetailOutput', ok: boolean, error?: { __typename?: 'CustomError', message: string, mainReason: string } | null, user?: { __typename?: 'User', id: string, email: string, verified: boolean, name: string, role: UserRole, address?: string | null, phoneNumber?: string | null, avatar?: { __typename?: 'StoredFile', fileUrl: string, filePath: string } | null } | null } };
 
 export type LoginQueryVariables = Exact<{
   input: LoginInput;
@@ -1132,6 +1156,10 @@ export const CarFragmentFragmentDoc = gql`
   engineType
   manufactureYear
   licensePlate
+  vehicleStatus {
+    booked
+    goodCondition
+  }
 }
     ${CarTypeFragmentFragmentDoc}`;
 export const UserFragmentFragmentDoc = gql`
@@ -2168,6 +2196,48 @@ export function useGetUserByLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetUserByQueryHookResult = ReturnType<typeof useGetUserByQuery>;
 export type GetUserByLazyQueryHookResult = ReturnType<typeof useGetUserByLazyQuery>;
 export type GetUserByQueryResult = Apollo.QueryResult<GetUserByQuery, GetUserByQueryVariables>;
+export const GetUserDetailDocument = gql`
+    query GetUserDetail($input: GetUserDetailInput!) {
+  getUserDetail(input: $input) {
+    ok
+    error {
+      message
+      mainReason
+    }
+    user {
+      ...UserFragment
+    }
+  }
+}
+    ${UserFragmentFragmentDoc}`;
+
+/**
+ * __useGetUserDetailQuery__
+ *
+ * To run a query within a React component, call `useGetUserDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserDetailQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGetUserDetailQuery(baseOptions: Apollo.QueryHookOptions<GetUserDetailQuery, GetUserDetailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserDetailQuery, GetUserDetailQueryVariables>(GetUserDetailDocument, options);
+      }
+export function useGetUserDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserDetailQuery, GetUserDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserDetailQuery, GetUserDetailQueryVariables>(GetUserDetailDocument, options);
+        }
+export type GetUserDetailQueryHookResult = ReturnType<typeof useGetUserDetailQuery>;
+export type GetUserDetailLazyQueryHookResult = ReturnType<typeof useGetUserDetailLazyQuery>;
+export type GetUserDetailQueryResult = Apollo.QueryResult<GetUserDetailQuery, GetUserDetailQueryVariables>;
 export const LoginDocument = gql`
     query Login($input: LoginInput!) {
   login(input: $input) {
